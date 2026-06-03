@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SummrTools — Sign In</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+:root{--green:#1D9E75;--green-dark:#0F6E56;--green-light:#E1F5EE;--text:#0E1C16;--text-secondary:#4A6358;--text-muted:#8AA89C;--bg:#FAFCFB;--surface:#FFFFFF;--border:rgba(29,158,117,0.15);--border-strong:rgba(29,158,117,0.3);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem;}
+.card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:2.5rem;width:100%;max-width:420px;box-shadow:0 8px 32px rgba(29,158,117,0.06);}
+.logo{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:1rem;}
+.logo-icon{width:40px;height:40px;border-radius:10px;background:var(--green);display:flex;align-items:center;justify-content:center;}
+.logo-icon i{color:#fff;font-size:20px;}
+.logo-text{font-family:'Fraunces',serif;font-size:22px;font-weight:500;}
+.logo-sub{font-size:13px;color:var(--text-muted);text-align:center;margin-bottom:2rem;}
+.tabs{display:flex;gap:4px;background:#f0f4f2;border-radius:10px;padding:3px;margin-bottom:1.5rem;}
+.tab{flex:1;padding:8px;text-align:center;font-size:14px;border-radius:8px;cursor:pointer;border:none;background:transparent;font-family:'DM Sans',sans-serif;color:var(--text-secondary);}
+.tab.active{background:#fff;color:var(--text);font-weight:500;border:1px solid var(--border);}
+.field{margin-bottom:1rem;}
+.label{font-size:12px;font-weight:500;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:4px;}
+.input{width:100%;padding:10px 12px;border:1px solid var(--border-strong);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;background:#fff;color:var(--text);transition:border-color .2s,box-shadow .2s;}
+.input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(29,158,117,0.1);}
+.btn{width:100%;background:var(--green);color:#fff;border:none;border-radius:10px;padding:12px;font-size:15px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:background .2s;margin-top:.5rem;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn:hover{background:var(--green-dark);}
+.btn:disabled{opacity:.5;cursor:not-allowed;}
+.msg{font-size:13px;padding:10px 14px;border-radius:8px;margin-top:1rem;display:none;}
+.msg.error{background:#fff5f5;color:#c0392b;border:1px solid rgba(192,57,43,.2);}
+.msg.success{background:var(--green-light);color:var(--green-dark);border:1px solid var(--border-strong);}
+.back-link{display:block;text-align:center;margin-top:1.25rem;font-size:13px;color:var(--text-muted);text-decoration:none;}
+.back-link:hover{color:var(--green);}
+.tier-preview{display:flex;gap:8px;margin-bottom:1.5rem;}
+.tier-pill{flex:1;text-align:center;padding:8px 4px;border-radius:8px;border:1px solid var(--border);font-size:11px;}
+.tier-pill .tier-name{font-weight:500;display:block;margin-bottom:2px;}
+.tier-pill .tier-price{color:var(--text-muted);}
+.tier-pill.highlight{border-color:var(--green);background:var(--green-light);}
+.tier-pill.highlight .tier-name{color:var(--green-dark);}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">
+    <div class="logo-icon"><i class="ti ti-tools"></i></div>
+    <span class="logo-text">SummrTools</span>
+  </div>
+  <p class="logo-sub">Tools for the African expat 🌍</p>
+
+  <div class="tabs">
+    <button class="tab active" id="tab-login" onclick="switchTab('login')">Sign in</button>
+    <button class="tab" id="tab-signup" onclick="switchTab('signup')">Create account</button>
+  </div>
+
+  <!-- LOGIN -->
+  <div id="login-form">
+    <div class="field"><label class="label">Email</label><input class="input" id="login-email" type="email" placeholder="you@email.com"></div>
+    <div class="field"><label class="label">Password</label><input class="input" id="login-password" type="password" placeholder="Your password"></div>
+    <button class="btn" id="login-btn" onclick="doLogin()"><i class="ti ti-login"></i> Sign in</button>
+    <div class="msg" id="login-msg"></div>
+  </div>
+
+  <!-- SIGNUP -->
+  <div id="signup-form" style="display:none;">
+    <div class="tier-preview">
+      <div class="tier-pill highlight"><span class="tier-name">Free</span><span class="tier-price">3 CV credits</span></div>
+      <div class="tier-pill"><span class="tier-name">Standard</span><span class="tier-price">4.99 PLN</span></div>
+      <div class="tier-pill"><span class="tier-name">Elite</span><span class="tier-price">10.00 PLN</span></div>
+    </div>
+    <div class="field"><label class="label">Full name</label><input class="input" id="signup-name" type="text" placeholder="e.g. Alex Chifamba"></div>
+    <div class="field"><label class="label">Email</label><input class="input" id="signup-email" type="email" placeholder="you@email.com"></div>
+    <div class="field"><label class="label">Password</label><input class="input" id="signup-password" type="password" placeholder="Min. 8 characters"></div>
+    <button class="btn" id="signup-btn" onclick="doSignup()"><i class="ti ti-user-plus"></i> Create free account</button>
+    <div class="msg" id="signup-msg"></div>
+  </div>
+
+  <a class="back-link" href="https://summrtools.co.zw/dashboard.html"><i class="ti ti-arrow-left"></i> Back to SummrTools</a>
+</div>
+
+<!-- Load Supabase as regular script (not module) to avoid global scope issues -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+const sb = supabase.createClient(
+  'https://wsrhuuuwqzpsprknolot.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indzcmh1dXV3cXpwc3Bya25vbG90Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5ODAzMDIsImV4cCI6MjA5NTU1NjMwMn0.SqtB1CSq5aOauLOyZkYYuFHJe_Ox5SGYpCCrIckCwoc',
+  { auth: { storageKey: 'summrtools-auth', storage: window.localStorage } }
+);
+
+// Redirect if already logged in
+// Wait for auth to stabilise before redirecting
+sb.auth.onAuthStateChange(function(event, session) {
+  if (event === 'SIGNED_IN' && session) {
+    window.location.href = 'https://summrtools.co.zw/dashboard.html';
+  }
+});
+// Also check existing session once on load
+sb.auth.getSession().then(function(res) {
+  if (res.data && res.data.session) {
+    setTimeout(function() {
+      window.location.href = 'https://summrtools.co.zw/dashboard.html';
+    }, 300);
+  }
+});
+
+function switchTab(tab) {
+  document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+  document.getElementById('tab-signup').classList.toggle('active', tab === 'signup');
+  document.getElementById('login-form').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('signup-form').style.display = tab === 'signup' ? 'block' : 'none';
+}
+
+function showMsg(id, text, type) {
+  var el = document.getElementById(id);
+  el.textContent = text;
+  el.className = 'msg ' + type;
+  el.style.display = 'block';
+}
+
+async function doLogin() {
+  var email = document.getElementById('login-email').value.trim();
+  var password = document.getElementById('login-password').value;
+  if (!email || !password) { showMsg('login-msg', 'Please fill in all fields.', 'error'); return; }
+  var btn = document.getElementById('login-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Signing in...';
+  var res = await sb.auth.signInWithPassword({ email: email, password: password });
+  if (res.error) {
+    showMsg('login-msg', res.error.message, 'error');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="ti ti-login"></i> Sign in';
+    return;
+  }
+  window.location.href = 'https://summrtools.co.zw/dashboard.html';
+}
+
+async function doSignup() {
+  var name = document.getElementById('signup-name').value.trim();
+  var email = document.getElementById('signup-email').value.trim();
+  var password = document.getElementById('signup-password').value;
+  if (!name || !email || !password) { showMsg('signup-msg', 'Please fill in all fields.', 'error'); return; }
+  if (password.length < 8) { showMsg('signup-msg', 'Password must be at least 8 characters.', 'error'); return; }
+  var btn = document.getElementById('signup-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Creating account...';
+  var res = await sb.auth.signUp({
+    email: email,
+    password: password,
+    options: { data: { full_name: name } }
+  });
+  if (res.error) {
+    showMsg('signup-msg', res.error.message, 'error');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="ti ti-user-plus"></i> Create free account';
+    return;
+  }
+  showMsg('signup-msg', 'Account created! Check your email to confirm, then sign in.', 'success');
+  btn.disabled = false;
+  btn.innerHTML = '<i class="ti ti-user-plus"></i> Create free account';
+}
+
+// Allow Enter key to submit
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    var loginVisible = document.getElementById('login-form').style.display !== 'none';
+    if (loginVisible) doLogin(); else doSignup();
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SummrTools — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+:root{--green:#1D9E75;--green-dark:#0F6E56;--green-light:#E1F5EE;--blue:#378ADD;--text:#0E1C16;--text-secondary:#4A6358;--text-muted:#8AA89C;--bg:#FAFCFB;--surface:#FFFFFF;--border:rgba(29,158,117,0.15);--border-strong:rgba(29,158,117,0.3);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px;background:rgba(250,252,251,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
+.nav-logo-icon{width:30px;height:30px;border-radius:7px;background:var(--green);display:flex;align-items:center;justify-content:center;}
+.nav-logo-icon i{color:#fff;font-size:15px;}
+.nav-logo-text{font-family:'Fraunces',serif;font-size:16px;font-weight:500;color:var(--text);}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.nav-user{font-size:13px;color:var(--text-secondary);}
+.nav-signout{font-size:13px;padding:6px 14px;border:1px solid var(--border-strong);border-radius:8px;background:transparent;cursor:pointer;color:var(--text-secondary);font-family:'DM Sans',sans-serif;}
+.nav-signout:hover{background:var(--green-light);color:var(--green);}
+.nav-dropdown{position:relative;}
+.nav-avatar{display:flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--border-strong);border-radius:99px;cursor:pointer;font-size:13px;font-weight:500;background:#fff;font-family:'DM Sans',sans-serif;transition:border-color .2s;}
+.nav-avatar:hover{border-color:var(--green);background:var(--green-light);}
+.nav-avatar-circle{width:26px;height:26px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:600;}
+.dropdown-menu{position:absolute;top:calc(100% + 8px);right:0;background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.08);min-width:200px;overflow:hidden;display:none;z-index:200;}
+.dropdown-menu.open{display:block;}
+.dropdown-header{padding:12px 16px;border-bottom:1px solid var(--border);}
+.dropdown-name{font-size:14px;font-weight:500;}
+.dropdown-email{font-size:12px;color:var(--text-muted);}
+.dropdown-item{display:flex;align-items:center;gap:10px;padding:10px 16px;font-size:14px;color:var(--text);text-decoration:none;cursor:pointer;border:none;background:none;width:100%;font-family:'DM Sans',sans-serif;text-align:left;}
+.dropdown-item:hover{background:var(--bg);}
+.dropdown-item i{font-size:16px;color:var(--text-muted);}
+.dropdown-item.danger{color:#c0392b;}
+.dropdown-item.danger i{color:#c0392b;}
+.dropdown-divider{height:1px;background:var(--border);margin:4px 0;}
+.wrap{max-width:900px;margin:0 auto;padding:80px 1.5rem 3rem;}
+.welcome{margin-bottom:2rem;}
+.welcome h1{font-family:'Fraunces',serif;font-size:28px;font-weight:300;margin-bottom:4px;}
+.welcome h1 em{font-style:italic;color:var(--green);}
+.welcome p{font-size:14px;color:var(--text-secondary);}
+/* TIER CARD */
+.tier-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:1.25rem 1.5rem;margin-bottom:2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.tier-info{display:flex;align-items:center;gap:12px;}
+.tier-badge{padding:4px 14px;border-radius:99px;font-size:12px;font-weight:500;}
+.tier-badge.free{background:#f0f0f0;color:#555;}
+.tier-badge.standard{background:#EBF4FF;color:#185FA5;}
+.tier-badge.elite{background:var(--green-light);color:var(--green-dark);}
+.tier-details{font-size:13px;color:var(--text-secondary);}
+.tier-details strong{color:var(--text);font-size:15px;display:block;margin-bottom:2px;}
+.credits-bar{flex:1;max-width:200px;}
+.credits-label{font-size:12px;color:var(--text-muted);margin-bottom:4px;display:flex;justify-content:space-between;}
+.credits-track{height:6px;background:#f0f0f0;border-radius:99px;overflow:hidden;}
+.credits-fill{height:100%;background:var(--green);border-radius:99px;transition:width .5s ease;}
+.upgrade-btn{background:var(--green);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;}
+.upgrade-btn:hover{background:var(--green-dark);}
+/* TOOLS GRID */
+.section-title{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-bottom:1rem;}
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-bottom:2.5rem;}
+.tool-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:1.25rem;cursor:pointer;transition:border-color .2s,transform .2s,box-shadow .2s;position:relative;overflow:hidden;text-decoration:none;display:block;color:inherit;}
+.tool-card:hover{border-color:var(--green);transform:translateY(-2px);box-shadow:0 8px 24px rgba(29,158,117,0.08);}
+.tool-card-accent{position:absolute;top:0;left:0;right:0;height:3px;background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform .2s;}
+.tool-card:hover .tool-card-accent{transform:scaleX(1);}
+.tool-icon{width:42px;height:42px;border-radius:10px;background:var(--green-light);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;}
+.tool-icon i{font-size:20px;color:var(--green);}
+.tool-name{font-size:16px;font-weight:500;margin-bottom:4px;}
+.tool-desc{font-size:13px;color:var(--text-secondary);line-height:1.5;margin-bottom:.75rem;}
+.tool-meta{display:flex;align-items:center;justify-content:space-between;}
+.tool-tag{font-size:11px;padding:2px 8px;border-radius:99px;background:var(--green-light);color:var(--green-dark);}
+.tool-arrow{font-size:14px;color:var(--green);}
+.tool-card.coming-soon{opacity:.6;cursor:default;pointer-events:none;}
+.coming-badge{position:absolute;top:.75rem;right:.75rem;font-size:10px;font-weight:500;padding:2px 8px;border-radius:99px;background:#FFF3CD;color:#856404;}
+/* TIER PLANS */
+.plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-bottom:2.5rem;}
+.plan-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:1.25rem;text-align:center;}
+.plan-card.highlighted{border-color:var(--green);box-shadow:0 4px 16px rgba(29,158,117,0.1);}
+.plan-name{font-size:16px;font-weight:500;margin-bottom:4px;}
+.plan-price{font-family:'Fraunces',serif;font-size:28px;font-weight:300;color:var(--green);margin-bottom:2px;}
+.plan-period{font-size:12px;color:var(--text-muted);margin-bottom:1rem;}
+.plan-feature{font-size:13px;color:var(--text-secondary);margin-bottom:6px;display:flex;align-items:center;gap:6px;justify-content:center;}
+.plan-feature i{font-size:14px;color:var(--green);}
+.plan-btn{width:100%;margin-top:1rem;padding:9px;border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;border:1px solid var(--border-strong);background:transparent;color:var(--text);}
+.plan-btn.primary{background:var(--green);color:#fff;border-color:var(--green);}
+.plan-btn:hover{opacity:.85;}
+.current-tag{font-size:11px;background:var(--green-light);color:var(--green-dark);padding:2px 8px;border-radius:99px;display:inline-block;margin-bottom:.5rem;}
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="https://summrtools.co.zw">
+    <div class="nav-logo-icon"><i class="ti ti-tools"></i></div>
+    <span class="nav-logo-text">SummrTools</span>
+  </a>
+  <div class="nav-right">
+    <div class="nav-dropdown" id="nav-dropdown">
+      <button class="nav-avatar" onclick="toggleDropdown()">
+        <div class="nav-avatar-circle" id="nav-initials">?</div>
+        <span id="nav-user">...</span>
+        <i class="ti ti-chevron-down" style="font-size:12px;color:var(--text-muted);"></i>
+      </button>
+      <div class="dropdown-menu" id="dropdown-menu">
+        <div class="dropdown-header">
+          <div class="dropdown-name" id="dd-name">...</div>
+          <div class="dropdown-email" id="dd-email">...</div>
+        </div>
+        <a class="dropdown-item" href="https://summrtools.co.zw/cv_profile.html"><i class="ti ti-id-badge"></i> My CV Profile</a>
+        <a class="dropdown-item" href="#" onclick="showChangePassword()"><i class="ti ti-lock"></i> Change password</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="https://summrtools.co.zw/admin.html" id="admin-link" style="display:none;"><i class="ti ti-shield"></i> Admin portal</a>
+        <button class="dropdown-item danger" onclick="showDeleteAccount()"><i class="ti ti-trash"></i> Delete account</button>
+        <div class="dropdown-divider"></div>
+        <button class="dropdown-item danger" onclick="doSignOut()"><i class="ti ti-logout"></i> Sign out</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Delete account modal — OUTSIDE nav -->
+<div id="delete-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:16px;padding:2rem;width:calc(100% - 2rem);max-width:400px;margin:auto;position:relative;top:50%;transform:translateY(-50%);">
+    <div style="width:48px;height:48px;border-radius:50%;background:#fff0f0;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+      <i class="ti ti-trash" style="font-size:22px;color:#c0392b;"></i>
+    </div>
+    <div style="font-size:17px;font-weight:500;margin-bottom:.5rem;">Delete your account</div>
+    <div style="font-size:14px;color:var(--text-secondary);margin-bottom:1.25rem;line-height:1.6;">This will permanently delete your account, CV profile, and all stored data. This cannot be undone.<br><br>A confirmation link will be generated for you to complete the deletion.</div>
+    <div style="display:flex;gap:8px;">
+      <button onclick="requestDeletion()" id="delete-confirm-btn" style="flex:1;background:#c0392b;color:#fff;border:none;border-radius:8px;padding:10px;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;">Confirm deletion</button>
+      <button onclick="document.getElementById('delete-modal').style.display='none'" style="padding:10px 16px;border:1px solid var(--border-strong);border-radius:8px;background:transparent;font-size:14px;font-family:'DM Sans',sans-serif;cursor:pointer;">Cancel</button>
+    </div>
+    <div id="delete-msg" style="font-size:13px;margin-top:.75rem;display:none;"></div>
+  </div>
+</div>
+
+<!-- Change password modal — OUTSIDE nav -->
+<div id="pw-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:9999;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:16px;padding:2rem;width:calc(100% - 2rem);max-width:380px;margin:auto;position:relative;top:50%;transform:translateY(-50%);">
+    <div style="font-size:16px;font-weight:500;margin-bottom:1rem;">Change password</div>
+    <div style="margin-bottom:.75rem;">
+      <label style="font-size:12px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:4px;">New password</label>
+      <input type="password" id="new-pw" placeholder="Min. 8 characters" style="width:100%;padding:10px 12px;border:1px solid var(--border-strong);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;">
+    </div>
+    <div style="display:flex;gap:8px;margin-top:1rem;">
+      <button onclick="doChangePassword()" style="flex:1;background:var(--green);color:#fff;border:none;border-radius:8px;padding:10px;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;">Update password</button>
+      <button onclick="closeModal()" style="padding:10px 16px;border:1px solid var(--border-strong);border-radius:8px;background:transparent;font-size:14px;font-family:'DM Sans',sans-serif;cursor:pointer;">Cancel</button>
+    </div>
+    <div id="pw-msg" style="font-size:13px;margin-top:.75rem;display:none;"></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="welcome">
+    <h1>Welcome back, <em id="user-name">...</em></h1>
+    <p>Here's your SummrTools dashboard</p>
+  </div>
+
+  <!-- TIER STATUS -->
+  <div class="tier-card" id="tier-card">
+    <div class="tier-info">
+      <div>
+        <span class="tier-badge" id="tier-badge">Free</span>
+      </div>
+      <div class="tier-details">
+        <strong id="tier-name">Loading...</strong>
+        <span id="tier-desc">Loading your account details...</span>
+      </div>
+    </div>
+    <div class="credits-bar" id="credits-bar-wrap">
+      <div class="credits-label">
+        <span>CV Credits</span>
+        <span id="credits-count">...</span>
+      </div>
+      <div class="credits-track"><div class="credits-fill" id="credits-fill" style="width:0%"></div></div>
+    </div>
+    <button class="upgrade-btn" id="upgrade-btn" onclick="scrollToPlans()">Upgrade plan</button>
+  </div>
+
+  <!-- TOOLS -->
+  <p class="section-title">Your tools</p>
+  <div class="tools-grid">
+    <a class="tool-card" href="https://summrtools.co.zw/cv.html" id="cv-tool-card">
+      <div class="tool-card-accent"></div>
+      <div class="tool-icon"><i class="ti ti-file-cv"></i></div>
+      <div class="tool-name">CV Builder</div>
+      <div class="tool-desc">Generate a professional, tailored CV using AI. Powered by your profile.</div>
+      <div class="tool-meta">
+        <span class="tool-tag" id="cv-credits-tag">...</span>
+        <i class="ti ti-arrow-right tool-arrow"></i>
+      </div>
+    </a>
+    <a class="tool-card" href="https://summrtools.co.zw/mzizi.html">
+      <div class="tool-card-accent"></div>
+      <div class="tool-icon"><i class="ti ti-language"></i></div>
+      <div class="tool-name">Mzizi</div>
+      <div class="tool-desc">Learn Polish with cultural context built for African expats. Unlimited access.</div>
+      <div class="tool-meta">
+        <span class="tool-tag">Unlimited</span>
+        <i class="ti ti-arrow-right tool-arrow"></i>
+      </div>
+    </a>
+
+    <div class="tool-card" id="relocation-card" onclick="openRelocation()" style="opacity:0.6;pointer-events:none;">
+      <div class="coming-badge" style="background:var(--green-light);color:var(--green-dark);border:1px solid var(--border-strong);">Elite only</div>
+      <div class="tool-card-accent"></div>
+      <div class="tool-icon"><i class="ti ti-world"></i></div>
+      <div class="tool-name">Global Move Advisor</div>
+      <div class="tool-desc">AI-powered relocation guide for Zimbabwean EU residents — visa routes, job markets, costs and checklists for any country.</div>
+      <div class="tool-meta">
+        <span class="tool-tag" style="background:var(--green-light);color:var(--green-dark);">Elite</span>
+        <i class="ti ti-lock tool-arrow" style="color:var(--text-muted);"></i>
+      </div>
+    </div>
+    <div class="tool-card coming-soon">
+      <div class="coming-badge">Coming soon</div>
+      <div class="tool-icon"><i class="ti ti-briefcase"></i></div>
+      <div class="tool-name">Job Matcher</div>
+      <div class="tool-desc">AI-powered job matching from LinkedIn, Indeed, Glassdoor and Pracuj.pl.</div>
+      <div class="tool-meta">
+        <span class="tool-tag" style="background:#FFF3CD;color:#856404;">In development</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- UPGRADE PLANS -->
+  <p class="section-title" id="plans-section">Upgrade your plan</p>
+  <div class="plans-grid">
+    <div class="plan-card" id="plan-free">
+      <div class="plan-name">Free</div>
+      <div class="plan-price">0</div>
+      <div class="plan-period">forever</div>
+      <div class="plan-feature"><i class="ti ti-check"></i> 3 CV credits total</div>
+      <div class="plan-feature"><i class="ti ti-check"></i> Full Mzizi access</div>
+      <div class="plan-feature"><i class="ti ti-check"></i> Dashboard access</div>
+      <button class="plan-btn" disabled>Current plan</button>
+    </div>
+    <div class="plan-card highlighted" id="plan-standard">
+      <div class="plan-name">Standard</div>
+      <div class="plan-price">4.99</div>
+      <div class="plan-period">PLN / 2 months</div>
+      <div class="plan-feature"><i class="ti ti-check"></i> 50 CV credits</div>
+      <div class="plan-feature"><i class="ti ti-check"></i> Full Mzizi access</div>
+      <div class="plan-feature"><i class="ti ti-check"></i> Priority support</div>
+      <button class="plan-btn primary" onclick="alert('Payment coming soon! Contact alex@summrtools.co.zw to upgrade.')">Upgrade — 4.99 PLN</button>
+    </div>
+    <div class="plan-card" id="plan-elite">
+      <div class="plan-name">Elite</div>
+      <div class="plan-price">10.00</div>
+      <div class="plan-period">PLN / month</div>
+      <div class="plan-feature"><i class="ti ti-check"></i> Unlimited CV credits</div>
+      <div class="plan-feature"><i class="ti ti-check"></i> Full Mzizi access</div>
+      <div class="plan-feature"><i class="ti ti-check"></i> Early access to new tools</div>
+      <button class="plan-btn primary" onclick="alert('Payment coming soon! Contact alex@summrtools.co.zw to upgrade.')">Upgrade — 10.00 PLN</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+const sb = supabase.createClient(
+  'https://wsrhuuuwqzpsprknolot.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indzcmh1dXV3cXpwc3Bya25vbG90Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5ODAzMDIsImV4cCI6MjA5NTU1NjMwMn0.SqtB1CSq5aOauLOyZkYYuFHJe_Ox5SGYpCCrIckCwoc',
+  { auth: { storageKey: 'summrtools-auth', storage: window.localStorage } }
+);
+
+const TIER_CREDITS = { free: 3, standard: 50, elite: Infinity };
+
+var isRedirecting = false;
+async function load() {
+  // Give auth time to initialise from localStorage
+  await new Promise(function(resolve){ setTimeout(resolve, 200); });
+  var res = await sb.auth.getSession();
+  var session = res.data && res.data.session;
+  var loadingEl = document.getElementById('auth-loading');
+  if (!session) {
+    if (!isRedirecting) {
+      isRedirecting = true;
+      window.location.href = 'https://summrtools.co.zw/login.html';
+    }
+    return;
+  }
+  // Auth confirmed — hide loading screen
+  if (loadingEl) loadingEl.style.display = 'none';
+
+  var profileRes = await sb.from('profiles').select('*').eq('id', session.user.id).maybeSingle();
+  if (profileRes.error) { console.warn('Profile error:', profileRes.error.message); }
+  var profile = profileRes.data || {};
+
+  // Safe defaults — never crash if profile is empty
+  var emailFallback = session.user.email || '';
+  var nameFallback = emailFallback.split('@')[0] || 'User';
+  // Try profile table first, then auth metadata, then email prefix
+  var metaName = session.user.user_metadata && session.user.user_metadata.full_name ? session.user.user_metadata.full_name : '';
+  var name = (profile.full_name && profile.full_name.trim()) ? profile.full_name.trim() : (metaName ? metaName : nameFallback);
+  // If profile has no name but metadata does, save it back to profiles table
+  if ((!profile.full_name || !profile.full_name.trim()) && metaName) {
+    sb.from('profiles').update({ full_name: metaName, email: emailFallback }).eq('id', session.user.id);
+  }
+  var tier = profile.tier || 'free';
+  var credits = (profile.cv_credits !== undefined && profile.cv_credits !== null) ? profile.cv_credits : 0;
+  var maxCredits = TIER_CREDITS[tier] || 3;
+
+  // Nav — safe element updates
+  var navUser = document.getElementById('nav-user');
+  var userName = document.getElementById('user-name');
+  var navInitials = document.getElementById('nav-initials');
+  var ddName = document.getElementById('dd-name');
+  var ddEmail = document.getElementById('dd-email');
+  if (navUser) navUser.textContent = name;
+  if (userName) userName.textContent = name;
+  if (navInitials) navInitials.textContent = name.split(' ').map(function(n){ return n[0] || ''; }).join('').toUpperCase().slice(0,2);
+  if (ddName) ddName.textContent = name;
+  if (ddEmail) ddEmail.textContent = emailFallback;
+
+  // Tier badge
+  var badge = document.getElementById('tier-badge');
+  if (badge) {
+    badge.textContent = tier.charAt(0).toUpperCase() + tier.slice(1);
+    badge.className = 'tier-badge ' + tier;
+  }
+
+  // Tier details
+  var tierName = document.getElementById('tier-name');
+  var tierDesc = document.getElementById('tier-desc');
+  if (tierName) tierName.textContent = tier === 'elite' ? 'Elite Plan — 10.00 PLN/mo' : tier === 'standard' ? 'Standard Plan — 4.99 PLN/2mo' : 'Free Plan';
+  if (tierDesc) tierDesc.textContent = tier === 'elite' ? 'Unlimited CV generation' : credits + ' CV credit' + (credits !== 1 ? 's' : '') + ' remaining';
+
+  // Credits bar
+  var creditsCount = document.getElementById('credits-count');
+  var creditsFill = document.getElementById('credits-fill');
+  var creditsBarWrap = document.getElementById('credits-bar-wrap');
+  if (creditsCount) creditsCount.textContent = tier === 'elite' ? 'Unlimited' : credits + ' / ' + maxCredits;
+  if (creditsFill) {
+    var pct = tier === 'elite' ? 100 : Math.max(0, Math.round((credits / maxCredits) * 100));
+    creditsFill.style.width = pct + '%';
+  }
+  if (tier === 'elite' && creditsBarWrap) creditsBarWrap.style.display = 'none';
+
+  // CV tool tag
+  var cvTag = document.getElementById('cv-credits-tag');
+  if (cvTag) {
+    cvTag.textContent = tier === 'elite' ? 'Unlimited' : credits + ' credit' + (credits !== 1 ? 's' : '') + ' left';
+    if (credits === 0 && tier !== 'elite') {
+      var card = document.getElementById('cv-tool-card');
+      if (card) { card.style.pointerEvents = 'none'; card.style.opacity = '.5'; }
+      cvTag.textContent = 'No credits left';
+      cvTag.style.background = '#fff0f0';
+      cvTag.style.color = '#c0392b';
+    }
+  }
+
+  // Hide upgrade btn if elite
+  var upgradeBtn = document.getElementById('upgrade-btn');
+  if (tier === 'elite' && upgradeBtn) upgradeBtn.style.display = 'none';
+
+  // Unlock relocation advisor for elite users only
+  var relocationCard = document.getElementById('relocation-card');
+  if (relocationCard && tier === 'elite') {
+    relocationCard.style.opacity = '1';
+    relocationCard.style.pointerEvents = 'auto';
+    var badge = relocationCard.querySelector('.coming-badge');
+    if (badge) { badge.textContent = 'Elite'; badge.style.background = 'var(--green-light)'; badge.style.color = 'var(--green-dark)'; }
+    var lockIcon = relocationCard.querySelector('.ti-lock');
+    if (lockIcon) { lockIcon.className = 'ti ti-arrow-right tool-arrow'; lockIcon.style.color = 'var(--green)'; }
+  }
+
+  // Show admin link if admin
+  console.log('is_admin value:', profile.is_admin, 'profile:', JSON.stringify(profile));
+  var adminLink = document.getElementById('admin-link');
+  if (profile && (profile.is_admin === true || profile.is_admin === 'true') && adminLink) {
+    adminLink.style.display = 'flex';
+    adminLink.style.alignItems = 'center';
+  }
+
+  // Highlight current plan safely
+  var planBtn = document.querySelector('#plan-' + tier + ' .plan-btn');
+  if (planBtn) planBtn.textContent = '✓ Current plan';
+  document.getElementById('plan-' + tier).querySelector('.plan-btn').disabled = true;
+}
+
+window.doSignOut = async function() {
+  await sb.auth.signOut();
+  window.location.href = 'https://summrtools.co.zw/login.html';
+};
+
+window.scrollToPlans = function() {
+  document.getElementById('plans-section').scrollIntoView({ behavior: 'smooth' });
+};
+
+window.openRelocation = function() {
+  window.location.href = 'https://summrtools.co.zw/relocation.html';
+};
+
+window.toggleDropdown = function() {
+  document.getElementById('dropdown-menu').classList.toggle('open');
+};
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(e) {
+  if (!document.getElementById('nav-dropdown').contains(e.target)) {
+    document.getElementById('dropdown-menu').classList.remove('open');
+  }
+});
+
+window.showChangePassword = function(e) {
+  if(e) e.preventDefault();
+  document.getElementById('dropdown-menu').classList.remove('open');
+  document.getElementById('pw-modal').style.display = 'flex';
+};
+
+window.closeModal = function() {
+  document.getElementById('pw-modal').style.display = 'none';
+  var msg = document.getElementById('pw-msg');
+  var pw = document.getElementById('new-pw');
+  if (msg) { msg.style.display = 'none'; msg.textContent = ''; }
+  if (pw) pw.value = '';
+};
+
+window.doChangePassword = async function() {
+  const pw = document.getElementById('new-pw').value;
+  const msg = document.getElementById('pw-msg');
+  if (pw.length < 8) { msg.textContent = 'Password must be at least 8 characters.'; msg.style.display='block'; msg.style.color='#c0392b'; return; }
+  const { error } = await sb.auth.updateUser({ password: pw });
+  if (error) { msg.textContent = error.message; msg.style.display='block'; msg.style.color='#c0392b'; return; }
+  msg.textContent = 'Password updated successfully!'; msg.style.display='block'; msg.style.color='var(--green)';
+  setTimeout(closeModal, 2000);
+};
+
+window.showDeleteAccount = function() {
+  document.getElementById('dropdown-menu').classList.remove('open');
+  document.getElementById('delete-modal').style.display = 'flex';
+};
+
+window.requestDeletion = async function() {
+  const btn = document.getElementById('delete-confirm-btn');
+  const msg = document.getElementById('delete-msg');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  try {
+    const sessionRes2 = await sb.auth.getSession();
+    const session2 = sessionRes2.data && sessionRes2.data.session;
+    if (!session2) return;
+    // Generate a deletion token
+    const token = Math.random().toString(36).substring(2) + Date.now().toString(36);
+    // Store token and mark as pending deletion
+    await sb.from('profiles').update({
+      account_status: 'pending_deletion',
+      deletion_requested_at: new Date().toISOString(),
+      deletion_token: token
+    }).eq('id', session2.user.id);
+    // Send confirmation email via Supabase (uses your email)
+    const confirmUrl = 'https://summrtools.co.zw/delete_confirm.html?token=' + token + '&uid=' + session2.user.id;
+    // We use Supabase magic link as email trigger - fallback to showing the link
+    msg.style.display = 'block';
+    msg.style.color = 'var(--green-dark)';
+    msg.innerHTML = 'Deletion request recorded. For now, to complete deletion please <a href="' + confirmUrl + '" style="color:var(--green-dark);font-weight:500;">click this confirmation link</a>.<br><small style="color:var(--text-muted);">Automated email coming soon.</small>';
+    btn.textContent = 'Request sent';
+  } catch(e) {
+    msg.style.display = 'block';
+    msg.style.color = '#c0392b';
+    msg.textContent = 'Error: ' + e.message;
+    btn.disabled = false;
+    btn.textContent = 'Send confirmation email';
+  }
+};
+
+load();
+</script>
+</body>
+</html>

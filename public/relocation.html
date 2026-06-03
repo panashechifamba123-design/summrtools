@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Move Advisor — SummrTools</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+:root{--green:#1D9E75;--green-dark:#0F6E56;--green-light:#E1F5EE;--text:#0E1C16;--text-secondary:#4A6358;--text-muted:#8AA89C;--bg:#FAFCFB;--surface:#FFFFFF;--border:rgba(29,158,117,0.15);--border-strong:rgba(29,158,117,0.3);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px;background:rgba(250,252,251,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
+.nav-logo-icon{width:30px;height:30px;border-radius:7px;background:var(--green);display:flex;align-items:center;justify-content:center;}
+.nav-logo-icon i{color:#fff;font-size:15px;}
+.nav-logo-text{font-family:'Fraunces',serif;font-size:16px;font-weight:500;color:var(--text);}
+.nav-badge{font-size:11px;background:var(--green-light);color:var(--green-dark);border:1px solid var(--border-strong);padding:2px 8px;border-radius:99px;font-weight:500;}
+.wrap{max-width:900px;margin:0 auto;padding:80px 1.5rem 3rem;}
+.hero{margin-bottom:2rem;text-align:center;}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;letter-spacing:-0.5px;margin-bottom:.5rem;}
+.hero h1 em{font-style:italic;color:var(--green);}
+.hero p{font-size:14px;color:var(--text-secondary);max-width:560px;margin:0 auto;}
+.profile-banner{background:var(--green-light);border:1px solid var(--border-strong);border-radius:10px;padding:.75rem 1rem;margin-bottom:1.5rem;font-size:13px;color:var(--green-dark);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
+.profile-banner-left{display:flex;align-items:center;gap:8px;}
+.profile-banner a{font-size:12px;color:var(--green-dark);font-weight:500;text-decoration:none;white-space:nowrap;}
+.profile-banner a:hover{text-decoration:underline;}
+.card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.25rem;}
+.card-title{font-size:15px;font-weight:500;margin-bottom:1rem;display:flex;align-items:center;gap:8px;}
+.card-title i{font-size:18px;color:var(--green);}
+.countries-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.75rem;margin-bottom:1rem;}
+.country-btn{padding:.75rem;border:1px solid var(--border-strong);border-radius:10px;background:#fff;cursor:pointer;text-align:center;transition:all .2s;font-family:'DM Sans',sans-serif;}
+.country-btn:hover{border-color:var(--green);background:var(--green-light);}
+.country-btn.selected{border-color:var(--green);background:var(--green-light);box-shadow:0 0 0 2px rgba(29,158,117,0.2);}
+.country-flag{font-size:24px;display:block;margin-bottom:4px;}
+.country-name{font-size:12px;font-weight:500;color:var(--text);}
+.country-score{font-size:11px;color:var(--green-dark);font-weight:500;}
+.custom-country{display:flex;gap:.5rem;margin-top:.5rem;}
+.input{padding:9px 12px;border:1px solid var(--border-strong);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;background:#fff;color:var(--text);transition:border-color .2s;}
+.input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(29,158,117,0.1);}
+.field{display:flex;flex-direction:column;gap:4px;margin-bottom:1rem;}
+.label{font-size:11px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;}
+.btn-primary{background:var(--green);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:15px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .2s;}
+.btn-primary:hover{background:var(--green-dark);}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;}
+.btn-secondary{background:transparent;color:var(--text-secondary);border:1px solid var(--border-strong);border-radius:8px;padding:8px 16px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;}
+.btn-secondary:hover{border-color:var(--green);color:var(--green);}
+.result-section{display:none;}
+.result-section.visible{display:block;}
+.tabs{display:flex;gap:4px;background:#f0f4f2;border-radius:8px;padding:3px;margin-bottom:1.5rem;flex-wrap:wrap;}
+.tab{flex:1;min-width:100px;padding:8px;text-align:center;font-size:13px;border-radius:6px;cursor:pointer;border:none;background:transparent;font-family:'DM Sans',sans-serif;color:var(--text-secondary);}
+.tab.active{background:#fff;color:var(--text);font-weight:500;border:1px solid var(--border);}
+.result-content{display:none;}
+.result-content.active{display:block;}
+.result-text{font-size:14px;line-height:1.9;color:var(--text);white-space:pre-wrap;}
+.score-card{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;margin-bottom:1.5rem;}
+.score-item{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1rem;text-align:center;}
+.score-num{font-family:'Fraunces',serif;font-size:2rem;font-weight:300;}
+.score-num.high{color:var(--green);}
+.score-num.mid{color:#EF9F27;}
+.score-num.low{color:#c0392b;}
+.score-label{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-top:4px;}
+.checklist-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);}
+.checklist-item:last-child{border-bottom:none;}
+.check-box{width:20px;height:20px;border:1px solid var(--border-strong);border-radius:4px;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-top:1px;}
+.check-box.checked{background:var(--green);border-color:var(--green);}
+.check-box.checked i{color:#fff;font-size:12px;}
+.check-text{font-size:14px;color:var(--text);line-height:1.5;}
+.check-text.done{text-decoration:line-through;color:var(--text-muted);}
+.loading-state{text-align:center;padding:3rem;color:var(--text-secondary);}
+.loading-state i{font-size:32px;color:var(--green);display:block;margin-bottom:1rem;animation:spin 1s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.saved-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin-bottom:1.5rem;}
+.saved-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.25rem;cursor:pointer;transition:all .2s;}
+.saved-card:hover{border-color:var(--green);transform:translateY(-2px);}
+.saved-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem;}
+.saved-flag{font-size:24px;}
+.saved-score{font-size:13px;font-weight:500;color:var(--green);}
+.saved-country{font-size:15px;font-weight:500;margin-bottom:4px;}
+.saved-date{font-size:12px;color:var(--text-muted);}
+.delete-saved{background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:14px;padding:2px;}
+.delete-saved:hover{color:#c0392b;}
+.flag-emoji{font-size:28px;margin-right:8px;}
+.result-header{display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+.result-title{font-family:'Fraunces',serif;font-size:22px;font-weight:300;}
+.result-title em{font-style:italic;color:var(--green);}
+.copy-btn{font-size:12px;padding:5px 12px;border:1px solid var(--border-strong);border-radius:6px;background:transparent;cursor:pointer;color:var(--text-secondary);font-family:'DM Sans',sans-serif;display:inline-flex;align-items:center;gap:4px;}
+.copy-btn:hover{background:var(--green-light);color:var(--green);}
+.new-analysis-btn{margin-top:1rem;}
+@media(max-width:600px){.countries-grid{grid-template-columns:repeat(3,1fr);}nav{padding:0 1rem;}.wrap{padding:70px 1rem 2rem;}}
+</style>
+</head>
+<body>
+
+<div id="auth-loading" style="position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;">
+  <div style="text-align:center;">
+    <div style="width:40px;height:40px;border-radius:10px;background:var(--green);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">
+      <i class="ti ti-world" style="color:#fff;font-size:20px;"></i>
+    </div>
+    <div style="font-size:13px;color:var(--text-muted);">Loading...</div>
+  </div>
+</div>
+<nav>
+  <a class="nav-logo" href="https://summrtools.co.zw">
+    <div class="nav-logo-icon"><i class="ti ti-world"></i></div>
+    <span class="nav-logo-text">Global Move</span>
+  </a>
+  <span class="nav-badge">by SummrTools</span>
+</nav>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1>Your global <em>relocation advisor</em></h1>
+    <p>AI-powered guidance for Zimbabwean nationals in the EU looking to move or work abroad. Visa routes, job markets, costs, and personalised checklists.</p>
+  </div>
+
+  <!-- PROFILE BANNER -->
+  <div class="profile-banner" id="profile-banner">
+    <div class="profile-banner-left">
+      <i class="ti ti-loader" id="banner-icon"></i>
+      <span id="banner-text">Loading your profile...</span>
+    </div>
+    <a href="https://summrtools.co.zw/cv_profile.html">Edit profile</a>
+  </div>
+
+  <!-- SETUP SECTION -->
+  <div id="setup-section">
+
+    <!-- SAVED ANALYSES -->
+    <div id="saved-section" style="display:none;">
+      <div class="card">
+        <div class="card-title"><i class="ti ti-bookmark"></i> Saved analyses</div>
+        <div class="saved-grid" id="saved-grid"></div>
+      </div>
+    </div>
+
+    <!-- COUNTRY SELECTOR -->
+    <div class="card">
+      <div class="card-title"><i class="ti ti-map-pin"></i> Where do you want to move or work?</div>
+      <div class="countries-grid" id="countries-grid"></div>
+      <div class="custom-country">
+        <input class="input" id="custom-country" placeholder="Or type any other country..." style="flex:1;">
+        <button class="btn-secondary" onclick="addCustomCountry()"><i class="ti ti-plus"></i> Add</button>
+      </div>
+    </div>
+
+    <!-- CONTEXT -->
+    <div class="card">
+      <div class="card-title"><i class="ti ti-user"></i> Your context</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="field">
+          <label class="label">Current residence permit</label>
+          <select class="input" id="permit-type">
+            <option value="temporary">Temporary residence (karta pobytu)</option>
+            <option value="permanent">Permanent residence</option>
+            <option value="eu-longterm">EU Long-term resident</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="label">Years in EU/Poland</label>
+          <select class="input" id="years-eu">
+            <option value="less1">Less than 1 year</option>
+            <option value="1-2">1-2 years</option>
+            <option value="3-5" selected>3-5 years</option>
+            <option value="5plus">5+ years</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="label">Target move type</label>
+          <select class="input" id="move-type">
+            <option value="work">Work (employer sponsored)</option>
+            <option value="jobseeker">Job seeker visa</option>
+            <option value="permanent">Permanent relocation</option>
+            <option value="remote">Remote work / digital nomad</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="label">Timeline</label>
+          <select class="input" id="timeline">
+            <option value="3months">Within 3 months</option>
+            <option value="6months">3-6 months</option>
+            <option value="1year" selected>6-12 months</option>
+            <option value="flexible">Flexible</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Anything specific you want to know (optional)</label>
+        <input class="input" id="specific-question" placeholder="e.g. Do I need to show proof of funds? Can I bring family? Is German required?">
+      </div>
+    </div>
+
+    <button class="btn-primary" id="analyse-btn" onclick="runAnalysis()" style="width:100%;">
+      <i class="ti ti-sparkles"></i> Analyse my move
+    </button>
+  </div>
+
+  <!-- RESULTS SECTION -->
+  <div class="result-section" id="result-section">
+    <div class="result-header">
+      <span class="flag-emoji" id="result-flag">🌍</span>
+      <div>
+        <div class="result-title">Moving to <em id="result-country-name">...</em></div>
+        <div style="font-size:13px;color:var(--text-muted);" id="result-subtitle">Personalised analysis for your profile</div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:8px;">
+        <button class="copy-btn" onclick="saveAnalysis()"><i class="ti ti-bookmark"></i> Save</button>
+        <button class="copy-btn" onclick="copyAll()"><i class="ti ti-copy"></i> Copy</button>
+      </div>
+    </div>
+
+    <!-- SCORES -->
+    <div class="score-card" id="score-card"></div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('overview',this)">Overview</button>
+      <button class="tab" onclick="switchTab('visa',this)">Visa routes</button>
+      <button class="tab" onclick="switchTab('jobs',this)">Job market</button>
+      <button class="tab" onclick="switchTab('costs',this)">Costs</button>
+      <button class="tab" onclick="switchTab('checklist',this)">Checklist</button>
+    </div>
+
+    <div class="result-content active" id="tab-overview"><div class="result-text" id="content-overview"></div></div>
+    <div class="result-content" id="tab-visa"><div class="result-text" id="content-visa"></div></div>
+    <div class="result-content" id="tab-jobs"><div class="result-text" id="content-jobs"></div></div>
+    <div class="result-content" id="tab-costs"><div class="result-text" id="content-costs"></div></div>
+    <div class="result-content" id="tab-checklist"><div id="content-checklist"></div></div>
+
+    <button class="btn-secondary new-analysis-btn" onclick="newAnalysis()"><i class="ti ti-arrow-left"></i> New analysis</button>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+const SUPABASE_URL = 'https://wsrhuuuwqzpsprknolot.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indzcmh1dXV3cXpwc3Bya25vbG90Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5ODAzMDIsImV4cCI6MjA5NTU1NjMwMn0.SqtB1CSq5aOauLOyZkYYuFHJe_Ox5SGYpCCrIckCwoc';
+// API calls route through secure server proxy at /api/claude
+const SAVE_KEY = 'globalmove_saved';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+  auth: {
+    storageKey: 'summrtools-auth',
+    storage: window.localStorage
+  }
+});
+
+var userProfile = {};
+var selectedCountry = null;
+var currentAnalysis = {};
+var checklistState = {};
+
+var COUNTRIES = [
+  {name:'Germany', flag:'🇩🇪', score:9},
+  {name:'Canada', flag:'🇨🇦', score:9},
+  {name:'Netherlands', flag:'🇳🇱', score:8},
+  {name:'Australia', flag:'🇦🇺', score:8},
+  {name:'United Kingdom', flag:'🇬🇧', score:8},
+  {name:'Ireland', flag:'🇮🇪', score:8},
+  {name:'New Zealand', flag:'🇳🇿', score:7},
+  {name:'Sweden', flag:'🇸🇪', score:7},
+  {name:'Norway', flag:'🇳🇴', score:7},
+  {name:'Switzerland', flag:'🇨🇭', score:7},
+  {name:'UAE / Dubai', flag:'🇦🇪', score:8},
+  {name:'South Africa', flag:'🇿🇦', score:7},
+];
+
+// Render country grid
+function renderCountries() {
+  var grid = document.getElementById('countries-grid');
+  grid.innerHTML = COUNTRIES.map(function(c) {
+    var scoreColor = c.score >= 8 ? 'var(--green)' : c.score >= 6 ? '#EF9F27' : '#c0392b';
+    return '<button class="country-btn" id="cbtn-' + c.name.replace(/\//g,'-').replace(/ /g,'-') + '" onclick="selectCountry(\'' + c.name + '\',\'' + c.flag + '\')">' +
+      '<span class="country-flag">' + c.flag + '</span>' +
+      '<div class="country-name">' + c.name + '</div>' +
+      '<div class="country-score" style="color:' + scoreColor + ';">Fit: ' + c.score + '/10</div>' +
+    '</button>';
+  }).join('');
+}
+
+function selectCountry(name, flag) {
+  selectedCountry = {name: name, flag: flag};
+  document.querySelectorAll('.country-btn').forEach(function(b){ b.classList.remove('selected'); });
+  var id = 'cbtn-' + name.replace(/\//g,'-').replace(/ /g,'-');
+  var btn = document.getElementById(id);
+  if (btn) btn.classList.add('selected');
+}
+
+function addCustomCountry() {
+  var val = document.getElementById('custom-country').value.trim();
+  if (!val) return;
+  COUNTRIES.push({name: val, flag: '🌍', score: 7});
+  renderCountries();
+  selectCountry(val, '🌍');
+  document.getElementById('custom-country').value = '';
+}
+
+// Load profile from Supabase
+async function loadProfile() {
+  await new Promise(function(resolve){ setTimeout(resolve, 200); });
+  var sessionRes = await sb.auth.getSession();
+  var session = sessionRes.data && sessionRes.data.session;
+  var bannerIcon = document.getElementById('banner-icon');
+  var bannerText = document.getElementById('banner-text');
+  var loadingEl = document.getElementById('auth-loading');
+
+  if (!session) {
+    window.location.href = 'https://summrtools.co.zw/login.html';
+    return;
+  }
+
+  // Check elite tier
+  var tierRes = await sb.from('profiles').select('tier').eq('id', session.user.id).maybeSingle();
+  if (!tierRes.data || tierRes.data.tier !== 'elite') {
+    document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:DM Sans,sans-serif;text-align:center;padding:2rem;"><div><div style="font-size:48px;margin-bottom:1rem;">🔒</div><h1 style="font-family:Fraunces,serif;font-size:1.8rem;font-weight:300;margin-bottom:.75rem;">Elite feature</h1><p style="color:#4A6358;margin-bottom:1.5rem;">The Global Move Advisor is available on the Elite plan only.</p><a href="https://summrtools.co.zw/dashboard.html" style="background:#1D9E75;color:#fff;border-radius:10px;padding:12px 28px;text-decoration:none;font-size:15px;font-weight:500;">Back to dashboard</a></div></div>';
+    return;
+  }
+
+  if (loadingEl) loadingEl.style.display = 'none';
+  var uid = session.user.id;
+  console.log('Loading profile for uid:', uid);
+
+  var r1 = await sb.from('cv_profiles').select('*').eq('user_id', uid).maybeSingle();
+  var r2 = await sb.from('cv_experience').select('*').eq('user_id', uid).order('sort_order');
+  var r3 = await sb.from('cv_education').select('*').eq('user_id', uid).order('sort_order');
+  var r4 = await sb.from('cv_skills').select('*').eq('user_id', uid).order('sort_order');
+
+  console.log('cv_profiles:', r1.data, r1.error);
+  console.log('cv_experience:', r2.data, r2.error);
+  console.log('cv_education:', r3.data, r3.error);
+  console.log('cv_skills:', r4.data, r4.error);
+
+  userProfile.cvp = r1.data || null;
+  userProfile.exp = r2.data || [];
+  userProfile.edu = r3.data || [];
+  userProfile.sk = r4.data || [];
+
+  if (r1.data || (r2.data && r2.data.length)) {
+    var name = r1.data && r1.data.full_name ? r1.data.full_name : session.user.email;
+    var expSummary = userProfile.exp.length ? userProfile.exp[0].job_title + ' at ' + userProfile.exp[0].company : '';
+    bannerIcon.className = 'ti ti-circle-check';
+    bannerText.textContent = 'Profile loaded: ' + name + (expSummary ? ' — ' + expSummary : '') + ' — analysis will be personalised to your background';
+  } else {
+    bannerIcon.className = 'ti ti-alert-circle';
+    bannerText.innerHTML = 'No profile data found. <a href="https://summrtools.co.zw/cv_profile.html" style="color:var(--green-dark);font-weight:500;text-decoration:underline;">Set up your profile</a> for personalised advice.';
+    var banner = document.getElementById('profile-banner');
+    if (banner) { banner.style.background = '#FFF3CD'; banner.style.borderColor = '#FFE08A'; banner.style.color = '#856404'; }
+  }
+}
+
+// Build profile context string for AI
+function buildProfileContext() {
+  var lines = ['Nationality: Zimbabwean', 'Current country: Poland (EU)'];
+  var permit = document.getElementById('permit-type').value;
+  var yearsEU = document.getElementById('years-eu').value;
+  lines.push('Residence permit type: ' + permit);
+  lines.push('Years in EU: ' + yearsEU);
+  if (userProfile.cvp && userProfile.cvp.full_name) lines.push('Name: ' + userProfile.cvp.full_name);
+  if (userProfile.exp && userProfile.exp.length) {
+    lines.push('Work experience:');
+    userProfile.exp.forEach(function(e){ lines.push('- ' + e.job_title + ' at ' + e.company + (e.start_date ? ' (' + e.start_date + ' - ' + (e.end_date || 'Present') + ')' : '')); });
+  } else {
+    lines.push('Work experience: IT/SaaS professional with fintech background');
+  }
+  if (userProfile.edu && userProfile.edu.length) {
+    lines.push('Education:');
+    userProfile.edu.forEach(function(e){ lines.push('- ' + e.degree + ', ' + e.institution); });
+  }
+  if (userProfile.sk && userProfile.sk.length) {
+    lines.push('Skills: ' + userProfile.sk.flatMap(function(s){ return s.skills || []; }).join(', '));
+  }
+  return lines.join('\n');
+}
+
+async function callClaude(systemPrompt, userPrompt) {
+  var res = await fetch('/api/claude', {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-5', max_tokens: 1500,
+      system: systemPrompt,
+      messages: [{ role: 'user', content: userPrompt }]
+    })
+  });
+  var data = await res.json();
+  if (data.error) throw new Error(data.error.message);
+  return data.content && data.content[0] && data.content[0].text;
+}
+
+async function runAnalysis() {
+  if (!selectedCountry) { alert('Please select a country first.'); return; }
+  var country = selectedCountry.name;
+  var moveType = document.getElementById('move-type').value;
+  var timeline = document.getElementById('timeline').value;
+  var specific = document.getElementById('specific-question').value.trim();
+  var profileCtx = buildProfileContext();
+  var btn = document.getElementById('analyse-btn');
+  btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader"></i> Analysing...';
+
+  document.getElementById('setup-section').style.display = 'none';
+  document.getElementById('result-section').classList.add('visible');
+  document.getElementById('result-flag').textContent = selectedCountry.flag;
+  document.getElementById('result-country-name').textContent = country;
+  document.getElementById('result-subtitle').textContent = 'Personalised analysis for your profile';
+
+  var systemPrompt = 'You are an expert immigration and relocation advisor specialising in helping Zimbabwean nationals move from EU countries to work or live abroad. You have deep knowledge of immigration law, visa requirements, job markets, and living costs across all major destination countries. Always be specific, practical, and honest about challenges. Consider the person\'s Zimbabwean nationality, EU residence, and professional background when giving advice.';
+
+  var baseContext = 'APPLICANT PROFILE:\n' + profileCtx + '\n\nTARGET COUNTRY: ' + country + '\nMove type: ' + moveType + '\nTimeline: ' + timeline + (specific ? '\nSpecific question: ' + specific : '');
+
+  // Show loading in all tabs
+  ['overview','visa','jobs','costs'].forEach(function(t){ document.getElementById('content-' + t).textContent = 'Loading...'; });
+  document.getElementById('content-checklist').innerHTML = '<div class="loading-state"><i class="ti ti-loader"></i><p>Generating your checklist...</p></div>';
+
+  // Run all 5 analyses in parallel
+  try {
+    var results = await Promise.all([
+      callClaude(systemPrompt, baseContext + '\n\nProvide a comprehensive overview covering: 1) Overall assessment of this move for this person\'s profile (2-3 sentences), 2) Key advantages of this country for a Zimbabwean EU resident with their background, 3) Key challenges and risks to be aware of, 4) How their EU residence in Poland helps or doesn\'t help, 5) A realistic honest summary. Be specific to their background.'),
+      callClaude(systemPrompt, baseContext + '\n\nProvide detailed visa route information: 1) All available visa pathways ranked by likelihood of success for this profile, 2) For each pathway: eligibility requirements, processing time, cost, key documents needed, 3) Whether EU long-term residency or Schengen history helps, 4) Any special programs for skilled workers in their field, 5) Common reasons for rejection and how to avoid them.'),
+      callClaude(systemPrompt, baseContext + '\n\nProvide job market intelligence: 1) Current demand for their specific skills and experience in this country, 2) Top 5 job boards and platforms most effective for their background, 3) Average salary range for their level in their field, 4) How to position their CV for this market, 5) Key employers in their sector, 6) Networking and professional association tips, 7) Any language requirements for their field.'),
+      callClaude(systemPrompt, baseContext + '\n\nProvide a detailed cost breakdown: 1) Visa and immigration fees (itemised), 2) Relocation costs (flights, shipping, temporary accommodation), 3) Settlement costs (first/last month rent, deposits, essential setup), 4) Monthly living costs breakdown (rent, food, transport, utilities, healthcare), 5) Comparison to their current costs in Poland, 6) How much savings to have before moving, 7) Tax implications as a Zimbabwean national.'),
+      callClaude(systemPrompt, baseContext + '\n\nGenerate a step-by-step relocation checklist. Return ONLY a JSON array of objects, each with: {"step": "action to take", "category": "visa|job|finance|documents|logistics|onground", "timeline": "when to do this e.g. 6 months before|3 months before|1 month before|on arrival|first week"}. Include 20-25 practical steps in logical order. No other text, just the JSON array.')
+    ]);
+
+    // Set overview, visa, jobs, costs
+    document.getElementById('content-overview').textContent = results[0] || 'Could not load.';
+    document.getElementById('content-visa').textContent = results[1] || 'Could not load.';
+    document.getElementById('content-jobs').textContent = results[2] || 'Could not load.';
+    document.getElementById('content-costs').textContent = results[3] || 'Could not load.';
+
+    // Parse and render checklist
+    try {
+      var match = results[4].match(/\[[\s\S]*\]/);
+      var steps = JSON.parse(match ? match[0] : results[4]);
+      renderChecklist(steps);
+    } catch(e) {
+      document.getElementById('content-checklist').innerHTML = '<div class="result-text">' + (results[4] || 'Could not generate checklist.') + '</div>';
+    }
+
+    // Generate scores
+    var scoreRes = await callClaude(systemPrompt, baseContext + '\n\nScore this relocation for this specific person on these dimensions (0-10): overall_fit, visa_difficulty (10=easy), job_market, cost_of_living_vs_poland (10=cheaper), language_barrier (10=no barrier). Return ONLY JSON: {"overall_fit":X,"visa_difficulty":X,"job_market":X,"cost_vs_poland":X,"language_barrier":X}. No other text.');
+    try {
+      var smatch = scoreRes.match(/\{[\s\S]*\}/);
+      var scores = JSON.parse(smatch ? smatch[0] : scoreRes);
+      renderScores(scores);
+    } catch(e) { document.getElementById('score-card').innerHTML = ''; }
+
+    // Save to currentAnalysis
+    currentAnalysis = { country: country, flag: selectedCountry.flag, results: results, date: new Date().toLocaleDateString() };
+
+  } catch(e) {
+    document.getElementById('content-overview').textContent = 'Error: ' + e.message;
+  }
+
+  btn.disabled = false; btn.innerHTML = '<i class="ti ti-sparkles"></i> Analyse my move';
+}
+
+function renderScores(scores) {
+  var items = [
+    {key:'overall_fit', label:'Overall fit'},
+    {key:'visa_difficulty', label:'Visa ease'},
+    {key:'job_market', label:'Job market'},
+    {key:'cost_vs_poland', label:'Cost vs Poland'},
+    {key:'language_barrier', label:'Language ease'},
+  ];
+  document.getElementById('score-card').innerHTML = items.map(function(item) {
+    var val = scores[item.key] || 0;
+    var cls = val >= 7 ? 'high' : val >= 5 ? 'mid' : 'low';
+    return '<div class="score-item"><div class="score-num ' + cls + '">' + val + '<span style="font-size:1rem;color:var(--text-muted);">/10</span></div><div class="score-label">' + item.label + '</div></div>';
+  }).join('');
+}
+
+function renderChecklist(steps) {
+  var categories = {visa:'Visa & Immigration', job:'Job Search', finance:'Finance', documents:'Documents', logistics:'Logistics', onground:'On the Ground'};
+  var grouped = {};
+  steps.forEach(function(s){ var cat = s.category || 'logistics'; if (!grouped[cat]) grouped[cat] = []; grouped[cat].push(s); });
+  var html = '';
+  Object.keys(categories).forEach(function(cat) {
+    if (!grouped[cat] || !grouped[cat].length) return;
+    html += '<h3 style="font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);margin:1.25rem 0 .5rem;">' + (categories[cat] || cat) + '</h3>';
+    grouped[cat].forEach(function(s, i) {
+      var id = cat + '_' + i;
+      html += '<div class="checklist-item" id="ci-' + id + '">' +
+        '<div class="check-box" id="cb-' + id + '" onclick="toggleCheck(\'' + id + '\')">' +
+        (checklistState[id] ? '<i class="ti ti-check"></i>' : '') + '</div>' +
+        '<div>' +
+          '<div class="check-text' + (checklistState[id] ? ' done' : '') + '" id="ct-' + id + '">' + s.step + '</div>' +
+          '<div style="font-size:11px;color:var(--text-muted);margin-top:2px;">' + (s.timeline || '') + '</div>' +
+        '</div>' +
+      '</div>';
+    });
+  });
+  document.getElementById('content-checklist').innerHTML = html;
+}
+
+function toggleCheck(id) {
+  checklistState[id] = !checklistState[id];
+  var cb = document.getElementById('cb-' + id);
+  var ct = document.getElementById('ct-' + id);
+  if (checklistState[id]) { cb.classList.add('checked'); cb.innerHTML = '<i class="ti ti-check"></i>'; ct.classList.add('done'); }
+  else { cb.classList.remove('checked'); cb.innerHTML = ''; ct.classList.remove('done'); }
+}
+
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tab').forEach(function(b){ b.classList.remove('active'); });
+  document.querySelectorAll('.result-content').forEach(function(c){ c.classList.remove('active'); });
+  btn.classList.add('active');
+  document.getElementById('tab-' + tab).classList.add('active');
+}
+
+function copyAll() {
+  var active = document.querySelector('.result-content.active .result-text');
+  if (active) { navigator.clipboard.writeText(active.textContent).then(function(){ alert('Copied!'); }); }
+}
+
+function saveAnalysis() {
+  if (!currentAnalysis.country) return;
+  var saved = getSaved();
+  saved = saved.filter(function(s){ return s.country !== currentAnalysis.country; });
+  saved.unshift(currentAnalysis);
+  if (saved.length > 10) saved = saved.slice(0, 10);
+  localStorage.setItem(SAVE_KEY, JSON.stringify(saved));
+  renderSaved();
+  alert('Analysis saved!');
+}
+
+function getSaved() {
+  try { return JSON.parse(localStorage.getItem(SAVE_KEY) || '[]'); } catch(e) { return []; }
+}
+
+function renderSaved() {
+  var saved = getSaved();
+  var section = document.getElementById('saved-section');
+  if (!saved.length) { section.style.display = 'none'; return; }
+  section.style.display = 'block';
+  document.getElementById('saved-grid').innerHTML = saved.map(function(s, i) {
+    return '<div class="saved-card" onclick="loadSaved(' + i + ')">' +
+      '<div class="saved-card-header"><span class="saved-flag">' + (s.flag || '🌍') + '</span>' +
+      '<button class="delete-saved" onclick="event.stopPropagation();deleteSaved(' + i + ')"><i class="ti ti-trash"></i></button></div>' +
+      '<div class="saved-country">' + s.country + '</div>' +
+      '<div class="saved-date">Saved: ' + (s.date || '') + '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function loadSaved(i) {
+  var saved = getSaved();
+  var s = saved[i];
+  if (!s || !s.results) return;
+  selectedCountry = {name: s.country, flag: s.flag || '🌍'};
+  document.getElementById('setup-section').style.display = 'none';
+  document.getElementById('result-section').classList.add('visible');
+  document.getElementById('result-flag').textContent = s.flag || '🌍';
+  document.getElementById('result-country-name').textContent = s.country;
+  document.getElementById('result-subtitle').textContent = 'Saved analysis — ' + (s.date || '');
+  document.getElementById('content-overview').textContent = s.results[0] || '';
+  document.getElementById('content-visa').textContent = s.results[1] || '';
+  document.getElementById('content-jobs').textContent = s.results[2] || '';
+  document.getElementById('content-costs').textContent = s.results[3] || '';
+  if (s.results[4]) { try { var m = s.results[4].match(/\[[\s\S]*\]/); renderChecklist(JSON.parse(m ? m[0] : s.results[4])); } catch(e) {} }
+  currentAnalysis = s;
+}
+
+function deleteSaved(i) {
+  var saved = getSaved();
+  saved.splice(i, 1);
+  localStorage.setItem(SAVE_KEY, JSON.stringify(saved));
+  renderSaved();
+}
+
+function newAnalysis() {
+  document.getElementById('result-section').classList.remove('visible');
+  document.getElementById('setup-section').style.display = 'block';
+  document.getElementById('score-card').innerHTML = '';
+  checklistState = {};
+  currentAnalysis = {};
+}
+
+// Init
+renderCountries();
+renderSaved();
+loadProfile();
+</script>
+</body>
+</html>

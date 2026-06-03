@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My CV Profile — SummrTools</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+:root{--green:#1D9E75;--green-dark:#0F6E56;--green-light:#E1F5EE;--text:#0E1C16;--text-secondary:#4A6358;--text-muted:#8AA89C;--bg:#FAFCFB;--surface:#FFFFFF;--border:rgba(29,158,117,0.15);--border-strong:rgba(29,158,117,0.3);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px;background:rgba(250,252,251,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
+.nav-logo-icon{width:30px;height:30px;border-radius:7px;background:var(--green);display:flex;align-items:center;justify-content:center;}
+.nav-logo-icon i{color:#fff;font-size:15px;}
+.nav-logo-text{font-family:'Fraunces',serif;font-size:16px;font-weight:500;color:var(--text);}
+.nav-right{display:flex;align-items:center;gap:10px;}
+.nav-btn{font-size:13px;padding:6px 14px;border:1px solid var(--border-strong);border-radius:8px;background:transparent;cursor:pointer;color:var(--text-secondary);font-family:'DM Sans',sans-serif;text-decoration:none;}
+.nav-btn:hover{background:var(--green-light);color:var(--green);}
+.wrap{max-width:820px;margin:0 auto;padding:80px 1.5rem 3rem;}
+.page-header{margin-bottom:2rem;}
+.page-header h1{font-family:'Fraunces',serif;font-size:26px;font-weight:300;margin-bottom:4px;}
+.page-header h1 em{font-style:italic;color:var(--green);}
+.page-header p{font-size:14px;color:var(--text-secondary);}
+.save-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;z-index:50;}
+.save-status{font-size:13px;color:var(--text-muted);}
+.save-status.saved{color:var(--green);}
+.save-btn{background:var(--green);color:#fff;border:none;border-radius:8px;padding:9px 24px;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;}
+.save-btn:hover{background:var(--green-dark);}
+.save-btn:disabled{opacity:.5;cursor:not-allowed;}
+/* SECTIONS */
+.section{background:#fff;border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.25rem;}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
+.section-title{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:500;}
+.section-title i{font-size:18px;color:var(--green);}
+.add-btn{display:inline-flex;align-items:center;gap:5px;font-size:13px;padding:5px 12px;border:1px solid var(--border-strong);border-radius:8px;background:transparent;cursor:pointer;color:var(--green);font-family:'DM Sans',sans-serif;}
+.add-btn:hover{background:var(--green-light);}
+/* FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.field{display:flex;flex-direction:column;gap:4px;}
+.field.full{grid-column:1/-1;}
+.label{font-size:11px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;}
+.input{padding:9px 12px;border:1px solid var(--border-strong);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;background:#fff;color:var(--text);transition:border-color .2s;}
+.input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(29,158,117,0.1);}
+textarea.input{resize:vertical;min-height:80px;}
+/* CARDS (experience, education) */
+.item-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1rem;margin-bottom:.75rem;position:relative;}
+.item-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:.75rem;}
+.item-card-title{font-size:14px;font-weight:500;}
+.item-card-sub{font-size:13px;color:var(--text-muted);}
+.item-actions{display:flex;gap:4px;flex-shrink:0;}
+.icon-btn{width:28px;height:28px;border-radius:6px;border:1px solid var(--border);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.icon-btn:hover{background:var(--green-light);}
+.icon-btn i{font-size:14px;color:var(--text-secondary);}
+.icon-btn.danger:hover{background:#fff0f0;}
+.icon-btn.danger i{color:#c0392b;}
+/* INLINE EDIT FORM */
+.edit-form{background:#fff;border:1px solid var(--border-strong);border-radius:10px;padding:1rem;margin-bottom:.75rem;}
+/* SKILLS */
+.skill-tag{display:inline-flex;align-items:center;gap:4px;background:var(--green-light);color:var(--green-dark);padding:4px 10px;border-radius:99px;font-size:12px;margin:3px;}
+.skill-tag button{background:none;border:none;cursor:pointer;color:var(--green-dark);font-size:12px;padding:0;line-height:1;}
+/* LANGUAGE */
+.lang-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);}
+.lang-row:last-child{border-bottom:none;}
+.proficiency-badge{font-size:11px;padding:2px 8px;border-radius:99px;background:var(--green-light);color:var(--green-dark);}
+/* TOAST */
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1A1A1A;color:#fff;font-size:13px;padding:10px 20px;border-radius:8px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:200;}
+.toast.show{opacity:1;}
+@media(max-width:600px){.form-grid{grid-template-columns:1fr;}.field.full{grid-column:1;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="https://summrtools.co.zw/dashboard.html">
+    <div class="nav-logo-icon"><i class="ti ti-tools"></i></div>
+    <span class="nav-logo-text">SummrTools</span>
+  </a>
+  <div class="nav-right">
+    <a class="nav-btn" href="https://summrtools.co.zw/dashboard.html"><i class="ti ti-layout-dashboard"></i> Dashboard</a>
+    <button class="nav-btn" onclick="doSignOut()"><i class="ti ti-logout"></i> Sign out</button>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="page-header">
+    <h1>My <em>CV Profile</em></h1>
+    <p>Fill this in once — your CV builder and job matcher will use it automatically.</p>
+  </div>
+
+  <!-- PERSONAL INFO -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title"><i class="ti ti-user"></i> Personal Information</div>
+    </div>
+    <div class="form-grid">
+      <div class="field"><label class="label">Full name</label><input class="input" id="p-name" placeholder="e.g. Alexander Chifamba"></div>
+      <div class="field"><label class="label">Email</label><input class="input" id="p-email" type="email" placeholder="you@email.com"></div>
+      <div class="field"><label class="label">Phone</label><input class="input" id="p-phone" placeholder="+48 884 390 611"></div>
+      <div class="field"><label class="label">Location</label><input class="input" id="p-location" placeholder="Warsaw, Poland"></div>
+      <div class="field"><label class="label">LinkedIn (optional)</label><input class="input" id="p-linkedin" placeholder="linkedin.com/in/yourname"></div>
+      <div class="field"><label class="label">Website (optional)</label><input class="input" id="p-website" placeholder="yourwebsite.com"></div>
+      <div class="field full"><label class="label">Professional summary (optional — AI can generate this)</label><textarea class="input" id="p-summary" placeholder="A brief summary of your professional background and goals..."></textarea></div>
+    </div>
+  </div>
+
+  <!-- WORK EXPERIENCE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title"><i class="ti ti-briefcase"></i> Work Experience</div>
+      <button class="add-btn" onclick="showExpForm()"><i class="ti ti-plus"></i> Add role</button>
+    </div>
+    <div id="exp-form" style="display:none;">
+      <div class="edit-form">
+        <div class="form-grid">
+          <div class="field"><label class="label">Job title</label><input class="input" id="exp-title" placeholder="e.g. Implementation Consultant"></div>
+          <div class="field"><label class="label">Company</label><input class="input" id="exp-company" placeholder="e.g. Justt AI"></div>
+          <div class="field"><label class="label">Location</label><input class="input" id="exp-location" placeholder="e.g. Warsaw, Poland (Remote)"></div>
+          <div class="field"><label class="label">Start date</label><input class="input" id="exp-start" placeholder="e.g. 2022"></div>
+          <div class="field"><label class="label">End date</label><input class="input" id="exp-end" placeholder="e.g. Present"></div>
+          <div class="field"><label class="label"><input type="checkbox" id="exp-current" onchange="document.getElementById('exp-end').disabled=this.checked;if(this.checked)document.getElementById('exp-end').value='Present';"> Current role</label></div>
+          <div class="field full"><label class="label">Key achievements (one per line)</label><textarea class="input" id="exp-bullets" placeholder="Managed end-to-end client onboarding for enterprise merchants&#10;Reduced report analysis time from 4 hours to 30 minutes using n8n automation&#10;Resolved complex API integration issues across PayPal, Worldpay, Nuvei"></textarea></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:.75rem;">
+          <button class="add-btn" style="background:var(--green);color:#fff;border-color:var(--green);" onclick="saveExp()"><i class="ti ti-check"></i> Save role</button>
+          <button class="add-btn" onclick="document.getElementById('exp-form').style.display='none'">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <div id="exp-list"></div>
+  </div>
+
+  <!-- EDUCATION -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title"><i class="ti ti-school"></i> Education</div>
+      <button class="add-btn" onclick="showEduForm()"><i class="ti ti-plus"></i> Add education</button>
+    </div>
+    <div id="edu-form" style="display:none;">
+      <div class="edit-form">
+        <div class="form-grid">
+          <div class="field"><label class="label">Degree / Qualification</label><input class="input" id="edu-degree" placeholder="e.g. Masters in Process & Project Management"></div>
+          <div class="field"><label class="label">Institution</label><input class="input" id="edu-institution" placeholder="e.g. VIZJA University"></div>
+          <div class="field"><label class="label">Location</label><input class="input" id="edu-location" placeholder="e.g. Warsaw, Poland"></div>
+          <div class="field"><label class="label">Start date</label><input class="input" id="edu-start" placeholder="e.g. 2023"></div>
+          <div class="field"><label class="label">End date</label><input class="input" id="edu-end" placeholder="e.g. 2025"></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:.75rem;">
+          <button class="add-btn" style="background:var(--green);color:#fff;border-color:var(--green);" onclick="saveEdu()"><i class="ti ti-check"></i> Save education</button>
+          <button class="add-btn" onclick="document.getElementById('edu-form').style.display='none'">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <div id="edu-list"></div>
+  </div>
+
+  <!-- SKILLS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title"><i class="ti ti-tools"></i> Skills & Tools</div>
+    </div>
+    <div style="margin-bottom:1rem;">
+      <div class="field" style="margin-bottom:.75rem;">
+        <label class="label">Category (optional, e.g. "Technical", "Languages", "Tools")</label>
+        <input class="input" id="skill-category" placeholder="e.g. Technical Skills">
+      </div>
+      <div style="display:flex;gap:8px;">
+        <input class="input" id="skill-input" placeholder="Type a skill and press Enter or Add..." style="flex:1;" onkeydown="if(event.key==='Enter'){event.preventDefault();addSkill();}">
+        <button class="add-btn" onclick="addSkill()"><i class="ti ti-plus"></i> Add</button>
+      </div>
+    </div>
+    <div id="skills-list"></div>
+  </div>
+
+  <!-- LANGUAGES -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title"><i class="ti ti-language"></i> Languages</div>
+      <button class="add-btn" onclick="showLangForm()"><i class="ti ti-plus"></i> Add language</button>
+    </div>
+    <div id="lang-form" style="display:none;">
+      <div class="edit-form">
+        <div class="form-grid">
+          <div class="field"><label class="label">Language</label><input class="input" id="lang-name" placeholder="e.g. Polish"></div>
+          <div class="field"><label class="label">Proficiency</label>
+            <select class="input" id="lang-level">
+              <option value="Native">Native</option>
+              <option value="Fluent">Fluent</option>
+              <option value="Advanced">Advanced (C1)</option>
+              <option value="Intermediate">Intermediate (B2)</option>
+              <option value="Basic">Basic</option>
+            </select>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:.75rem;">
+          <button class="add-btn" style="background:var(--green);color:#fff;border-color:var(--green);" onclick="saveLang()"><i class="ti ti-check"></i> Save language</button>
+          <button class="add-btn" onclick="document.getElementById('lang-form').style.display='none'">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <div id="lang-list"></div>
+  </div>
+
+  <div style="height:80px;"></div>
+</div>
+
+<div class="save-bar">
+  <span class="save-status" id="save-status">All changes saved automatically</span>
+  <button class="save-btn" onclick="saveAll()"><i class="ti ti-device-floppy"></i> Save all changes</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+const sb = supabase.createClient(
+  'https://wsrhuuuwqzpsprknolot.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indzcmh1dXV3cXpwc3Bya25vbG90Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5ODAzMDIsImV4cCI6MjA5NTU1NjMwMn0.SqtB1CSq5aOauLOyZkYYuFHJe_Ox5SGYpCCrIckCwoc',
+  { auth: { storageKey: 'summrtools-auth', storage: window.localStorage } }
+);
+
+let userId = null;
+let experiences = [];
+let educations = [];
+let skills = [];
+let languages = [];
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function setSaveStatus(msg, saved) {
+  const el = document.getElementById('save-status');
+  el.textContent = msg;
+  el.className = 'save-status' + (saved ? ' saved' : '');
+}
+
+async function init() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) { window.location.href = 'https://summrtools.co.zw/login.html'; return; }
+  userId = session.user.id;
+  await loadAll();
+}
+
+async function loadAll() {
+  // Load personal info
+  const { data: profile } = await sb.from('cv_profiles').select('*').eq('user_id', userId).single();
+  if (profile) {
+    document.getElementById('p-name').value = profile.full_name || '';
+    document.getElementById('p-email').value = profile.email || '';
+    document.getElementById('p-phone').value = profile.phone || '';
+    document.getElementById('p-location').value = profile.location || '';
+    document.getElementById('p-linkedin').value = profile.linkedin || '';
+    document.getElementById('p-website').value = profile.website || '';
+    document.getElementById('p-summary').value = profile.summary || '';
+  }
+  // Load experience
+  const { data: exp } = await sb.from('cv_experience').select('*').eq('user_id', userId).order('sort_order');
+  experiences = exp || [];
+  renderExp();
+  // Load education
+  const { data: edu } = await sb.from('cv_education').select('*').eq('user_id', userId).order('sort_order');
+  educations = edu || [];
+  renderEdu();
+  // Load skills
+  const { data: sk } = await sb.from('cv_skills').select('*').eq('user_id', userId).order('sort_order');
+  skills = sk || [];
+  renderSkills();
+  // Load languages
+  const { data: lang } = await sb.from('cv_languages').select('*').eq('user_id', userId);
+  languages = lang || [];
+  renderLangs();
+}
+
+// ── SAVE ALL ──────────────────────────────
+async function saveAll() {
+  const btn = document.querySelector('.save-btn');
+  btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader"></i> Saving...';
+  setSaveStatus('Saving...', false);
+  const profileData = {
+    user_id: userId,
+    full_name: document.getElementById('p-name').value.trim(),
+    email: document.getElementById('p-email').value.trim(),
+    phone: document.getElementById('p-phone').value.trim(),
+    location: document.getElementById('p-location').value.trim(),
+    linkedin: document.getElementById('p-linkedin').value.trim(),
+    website: document.getElementById('p-website').value.trim(),
+    summary: document.getElementById('p-summary').value.trim(),
+    updated_at: new Date().toISOString()
+  };
+  await sb.from('cv_profiles').upsert(profileData, { onConflict: 'user_id' });
+  setSaveStatus('All changes saved ✓', true);
+  btn.disabled = false; btn.innerHTML = '<i class="ti ti-device-floppy"></i> Save all changes';
+  toast('Profile saved successfully!');
+}
+
+// ── EXPERIENCE ────────────────────────────
+function showExpForm() { document.getElementById('exp-form').style.display = 'block'; }
+
+async function saveExp() {
+  const title = document.getElementById('exp-title').value.trim();
+  const company = document.getElementById('exp-company').value.trim();
+  if (!title || !company) { toast('Please fill in job title and company.'); return; }
+  const bulletsRaw = document.getElementById('exp-bullets').value.trim();
+  const bullets = bulletsRaw ? bulletsRaw.split('\n').filter(b => b.trim()) : [];
+  const { data, error } = await sb.from('cv_experience').insert({
+    user_id: userId,
+    job_title: title,
+    company: company,
+    location: document.getElementById('exp-location').value.trim(),
+    start_date: document.getElementById('exp-start').value.trim(),
+    end_date: document.getElementById('exp-end').value.trim(),
+    is_current: document.getElementById('exp-current').checked,
+    bullets: bullets,
+    sort_order: experiences.length
+  }).select().single();
+  if (!error) {
+    experiences.unshift(data);
+    renderExp();
+    document.getElementById('exp-form').style.display = 'none';
+    ['exp-title','exp-company','exp-location','exp-start','exp-end','exp-bullets'].forEach(id => document.getElementById(id).value = '');
+    toast('Role added!');
+  }
+}
+
+async function deleteExp(id) {
+  await sb.from('cv_experience').delete().eq('id', id);
+  experiences = experiences.filter(e => e.id !== id);
+  renderExp(); toast('Role removed.');
+}
+
+function renderExp() {
+  const list = document.getElementById('exp-list');
+  if (!experiences.length) { list.innerHTML = '<p style="font-size:13px;color:var(--text-muted);padding:.5rem 0;">No experience added yet.</p>'; return; }
+  list.innerHTML = experiences.map(e => `
+    <div class="item-card">
+      <div class="item-card-header">
+        <div>
+          <div class="item-card-title">${e.job_title} · ${e.company}</div>
+          <div class="item-card-sub">${e.location || ''} ${e.start_date ? '· ' + e.start_date + ' – ' + (e.end_date || 'Present') : ''}</div>
+        </div>
+        <div class="item-actions">
+          <button class="icon-btn danger" onclick="deleteExp('${e.id}')"><i class="ti ti-trash"></i></button>
+        </div>
+      </div>
+      ${e.bullets && e.bullets.length ? '<ul style="font-size:13px;color:var(--text-secondary);padding-left:1.25rem;">' + e.bullets.map(b => `<li style="margin-bottom:3px;">${b}</li>`).join('') + '</ul>' : ''}
+    </div>`).join('');
+}
+
+// ── EDUCATION ─────────────────────────────
+function showEduForm() { document.getElementById('edu-form').style.display = 'block'; }
+
+async function saveEdu() {
+  const degree = document.getElementById('edu-degree').value.trim();
+  const institution = document.getElementById('edu-institution').value.trim();
+  if (!degree || !institution) { toast('Please fill in degree and institution.'); return; }
+  const { data, error } = await sb.from('cv_education').insert({
+    user_id: userId,
+    degree: degree,
+    institution: institution,
+    location: document.getElementById('edu-location').value.trim(),
+    start_date: document.getElementById('edu-start').value.trim(),
+    end_date: document.getElementById('edu-end').value.trim(),
+    sort_order: educations.length
+  }).select().single();
+  if (!error) {
+    educations.push(data);
+    renderEdu();
+    document.getElementById('edu-form').style.display = 'none';
+    ['edu-degree','edu-institution','edu-location','edu-start','edu-end'].forEach(id => document.getElementById(id).value = '');
+    toast('Education added!');
+  }
+}
+
+async function deleteEdu(id) {
+  await sb.from('cv_education').delete().eq('id', id);
+  educations = educations.filter(e => e.id !== id);
+  renderEdu(); toast('Education removed.');
+}
+
+function renderEdu() {
+  const list = document.getElementById('edu-list');
+  if (!educations.length) { list.innerHTML = '<p style="font-size:13px;color:var(--text-muted);padding:.5rem 0;">No education added yet.</p>'; return; }
+  list.innerHTML = educations.map(e => `
+    <div class="item-card">
+      <div class="item-card-header">
+        <div>
+          <div class="item-card-title">${e.degree}</div>
+          <div class="item-card-sub">${e.institution}${e.location ? ' · ' + e.location : ''}${e.end_date ? ' · ' + e.end_date : ''}</div>
+        </div>
+        <div class="item-actions">
+          <button class="icon-btn danger" onclick="deleteEdu('${e.id}')"><i class="ti ti-trash"></i></button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+// ── SKILLS ────────────────────────────────
+async function addSkill() {
+  const input = document.getElementById('skill-input');
+  const category = document.getElementById('skill-category').value.trim() || 'General';
+  const val = input.value.trim();
+  if (!val) return;
+  const existing = skills.find(s => s.category === category);
+  if (existing) {
+    const updated = [...(existing.skills || []), val];
+    await sb.from('cv_skills').update({ skills: updated }).eq('id', existing.id);
+    existing.skills = updated;
+  } else {
+    const { data } = await sb.from('cv_skills').insert({ user_id: userId, category: category, skills: [val], sort_order: skills.length }).select().single();
+    if (data) skills.push(data);
+  }
+  input.value = '';
+  renderSkills();
+}
+
+async function removeSkill(categoryId, skillVal) {
+  const cat = skills.find(s => s.id === categoryId);
+  if (!cat) return;
+  const updated = cat.skills.filter(s => s !== skillVal);
+  if (updated.length === 0) {
+    await sb.from('cv_skills').delete().eq('id', categoryId);
+    skills = skills.filter(s => s.id !== categoryId);
+  } else {
+    await sb.from('cv_skills').update({ skills: updated }).eq('id', categoryId);
+    cat.skills = updated;
+  }
+  renderSkills();
+}
+
+function renderSkills() {
+  const list = document.getElementById('skills-list');
+  if (!skills.length) { list.innerHTML = '<p style="font-size:13px;color:var(--text-muted);">No skills added yet.</p>'; return; }
+  list.innerHTML = skills.map(cat => `
+    <div style="margin-bottom:.75rem;">
+      <div style="font-size:12px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">${cat.category}</div>
+      <div>${(cat.skills || []).map(s => `<span class="skill-tag">${s}<button onclick="removeSkill('${cat.id}','${s}')">×</button></span>`).join('')}</div>
+    </div>`).join('');
+}
+
+// ── LANGUAGES ─────────────────────────────
+function showLangForm() { document.getElementById('lang-form').style.display = 'block'; }
+
+async function saveLang() {
+  const name = document.getElementById('lang-name').value.trim();
+  if (!name) { toast('Please enter a language.'); return; }
+  const { data, error } = await sb.from('cv_languages').insert({
+    user_id: userId,
+    language: name,
+    proficiency: document.getElementById('lang-level').value
+  }).select().single();
+  if (!error) {
+    languages.push(data);
+    renderLangs();
+    document.getElementById('lang-form').style.display = 'none';
+    document.getElementById('lang-name').value = '';
+    toast('Language added!');
+  }
+}
+
+async function deleteLang(id) {
+  await sb.from('cv_languages').delete().eq('id', id);
+  languages = languages.filter(l => l.id !== id);
+  renderLangs(); toast('Language removed.');
+}
+
+function renderLangs() {
+  const list = document.getElementById('lang-list');
+  if (!languages.length) { list.innerHTML = '<p style="font-size:13px;color:var(--text-muted);padding:.5rem 0;">No languages added yet.</p>'; return; }
+  list.innerHTML = languages.map(l => `
+    <div class="lang-row">
+      <span style="font-size:14px;font-weight:500;">${l.language}</span>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span class="proficiency-badge">${l.proficiency}</span>
+        <button class="icon-btn danger" onclick="deleteLang('${l.id}')"><i class="ti ti-trash"></i></button>
+      </div>
+    </div>`).join('');
+}
+
+function doSignOut() { sb.auth.signOut().then(() => window.location.href = 'https://summrtools.co.zw/login.html'); }
+
+init();
+</script>
+</body>
+</html>

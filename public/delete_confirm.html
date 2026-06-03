@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confirm Account Deletion — SummrTools</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+:root{--green:#1D9E75;--green-dark:#0F6E56;--green-light:#E1F5EE;--text:#0E1C16;--text-secondary:#4A6358;--text-muted:#8AA89C;--bg:#FAFCFB;--border:rgba(29,158,117,0.15);--border-strong:rgba(29,158,117,0.3);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem;}
+.card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:2.5rem;width:100%;max-width:420px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.06);}
+.icon{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;}
+.icon.danger{background:#fff0f0;}
+.icon.success{background:var(--green-light);}
+.icon i{font-size:28px;}
+.icon.danger i{color:#c0392b;}
+.icon.success i{color:var(--green);}
+h1{font-size:20px;font-weight:500;margin-bottom:.75rem;}
+p{font-size:14px;color:var(--text-secondary);line-height:1.6;margin-bottom:1.5rem;}
+.btn-danger{width:100%;background:#c0392b;color:#fff;border:none;border-radius:10px;padding:12px;font-size:15px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;margin-bottom:.75rem;}
+.btn-cancel{width:100%;background:transparent;color:var(--text-secondary);border:1px solid var(--border-strong);border-radius:10px;padding:12px;font-size:15px;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;display:block;}
+.btn-cancel:hover{background:var(--bg);}
+.msg{font-size:13px;padding:10px 14px;border-radius:8px;margin-top:1rem;display:none;}
+.msg.error{background:#fff5f5;color:#c0392b;border:1px solid rgba(192,57,43,.2);}
+.msg.success{background:var(--green-light);color:var(--green-dark);border:1px solid var(--border-strong);}
+</style>
+</head>
+<body>
+<div class="card" id="confirm-card">
+  <div class="icon danger"><i class="ti ti-trash"></i></div>
+  <h1>Confirm account deletion</h1>
+  <p>You are about to permanently delete your SummrTools account and all associated data. This cannot be undone.</p>
+  <button class="btn-danger" id="delete-btn" onclick="confirmDelete()">Yes, permanently delete my account</button>
+  <a class="btn-cancel" href="https://summrtools.co.zw/dashboard.html">Cancel — keep my account</a>
+  <div class="msg" id="msg"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+var sb = supabase.createClient(
+  'https://wsrhuuuwqzpsprknolot.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indzcmh1dXV3cXpwc3Bya25vbG90Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5ODAzMDIsImV4cCI6MjA5NTU1NjMwMn0.SqtB1CSq5aOauLOyZkYYuFHJe_Ox5SGYpCCrIckCwoc',
+  { auth: { storageKey: 'summrtools-auth', storage: window.localStorage } }
+);
+
+// Get token and uid from URL
+var params = new URLSearchParams(window.location.search);
+var token = params.get('token');
+var uid = params.get('uid');
+
+if (!token || !uid) {
+  document.getElementById('confirm-card').innerHTML = '<div class="icon danger"><i class="ti ti-alert-circle"></i></div><h1>Invalid link</h1><p>This deletion link is invalid or has expired.</p><a class="btn-cancel" href="https://summrtools.co.zw">Go home</a>';
+}
+
+async function confirmDelete() {
+  var btn = document.getElementById('delete-btn');
+  var msg = document.getElementById('msg');
+  btn.disabled = true;
+  btn.textContent = 'Deleting...';
+
+  // Verify token matches
+  var res = await sb.from('profiles').select('deletion_token, account_status').eq('id', uid).maybeSingle();
+
+  if (!res.data || res.data.deletion_token !== token) {
+    msg.className = 'msg error';
+    msg.textContent = 'Invalid or expired deletion token.';
+    msg.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Yes, permanently delete my account';
+    return;
+  }
+
+  if (res.data.account_status !== 'pending_deletion') {
+    msg.className = 'msg error';
+    msg.textContent = 'No deletion was requested for this account.';
+    msg.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Yes, permanently delete my account';
+    return;
+  }
+
+  // Delete all CV data
+  await sb.from('cv_experience').delete().eq('user_id', uid);
+  await sb.from('cv_education').delete().eq('user_id', uid);
+  await sb.from('cv_skills').delete().eq('user_id', uid);
+  await sb.from('cv_languages').delete().eq('user_id', uid);
+  await sb.from('cv_profiles').delete().eq('user_id', uid);
+
+  // Mark profile as deleted
+  await sb.from('profiles').update({
+    account_status: 'deleted',
+    deletion_token: null,
+    tier: 'free',
+    cv_credits: 0
+  }).eq('id', uid);
+
+  // Sign out
+  await sb.auth.signOut();
+
+  // Show success
+  document.getElementById('confirm-card').innerHTML =
+    '<div class="icon success"><i class="ti ti-circle-check"></i></div>' +
+    '<h1>Account deleted</h1>' +
+    '<p>Your account and all associated data have been permanently deleted. We are sorry to see you go.</p>' +
+    '<a class="btn-cancel" href="https://summrtools.co.zw" style="text-align:center;">Back to SummrTools</a>';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mzizi — Polish for African Expats | SummrTools</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+:root{--green:#1D9E75;--green-dark:#0F6E56;--green-light:#E1F5EE;--green-mid:#9FE1CB;--text:#0E1C16;--text-secondary:#4A6358;--text-muted:#8AA89C;--bg:#FAFCFB;--surface:#FFFFFF;--border:rgba(29,158,117,0.15);--border-strong:rgba(29,158,117,0.3);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.6;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px;background:rgba(250,252,251,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.nav-back{display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--text-secondary);text-decoration:none;padding:6px 12px;border-radius:8px;border:1px solid var(--border-strong);}
+.nav-back:hover{background:var(--green-light);color:var(--green);}
+.nav-brand{font-size:15px;font-weight:500;color:var(--text);}
+.nav-brand span{color:var(--green);}
+.wrap{max-width:780px;margin:0 auto;padding:80px 1.5rem 3rem;}
+.tool-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;}
+.tool-logo{display:flex;align-items:center;gap:10px;}
+.tool-logo-icon{width:40px;height:40px;border-radius:10px;background:var(--green);display:flex;align-items:center;justify-content:center;}
+.tool-logo-icon i{color:#fff;font-size:20px;}
+.tool-name{font-size:20px;font-weight:500;}
+.tool-sub{font-size:13px;color:var(--text-muted);}
+.streak{display:inline-flex;align-items:center;gap:6px;background:#f0f4f2;border-radius:8px;padding:6px 12px;font-size:13px;font-weight:500;}
+.daily{background:#f5f9f7;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:12px;border:1px solid var(--border);}
+.daily-badge{background:var(--green-light);color:var(--green-dark);font-size:11px;font-weight:500;padding:3px 8px;border-radius:6px;white-space:nowrap;}
+.daily-pl{font-size:16px;font-weight:500;}
+.daily-en{font-size:13px;color:var(--text-secondary);}
+.speak-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--border-strong);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.speak-btn:hover,.speak-btn.speaking{background:var(--green-light);}
+.speak-btn i{font-size:17px;color:var(--green);}
+.tabs{display:flex;gap:4px;margin-bottom:1.25rem;background:#f0f4f2;border-radius:8px;padding:3px;}
+.tab{flex:1;padding:7px;text-align:center;font-size:13px;border-radius:6px;cursor:pointer;color:var(--text-secondary);border:none;background:transparent;font-family:'DM Sans',sans-serif;}
+.tab.active{background:#fff;color:var(--text);font-weight:500;border:1px solid var(--border);}
+.cats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.25rem;}
+.cat{font-size:13px;padding:6px 14px;border-radius:99px;border:1px solid var(--border-strong);background:transparent;cursor:pointer;color:var(--text-secondary);font-family:'DM Sans',sans-serif;}
+.cat.active{background:var(--green);border-color:var(--green);color:#fff;}
+.card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1rem;}
+.tag{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--green-dark);background:var(--green-light);border-radius:6px;padding:2px 8px;display:inline-block;margin-bottom:8px;}
+.phrase-pl{font-size:19px;font-weight:500;margin-bottom:4px;}
+.phrase-en{font-size:14px;color:var(--text-secondary);margin-bottom:12px;}
+.actions{display:flex;gap:8px;flex-wrap:wrap;}
+.btn{font-size:13px;padding:6px 12px;border-radius:8px;border:1px solid var(--border-strong);background:transparent;cursor:pointer;color:var(--text-secondary);display:inline-flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;}
+.btn:hover{background:#f5f5f5;}
+.btn.teal{border-color:var(--green);color:var(--green-dark);}
+.btn.blue{border-color:#378ADD;color:#185FA5;}
+.btn:disabled{opacity:.5;cursor:not-allowed;}
+.pbox{background:#f5f9f7;border-radius:8px;padding:.75rem 1rem;margin-top:10px;display:none;}
+.pbox.vis{display:block;}
+.ctx{border-left:3px solid var(--green);border-radius:0 8px 8px 0;padding:.75rem 1rem;margin-top:12px;font-size:14px;line-height:1.6;display:none;background:#f9fefb;color:var(--text);}
+.ctx.vis{display:block;}
+.ctx.loading{background:#f5f5f5;border-left-color:#ccc;color:#888;font-style:italic;}
+.comm-card{border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:.75rem;background:#fff;}
+.av{width:28px;height:28px;border-radius:50%;background:var(--green-mid);display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:#085041;flex-shrink:0;}
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-back" href="https://summrtools.co.zw/dashboard.html"><i class="ti ti-arrow-left"></i> SummrTools</a>
+  <div class="nav-brand">Mzizi · <span>Polish for Expats</span></div>
+  <div></div>
+</nav>
+<div class="wrap">
+  <div class="tool-header">
+    <div class="tool-logo">
+      <div class="tool-logo-icon"><i class="ti ti-language"></i></div>
+      <div><div class="tool-name">Mzizi</div><div class="tool-sub">Polish for African expats</div></div>
+    </div>
+    <div class="streak"><i class="ti ti-flame" style="color:#EF9F27;font-size:16px;"></i> 4 day streak</div>
+  </div>
+  <div class="daily">
+    <div class="daily-badge">Phrase of the day</div>
+    <div style="flex:1;"><div class="daily-pl">Czy mogę prosić o paragon?</div><div class="daily-en">Can I get a receipt, please?</div></div>
+    <button class="speak-btn" onclick="doSpeak('Czy mogę prosić o paragon?',this)"><i class="ti ti-volume"></i></button>
+  </div>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('phrases',this)">Phrases</button>
+    <button class="tab" onclick="switchTab('community',this)">Community tips</button>
+  </div>
+  <div id="phrases-tab">
+    <div class="cats">
+      <button class="cat active" onclick="filterCat('all',this)">All</button>
+      <button class="cat" onclick="filterCat('shop',this)">Shopping</button>
+      <button class="cat" onclick="filterCat('gov',this)">Urząd</button>
+      <button class="cat" onclick="filterCat('health',this)">Health</button>
+      <button class="cat" onclick="filterCat('social',this)">Social</button>
+      <button class="cat" onclick="filterCat('transport',this)">Transport</button>
+    </div>
+    <div id="phrase-list"></div>
+  </div>
+  <div id="community-tab" style="display:none;">
+    <div class="comm-card"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><div class="av">TM</div><div><div style="font-size:13px;font-weight:500;">Tonderai M.</div><div style="font-size:12px;color:var(--text-muted);">Zimbabwe · Warsaw</div></div></div><div style="font-size:15px;font-weight:500;margin-bottom:2px;">Proszę wystawić fakturę na firmę.</div><div style="font-size:13px;color:var(--text-secondary);">Essential if you're freelancing or need work expenses reimbursed. Saved me so much confusion at shops!</div><div style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text-muted);margin-top:8px;"><i class="ti ti-heart" style="color:#D85A30;"></i> 24 helpful</div></div>
+    <div class="comm-card"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><div class="av">AN</div><div><div style="font-size:13px;font-weight:500;">Adaeze N.</div><div style="font-size:12px;color:var(--text-muted);">Nigeria · Kraków</div></div></div><div style="font-size:15px;font-weight:500;margin-bottom:2px;">Czy jest kolejka z numerkiem?</div><div style="font-size:13px;color:var(--text-secondary);">In Polish offices you need to take a ticket from a machine. Nobody tells you this and you'll stand there forever otherwise.</div><div style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text-muted);margin-top:8px;"><i class="ti ti-heart" style="color:#D85A30;"></i> 41 helpful</div></div>
+    <div class="comm-card"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><div class="av">KO</div><div><div style="font-size:13px;font-weight:500;">Kofi O.</div><div style="font-size:12px;color:var(--text-muted);">Ghana · Wrocław</div></div></div><div style="font-size:15px;font-weight:500;margin-bottom:2px;">Nie mówię dobrze po polsku, czy możemy po angielsku?</div><div style="font-size:13px;color:var(--text-secondary);">Most younger Poles will switch immediately. Don't be shy about it.</div><div style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text-muted);margin-top:8px;"><i class="ti ti-heart" style="color:#D85A30;"></i> 67 helpful</div></div>
+  </div>
+</div>
+<script>
+// API calls route through secure server proxy at /api/claude
+const phrases=[
+  {cat:'shop',pl:'Ile to kosztuje?',en:'How much does this cost?',pronounce:'EE-leh toh KOSH-too-yeh',bd:[['Ile','EE-leh'],['to','toh'],['kosztuje?','KOSH-too-yeh']]},
+  {cat:'gov',pl:'Mam wizytę na godzinę dziesiątą.',en:"I have an appointment at 10 o'clock.",pronounce:'Mahm VEE-zi-teh nah go-JEE-neh jeh-SHAN-toh',bd:[['Mam','Mahm'],['wizytę','VEE-zi-teh'],['na','nah'],['godzinę','go-JEE-neh'],['dziesiątą','jeh-SHAN-toh']]},
+  {cat:'health',pl:'Potrzebuję lekarza pierwszego kontaktu.',en:'I need a GP (primary care doctor).',pronounce:'pot-CHEH-boo-yeh leh-KAH-zha PYER-vsheh-go kon-TAK-too',bd:[['Potrzebuję','pot-CHEH-boo-yeh'],['lekarza','leh-KAH-zha'],['pierwszego','PYER-vsheh-go'],['kontaktu','kon-TAK-too']]},
+  {cat:'social',pl:'Skąd jesteś?',en:'Where are you from?',pronounce:'Skond YES-tesh',bd:[['Skąd','Skond'],['jesteś?','YES-tesh']]},
+  {cat:'transport',pl:'Poproszę bilet do centrum.',en:'A ticket to the city centre, please.',pronounce:'po-PRO-sheh BEE-let doh TSEN-troom',bd:[['Poproszę','po-PRO-sheh'],['bilet','BEE-let'],['do','doh'],['centrum','TSEN-troom']]},
+  {cat:'shop',pl:'Czy mogę zapłacić kartą?',en:'Can I pay by card?',pronounce:'Chih MO-geh zah-PWAH-cheech KAR-toh',bd:[['Czy','Chih'],['mogę','MO-geh'],['zapłacić','zah-PWAH-cheech'],['kartą?','KAR-toh']]},
+  {cat:'gov',pl:'Czy mogę dostać tłumacza?',en:'Can I get an interpreter?',pronounce:'Chih MO-geh DOS-tach twoo-MAH-cha',bd:[['Czy','Chih'],['mogę','MO-geh'],['dostać','DOS-tach'],['tłumacza?','twoo-MAH-cha']]},
+  {cat:'social',pl:'Miło mi cię poznać.',en:'Nice to meet you.',pronounce:'MEE-woh mee cheh POZ-nach',bd:[['Miło','MEE-woh'],['mi','mee'],['cię','cheh'],['poznać','POZ-nach']]}
+];
+let currentCat='all',voice=null;
+function initVoice(){const v=speechSynthesis.getVoices();voice=v.find(x=>x.lang==='pl-PL')||v.find(x=>x.lang.startsWith('pl'));}
+if(speechSynthesis.onvoiceschanged!==undefined)speechSynthesis.onvoiceschanged=initVoice;
+setTimeout(initVoice,800);
+function doSpeak(text,btn){initVoice();speechSynthesis.cancel();if(!voice){alert('Polish voice not available on this browser. Try Chrome on desktop.');return;}const u=new SpeechSynthesisUtterance(text);u.voice=voice;u.lang='pl-PL';u.rate=0.82;if(btn){btn.classList.add('speaking');u.onend=()=>btn.classList.remove('speaking');u.onerror=()=>btn.classList.remove('speaking');}speechSynthesis.speak(u);}
+function catLabel(c){return{shop:'Shopping',gov:'Urząd',health:'Health',social:'Social',transport:'Transport'}[c]||c;}
+function render(cat){
+  const list=document.getElementById('phrase-list');
+  const f=cat==='all'?phrases:phrases.filter(p=>p.cat===cat);
+  list.innerHTML=f.map((p,i)=>{
+    const bd=p.bd.map(([w,pr])=>`<span style="margin-right:10px;"><b>${w}</b> <span style="color:var(--green);font-size:13px;">${pr}</span></span>`).join('');
+    const esc=p.pl.replace(/'/g,"\\'");
+    return `<div class="card"><span class="tag">${catLabel(p.cat)}</span>
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+      <div style="flex:1;"><div class="phrase-pl">${p.pl}</div><div class="phrase-en">${p.en}</div></div>
+      <button class="speak-btn" onclick="doSpeak('${esc}',this)"><i class="ti ti-volume"></i></button>
+    </div>
+    <div class="actions" style="margin-top:10px;">
+      <button class="btn teal" onclick="toggleP(${i},this)"><i class="ti ti-ear"></i> Pronunciation</button>
+      <button class="btn blue" onclick="loadAI(${i},this)"><i class="ti ti-sparkles"></i> AI context</button>
+    </div>
+    <div class="pbox" id="pb${i}">
+      <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);margin-bottom:6px;">How to say it</div>
+      <div style="margin-bottom:6px;line-height:2;">${bd}</div>
+      <div style="font-size:13px;color:var(--text-secondary);">Full: <span style="color:var(--green);font-weight:500;">${p.pronounce}</span></div>
+      <button class="btn" style="margin-top:8px;font-size:12px;" onclick="doSpeak('${esc}',null)"><i class="ti ti-player-play"></i> Play slowly</button>
+    </div>
+    <div class="ctx" id="ctx${i}"></div></div>`;
+  }).join('');
+}
+function toggleP(i,btn){const b=document.getElementById('pb'+i);b.classList.toggle('vis');btn.innerHTML=b.classList.contains('vis')?'<i class="ti ti-x"></i> Hide':'<i class="ti ti-ear"></i> Pronunciation';}
+async function loadAI(i,btn){
+  const f=currentCat==='all'?phrases:phrases.filter(p=>p.cat===currentCat);
+  const p=f[i];if(!p)return;
+  const ctx=document.getElementById('ctx'+i);
+  if(ctx.classList.contains('vis')&&ctx.dataset.done){ctx.classList.remove('vis');ctx.dataset.done='';btn.innerHTML='<i class="ti ti-sparkles"></i> AI context';return;}
+  btn.disabled=true;btn.innerHTML='<i class="ti ti-loader"></i> Loading...';
+  ctx.className='ctx loading vis';ctx.textContent='Getting cultural context...';
+  try{
+    const res=await fetch('/api/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:1000,system:'You are a friendly cultural guide for African expats living in Poland. Explain in 3-4 sentences: when/where to use this phrase, cultural nuance for an African expat, and a practical life tip. Write warmly, as a fellow expat. Flowing prose only.',messages:[{role:'user',content:`Polish phrase: "${p.pl}" (means: "${p.en}"). Cultural context for an African expat in Poland.`}]})});
+    const d=await res.json();
+    if(d.error){ctx.className='ctx loading vis';ctx.textContent='Error: '+d.error.message;btn.innerHTML='<i class="ti ti-sparkles"></i> AI context';btn.disabled=false;return;}
+    ctx.className='ctx vis';ctx.textContent=d.content[0].text;ctx.dataset.done='1';
+    btn.innerHTML='<i class="ti ti-x"></i> Hide';
+  }catch(e){ctx.className='ctx loading vis';ctx.textContent='Error: '+e.message;btn.innerHTML='<i class="ti ti-sparkles"></i> AI context';}
+  btn.disabled=false;
+}
+function filterCat(cat,btn){currentCat=cat;document.querySelectorAll('.cat').forEach(b=>b.classList.remove('active'));btn.classList.add('active');render(cat);}
+function switchTab(tab,btn){document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('phrases-tab').style.display=tab==='phrases'?'block':'none';document.getElementById('community-tab').style.display=tab==='community'?'block':'none';}
+render('all');
+</script>
+</body>
+</html>
