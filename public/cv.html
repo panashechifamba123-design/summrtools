@@ -71,7 +71,25 @@ textarea.input{resize:vertical;min-height:90px;}
 }
 .error-box{background:#fff5f5;border:1px solid rgba(220,50,50,0.2);border-radius:8px;padding:.75rem 1rem;margin-top:1rem;font-size:13px;color:#c0392b;display:none;}
 .error-box.vis{display:block;}
-@media(max-width:600px){.form-grid{grid-template-columns:1fr;}.field.full{grid-column:1;}}
+.feature-toggles{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.25rem;padding:1rem;background:#fff;border:1px solid var(--border);border-radius:12px;}
+.toggle-item{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--text-secondary);user-select:none;}
+.toggle-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--green);cursor:pointer;}
+.toggle-item:hover{color:var(--green);}
+.keywords-section{background:#f0fff8;border:1px solid var(--border-strong);border-radius:10px;padding:.75rem 1rem;margin-top:1rem;font-size:13px;color:var(--green-dark);display:none;}
+.keywords-section.vis{display:block;}
+.keyword-tag{display:inline-block;background:var(--green-light);color:var(--green-dark);padding:2px 8px;border-radius:99px;font-size:11px;font-weight:500;margin:2px;}
+.keyword-tag.missing{background:#fff0f0;color:#c0392b;}
+.cover-letter-section{margin-top:1.5rem;border-top:1px solid var(--border);padding-top:1.5rem;display:none;}
+.cover-letter-section.vis{display:block;}
+.history-section{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;display:none;}
+.history-section.vis{display:block;}
+.history-item{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.history-item:last-child{border-bottom:none;}
+.history-load-btn{font-size:12px;padding:3px 10px;border:1px solid var(--border-strong);border-radius:6px;background:transparent;cursor:pointer;color:var(--green);font-family:'DM Sans',sans-serif;}
+.history-del-btn{font-size:12px;padding:3px 8px;border:none;background:transparent;cursor:pointer;color:var(--text-muted);}
+.history-del-btn:hover{color:#c0392b;}
+.section-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);margin-bottom:.5rem;}
+@media(max-width:600px){.form-grid{grid-template-columns:1fr;}.field.full{grid-column:1;}.feature-toggles{flex-direction:column;}}
 </style>
 </head>
 <body>
@@ -108,11 +126,26 @@ textarea.input{resize:vertical;min-height:90px;}
   <textarea id="cv-edu" style="display:none;"></textarea>
   <input type="hidden" id="cv-skills">
 
+  <!-- CV History -->
+  <div class="history-section" id="history-section">
+    <div class="section-label">Saved CVs</div>
+    <div id="history-list"></div>
+  </div>
+
   <!-- Only field user needs to fill -->
   <div class="field full" style="margin-bottom:1.25rem;">
     <label class="label">Job you are applying for <span style="text-transform:none;font-weight:400;">(paste the job title or full description for best results)</span></label>
     <textarea class="input" id="cv-job" placeholder="e.g. Technical Support Engineer at Gcore — paste the full job description here for a perfectly tailored CV..." style="min-height:100px;"></textarea>
   </div>
+
+  <!-- Feature toggles -->
+  <div class="feature-toggles">
+    <label class="toggle-item"><input type="checkbox" id="tog-cover" checked> <i class="ti ti-mail" style="color:var(--green);"></i> Generate cover letter</label>
+    <label class="toggle-item"><input type="checkbox" id="tog-keywords" checked> <i class="ti ti-tags" style="color:var(--green);"></i> Keyword injection</label>
+    <label class="toggle-item"><input type="checkbox" id="tog-length" checked> <i class="ti ti-ruler" style="color:var(--green);"></i> Auto length control</label>
+    <label class="toggle-item"><input type="checkbox" id="tog-save" checked> <i class="ti ti-bookmark" style="color:var(--green);"></i> Save to history</label>
+  </div>
+
   <button class="gen-btn" id="gen-btn" onclick="generate()"><i class="ti ti-sparkles"></i> Generate my CV</button>
   <div class="error-box" id="error-box"></div>
   <div class="result-box" id="result-box">
@@ -121,8 +154,21 @@ textarea.input{resize:vertical;min-height:90px;}
     </div>
     <div class="result-text" id="result-text"></div>
     <div class="result-actions">
-      <button class="copy-btn" onclick="doCopy(this)"><i class="ti ti-copy"></i> Copy text</button>
-      <button class="pdf-btn" onclick="downloadPDF()"><i class="ti ti-file-type-pdf"></i> Download as PDF</button>
+      <button class="copy-btn" onclick="doCopy(this)"><i class="ti ti-copy"></i> Copy CV</button>
+      <button class="pdf-btn" onclick="downloadPDF()"><i class="ti ti-file-type-pdf"></i> Download PDF</button>
+    </div>
+    <!-- Keywords panel -->
+    <div class="keywords-section" id="keywords-section">
+      <div style="font-size:12px;font-weight:500;margin-bottom:6px;"><i class="ti ti-tags"></i> Keywords from JD</div>
+      <div id="keywords-list"></div>
+    </div>
+    <!-- Cover letter section -->
+    <div class="cover-letter-section" id="cover-letter-section">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;">
+        <div style="font-size:14px;font-weight:500;color:var(--green);"><i class="ti ti-mail"></i> Cover Letter</div>
+        <button class="copy-btn" onclick="doCopyCover(this)"><i class="ti ti-copy"></i> Copy</button>
+      </div>
+      <div class="result-text" id="cover-letter-text"></div>
     </div>
 
     <!-- ATS SECTION -->
@@ -152,7 +198,7 @@ const sb = supabase.createClient(
   { auth: { storageKey: 'summrtools-auth', storage: window.localStorage } }
 );
 
-// API calls route through secure server proxy at /api/claude
+// API calls route through /api/claude proxy
 
 // Check auth and credits on load
 let userProfile = null;
@@ -284,75 +330,227 @@ async function init() {
 }
 init();
 
+// ── CV HISTORY ──────────────────────────────
+var HISTORY_KEY = 'summrtools_cv_history';
+
+function loadHistory() {
+  try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); } catch(e) { return []; }
+}
+
+function saveToHistory(cvText, jobTitle) {
+  var history = loadHistory();
+  history.unshift({ id: Date.now(), date: new Date().toLocaleDateString(), job: jobTitle || 'Untitled', cv: cvText });
+  if (history.length > 10) history = history.slice(0, 10);
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+  renderHistory();
+}
+
+function renderHistory() {
+  var history = loadHistory();
+  var section = document.getElementById('history-section');
+  var list = document.getElementById('history-list');
+  if (!history.length) { section.classList.remove('vis'); return; }
+  section.classList.add('vis');
+  list.innerHTML = history.map(function(h, i) {
+    return '<div class="history-item">' +
+      '<div><div style="font-weight:500;">' + h.job + '</div><div style="font-size:12px;color:var(--text-muted);">' + h.date + '</div></div>' +
+      '<div style="display:flex;gap:6px;">' +
+        '<button class="history-load-btn" onclick="loadFromHistory(' + i + ')"><i class="ti ti-download"></i> Load</button>' +
+        '<button class="history-del-btn" onclick="deleteHistory(' + i + ')"><i class="ti ti-trash"></i></button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function loadFromHistory(i) {
+  var history = loadHistory();
+  var h = history[i];
+  if (!h) return;
+  document.getElementById('result-text').textContent = h.cv;
+  document.getElementById('result-box').className = 'result-box vis';
+  document.getElementById('ats-section').style.display = 'block';
+}
+
+function deleteHistory(i) {
+  var history = loadHistory();
+  history.splice(i, 1);
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+  renderHistory();
+}
+
+// ── KEYWORD INJECTION ────────────────────────
+async function extractAndInjectKeywords(cv, job) {
+  if (!job) return cv;
+  try {
+    var res = await fetch('/api/claude', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-5', max_tokens: 800,
+        system: 'You are an ATS keyword expert. Return ONLY valid JSON, no markdown.',
+        messages: [{ role: 'user', content: 'Extract the top 10 ATS keywords from this job description that should appear in a CV. Then check which ones are already in the CV and which are missing. Return JSON: {"present": ["keyword1"], "missing": ["keyword2"]}. Job Description: ' + job + ' CV: ' + cv }]
+      })
+    });
+    var data = await res.json();
+    var raw = data.content && data.content[0] && data.content[0].text;
+    var match = raw.match(/\{[\s\S]*\}/);
+    var result = JSON.parse(match ? match[0] : raw);
+    var ksec = document.getElementById('keywords-section');
+    var klist = document.getElementById('keywords-list');
+    ksec.classList.add('vis');
+    var html = '';
+    (result.present || []).forEach(function(k){ html += '<span class="keyword-tag">' + k + '</span>'; });
+    (result.missing || []).forEach(function(k){ html += '<span class="keyword-tag missing">&#x26A0; ' + k + '</span>'; });
+    klist.innerHTML = html + '<div style="font-size:11px;color:var(--text-muted);margin-top:6px;">Green = present in CV &nbsp;|&nbsp; Red = missing from JD</div>';
+    return cv;
+  } catch(e) { return cv; }
+}
+
+// ── COVER LETTER ─────────────────────────────
+async function generateCoverLetter(name, cv, job, contact) {
+  if (!job) return;
+  document.getElementById('cover-letter-section').classList.add('vis');
+  document.getElementById('cover-letter-text').textContent = 'Generating cover letter...';
+  try {
+    var res = await fetch('/api/claude', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-5', max_tokens: 800,
+        system: 'You are a professional cover letter writer. Write concise, genuine cover letters that do not sound generic. Use ONLY information from the CV provided. 3 short paragraphs maximum. Plain text only.',
+        messages: [{ role: 'user', content: 'Write a cover letter for this person applying to this role. Use ONLY details from their CV — do not invent anything.\n\nApplicant name: ' + name + '\nContact: ' + contact + '\n\nJob: ' + job + '\n\nCV:\n' + cv }]
+      })
+    });
+    var data = await res.json();
+    var text = data.content && data.content[0] && data.content[0].text;
+    document.getElementById('cover-letter-text').textContent = text || 'Could not generate cover letter.';
+  } catch(e) {
+    document.getElementById('cover-letter-text').textContent = 'Error generating cover letter.';
+  }
+}
+
+// ── MAIN GENERATE ────────────────────────────
 async function generate() {
-  const name=document.getElementById('cv-name').value.trim();
-  const role=document.getElementById('cv-role').value.trim();
-  const email=document.getElementById('cv-email').value.trim();
-  const contact=document.getElementById('cv-contact').value.trim();
-  const exp=document.getElementById('cv-exp').value.trim();
-  const edu=document.getElementById('cv-edu').value.trim();
-  const skills=document.getElementById('cv-skills').value.trim();
-  const job=document.getElementById('cv-job').value.trim();
-  const errBox=document.getElementById('error-box');
-  errBox.className='error-box';
-  if(!name && !exp){errBox.className='error-box vis';errBox.textContent='Please set up your CV profile first, or the generation has no data to work with.';return;}
-  const btn=document.getElementById('gen-btn');
-  btn.disabled=true;btn.innerHTML='<i class="ti ti-loader"></i> Generating your CV...';
-  const resultBox=document.getElementById('result-box');
-  const resultText=document.getElementById('result-text');
-  resultBox.className='result-box vis';
-  resultText.textContent='Building your CV with AI — this takes about 10 seconds...';
-  const prompt='Format the following CV data into a clean, professional CV. Use ONLY the data provided — do not add, invent, or assume any details not explicitly listed. If a section has no data, skip it.' +
-    (job ? ' Tailor the wording to suit this role: ' + job : '') +
-    '\n\n=== INPUT DATA ===' +
-    '\nName: ' + (name || 'Not provided') +
+  var name = document.getElementById('cv-name').value.trim();
+  var email = document.getElementById('cv-email').value.trim();
+  var contact = document.getElementById('cv-contact').value.trim();
+  var exp = document.getElementById('cv-exp').value.trim();
+  var edu = document.getElementById('cv-edu').value.trim();
+  var skills = document.getElementById('cv-skills').value.trim();
+  var job = document.getElementById('cv-job').value.trim();
+
+  // Feature toggles
+  var wantCover = document.getElementById('tog-cover').checked;
+  var wantKeywords = document.getElementById('tog-keywords').checked;
+  var wantLength = document.getElementById('tog-length').checked;
+  var wantSave = document.getElementById('tog-save').checked;
+
+  var errBox = document.getElementById('error-box');
+  errBox.className = 'error-box';
+  if (!name && !exp) { errBox.className = 'error-box vis'; errBox.textContent = 'Please set up your CV profile first.'; return; }
+
+  var btn = document.getElementById('gen-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="ti ti-loader"></i> Generating your CV...';
+  var resultBox = document.getElementById('result-box');
+  var resultText = document.getElementById('result-text');
+  resultBox.className = 'result-box vis';
+  resultText.textContent = 'Building your CV with AI — this takes about 15 seconds...';
+
+  // Determine experience level for length control
+  var expCount = exp ? exp.split('\n\n').filter(function(e){ return e.trim(); }).length : 0;
+  var lengthInstruction = '';
+  if (wantLength) {
+    if (expCount <= 2) {
+      lengthInstruction = 'Keep the CV to ONE page maximum. Be very concise.';
+    } else {
+      lengthInstruction = 'Keep the CV to a maximum of TWO pages. Be selective — only include what is most relevant to the role.';
+    }
+  }
+
+  // Build smart prompt
+  var systemPrompt = 'You are a professional CV writer and formatter. Your ONLY job is to format and present the data provided.' +
+    ' NEVER invent, add, embellish, or assume any information not explicitly given.' +
+    ' ALWAYS use bullet points (starting with -) for work experience — never paragraphs.' +
+    ' Each bullet is one concise line starting with an action verb.' +
+    ' SMART FILTERING: If a job description is provided, analyse it carefully and:' +
+    ' 1) Only include experience and skills that are RELEVANT to the role — omit irrelevant ones' +
+    ' 2) Do NOT make the candidate look overqualified — match the seniority level of the JD' +
+    ' 3) Sort skills by relevance to the JD — most relevant first' +
+    ' 4) Maximum 4-5 bullets per role, focusing only on what matches the JD' +
+    ' 5) If a skill category is completely irrelevant to the JD, omit it' +
+    (wantLength ? ' LENGTH: ' + lengthInstruction : '') +
+    ' Output clean plain text only — no markdown, no asterisks.';
+
+  var userPrompt = 'Format this CV data for the role below. Apply smart filtering — only include relevant experience and skills. Do not make the candidate look overqualified.' +
+    (job ? ' TARGET ROLE: ' + job : '') +
+    '\n\n=== CANDIDATE DATA ===' +
+    '\nName: ' + (name || '') +
     '\nEmail: ' + (email || '') +
     '\nContact: ' + (contact || '') +
     '\n\nWork Experience:\n' + (exp || 'Not provided') +
     '\n\nEducation:\n' + (edu || 'Not provided') +
     '\n\nSkills: ' + (skills || 'Not provided') +
-    (job ? '\n\nApplying for: ' + job : '') +
-    '\n\n=== INSTRUCTIONS ===' +
-    '\nFormat using these sections (only include sections with data):' +
-    '\n1. CONTACT HEADER - name, email, phone, location' +
-    '\n2. PROFESSIONAL SUMMARY - 2-3 sentences based strictly on the experience listed above only' +
-    '\n3. WORK EXPERIENCE - list each role exactly as given, improve wording but do not add new bullets or achievements not in the input' +
-    '\n4. EDUCATION - list as given' +
-    '\n5. SKILLS & TOOLS - list as given' +
-    '\nUse === as section dividers. Plain text only.';
-  try{
-    const res=await fetch('/api/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:1500,system:'You are a professional CV formatter. Your ONLY job is to format and present the data provided by the user — do NOT invent, add, embellish, or assume any information that is not explicitly given. Do not add jobs, skills, achievements, dates, or any details not present in the input. If a field is empty, leave that section minimal or omit it. Improve the wording and structure of what exists, but never fabricate content. Output clean plain text only — no markdown, no asterisks.',messages:[{role:'user',content:prompt}]})});
-    const data=await res.json();
-    console.log('API response:', data);
-    if(data.error){errBox.className='error-box vis';errBox.textContent='API Error: '+data.error.message+' (type: '+data.error.type+')';resultBox.className='result-box';btn.disabled=false;btn.innerHTML='<i class="ti ti-sparkles"></i> Generate my CV';return;}
-    if(!data.content||!data.content[0]){errBox.className='error-box vis';errBox.textContent='Unexpected response from API. Check browser console.';resultBox.className='result-box';btn.disabled=false;btn.innerHTML='<i class="ti ti-sparkles"></i> Generate my CV';return;}
-    resultText.textContent=data.content[0].text;
+    '\n\n=== FORMAT ===' +
+    '\n1. CONTACT HEADER - name, email, phone, location on one line' +
+    '\n2. PROFESSIONAL SUMMARY - 2-3 sentences tailored to the role' +
+    '\n3. WORK EXPERIENCE - job title, company, location, dates | then 4-5 relevant bullet points per role using - prefix | omit roles with zero relevance to the JD' +
+    '\n4. EDUCATION - one line per qualification' +
+    '\n5. SKILLS - sorted by relevance to the JD, omit irrelevant categories' +
+    '\nUse === as section dividers. Plain text only. No paragraphs.';
+
+  try {
+    var res = await fetch('/api/claude', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ model: 'claude-sonnet-4-5', max_tokens: 2000, system: systemPrompt, messages: [{ role: 'user', content: userPrompt }] })
+    });
+    var data = await res.json();
+    if (data.error) { errBox.className = 'error-box vis'; errBox.textContent = 'API Error: ' + data.error.message; resultBox.className = 'result-box'; btn.disabled = false; btn.innerHTML = '<i class="ti ti-sparkles"></i> Generate my CV'; return; }
+    if (!data.content || !data.content[0]) { errBox.className = 'error-box vis'; errBox.textContent = 'Unexpected response. Please try again.'; resultBox.className = 'result-box'; btn.disabled = false; btn.innerHTML = '<i class="ti ti-sparkles"></i> Generate my CV'; return; }
+
+    var cvText = data.content[0].text;
+    resultText.textContent = cvText;
+
+    // Get job title for saving
+    var jobTitle = job ? job.split('\n')[0].substring(0, 60) : 'CV ' + new Date().toLocaleDateString();
+
+    // Run features in parallel
+    var tasks = [];
+    if (wantKeywords && job) tasks.push(extractAndInjectKeywords(cvText, job));
+    if (wantCover && job) tasks.push(generateCoverLetter(name, cvText, job, contact));
+    if (tasks.length) await Promise.all(tasks);
+
+    // Save to history
+    if (wantSave) saveToHistory(cvText, jobTitle);
+
     // Show ATS section
     document.getElementById('ats-section').style.display = 'block';
-    // Auto-run ATS if JD provided
-    if (document.getElementById('cv-job').value.trim()) {
-      setTimeout(runATS, 500);
-    }
-    // Deduct credit if not elite
+    if (job) setTimeout(runATS, 500);
+
+    // Deduct credit
     if (userProfile && userProfile.tier !== 'elite') {
-      const newCredits = Math.max(0, (userProfile.cv_credits || 0) - 1);
+      var newCredits = Math.max(0, (userProfile.cv_credits || 0) - 1);
       await sb.from('profiles').update({ cv_credits: newCredits }).eq('id', userProfile.id);
       userProfile.cv_credits = newCredits;
-      const btn2 = document.getElementById('gen-btn');
       if (newCredits <= 0) {
-        btn2.disabled = true;
-        btn2.innerHTML = '<i class="ti ti-lock"></i> No credits left — upgrade to continue';
-        btn2.style.background = '#ccc';
+        btn.disabled = true; btn.innerHTML = '<i class="ti ti-lock"></i> No credits left'; btn.style.background = '#ccc';
       } else {
-        btn2.innerHTML = '<i class="ti ti-sparkles"></i> Generate my CV (' + newCredits + ' credit' + (newCredits !== 1 ? 's' : '') + ' left)';
+        btn.innerHTML = '<i class="ti ti-sparkles"></i> Generate my CV (' + newCredits + ' credit' + (newCredits !== 1 ? 's' : '') + ' left)';
       }
+      return;
     }
-  }catch(e){
-    console.error('Fetch error:',e);
-    errBox.className='error-box vis';errBox.textContent='Network error: '+e.message+'. Make sure you are connected to the internet.';
-    resultBox.className='result-box';
+  } catch(e) {
+    errBox.className = 'error-box vis'; errBox.textContent = 'Network error: ' + e.message;
+    resultBox.className = 'result-box';
   }
-  btn.disabled=false;btn.innerHTML='<i class="ti ti-sparkles"></i> Generate my CV';
+  btn.disabled = false;
+  btn.innerHTML = '<i class="ti ti-sparkles"></i> Generate my CV';
+}
+
+function doCopyCover(btn) {
+  var text = document.getElementById('cover-letter-text').textContent;
+  navigator.clipboard.writeText(text).then(function() {
+    btn.innerHTML = '<i class="ti ti-check"></i> Copied!';
+    setTimeout(function(){ btn.innerHTML = '<i class="ti ti-copy"></i> Copy'; }, 2000);
+  });
 }
 function doCopy(btn){
   const text=document.getElementById('result-text').textContent;
