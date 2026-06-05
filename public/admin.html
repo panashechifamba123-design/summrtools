@@ -89,7 +89,7 @@ select.tier-select{font-size:12px;padding:4px 8px;border:1px solid var(--border-
   <div class="stats-grid">
     <div class="stat-card"><div class="stat-label">Total users</div><div class="stat-value" id="stat-total">—</div><div class="stat-sub">registered accounts</div></div>
     <div class="stat-card"><div class="stat-label">Free tier</div><div class="stat-value" id="stat-free">—</div><div class="stat-sub">free accounts</div></div>
-    <div class="stat-card"><div class="stat-label">Standard</div><div class="stat-value" id="stat-standard">—</div><div class="stat-sub">paying users</div></div>
+    <div class="stat-card"><div class="stat-label">Standard</div><div class="stat-value" id="stat-standard">—</div><div class="stat-sub">starter + pro</div></div>
     <div class="stat-card"><div class="stat-label">Elite</div><div class="stat-value" id="stat-elite">—</div><div class="stat-sub">elite users</div></div>
     <div class="stat-card"><div class="stat-label">Pending deletion</div><div class="stat-value" id="stat-deletion" style="color:#c0392b;">—</div><div class="stat-sub">awaiting deletion</div></div>
   </div>
@@ -166,7 +166,7 @@ async function loadUsers() {
 function updateStats() {
   document.getElementById('stat-total').textContent = allUsers.length;
   document.getElementById('stat-free').textContent = allUsers.filter(function(u){ return u.tier === 'free' || !u.tier; }).length;
-  document.getElementById('stat-standard').textContent = allUsers.filter(function(u){ return u.tier === 'standard'; }).length;
+  document.getElementById('stat-standard').textContent = allUsers.filter(function(u){ return u.tier === 'starter' || u.tier === 'pro'; }).length;
   document.getElementById('stat-elite').textContent = allUsers.filter(function(u){ return u.tier === 'elite'; }).length;
   var pending = allUsers.filter(function(u){ return u.account_status === 'pending_deletion'; });
   document.getElementById('stat-deletion').textContent = pending.length;
@@ -233,7 +233,8 @@ function filterUsers() {
 }
 
 async function changeTier(uid, tier) {
-  var credits = tier === 'standard' ? 50 : tier === 'elite' ? 9999 : 3;
+  var tierCredits = {free: 3, starter: 20, pro: 60, elite: 9999};
+  var credits = tierCredits[tier] !== undefined ? tierCredits[tier] : 3;
   var res = await sb.from('profiles').update({ tier: tier, cv_credits: credits }).eq('id', uid);
   if (res.error) { toast('Error: ' + res.error.message); return; }
   // Update local data

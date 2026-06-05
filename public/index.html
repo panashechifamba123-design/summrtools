@@ -202,6 +202,15 @@ textarea.cv-input{resize:vertical;min-height:85px;}
           <div class="tool-tags"><span class="tool-tag">Career</span><span class="tool-tag">AI-powered</span><span class="tool-tag">Free</span></div>
           <span class="tool-link">Get started — sign in <i class="ti ti-arrow-right"></i></span>
         </div>
+        <div class="tool-card reveal" onclick="window.location.href='https://summrtools.co.zw/login.html'">
+          <div class="tool-card-accent"></div>
+          <div class="coming-badge" style="background:var(--green-light);color:var(--green-dark);border:1px solid var(--border-strong);">Elite</div>
+          <div class="tool-icon"><i class="ti ti-world"></i></div>
+          <div class="tool-name">Global Move Advisor</div>
+          <div class="tool-desc">AI-powered relocation guide for Zimbabwean EU residents — visa routes, job markets, cost breakdowns and personalised checklists for any country.</div>
+          <div class="tool-tags"><span class="tool-tag">Relocation</span><span class="tool-tag">Immigration</span><span class="tool-tag">Careers</span></div>
+          <div class="tool-link">Get started <i class="ti ti-arrow-right"></i></div>
+        </div>
         <div class="tool-card coming-soon reveal">
           <div class="coming-badge">Coming soon</div>
           <div class="tool-icon"><i class="ti ti-home"></i></div>
@@ -250,7 +259,73 @@ textarea.cv-input{resize:vertical;min-height:85px;}
 
   <section style="padding:5rem 2rem;">
     <div class="section-inner">
-      <div class="cta-section reveal">
+            <!-- PRICING -->
+      <section id="pricing">
+        <div class="section-inner">
+          <div class="section-label reveal">Pricing</div>
+          <h2 class="section-title reveal">Simple, <em>honest</em> pricing</h2>
+          <p class="section-sub reveal">Start free — upgrade when you need more. No hidden fees, cancel anytime.</p>
+          <div class="pricing-grid">
+
+            <div class="pricing-card reveal">
+              <div class="pricing-name">Free</div>
+              <div class="pricing-price">0 <span>PLN</span></div>
+              <div class="pricing-period">forever</div>
+              <ul class="pricing-features">
+                <li><i class="ti ti-check"></i> 3 CV credits</li>
+                <li><i class="ti ti-check"></i> Full Mzizi access</li>
+                <li><i class="ti ti-check"></i> Dashboard access</li>
+              </ul>
+              <a href="https://summrtools.co.zw/login.html" class="pricing-btn">Get started free</a>
+            </div>
+
+            <div class="pricing-card reveal">
+              <div class="pricing-name">Starter</div>
+              <div class="pricing-price">9.99 <span>PLN</span></div>
+              <div class="pricing-period">per month</div>
+              <ul class="pricing-features">
+                <li><i class="ti ti-check"></i> 20 CV credits / month</li>
+                <li><i class="ti ti-check"></i> Cover letter generator</li>
+                <li><i class="ti ti-check"></i> Full Mzizi access</li>
+                <li><i class="ti ti-check"></i> ATS keyword scoring</li>
+              </ul>
+              <a href="https://summrtools.co.zw/login.html" class="pricing-btn">Get started</a>
+            </div>
+
+            <div class="pricing-card popular reveal">
+              <div class="pricing-popular-badge">Most popular</div>
+              <div class="pricing-name">Pro</div>
+              <div class="pricing-price">19.99 <span>PLN</span></div>
+              <div class="pricing-period">per month</div>
+              <ul class="pricing-features">
+                <li><i class="ti ti-check"></i> 60 CV credits / month</li>
+                <li><i class="ti ti-check"></i> Cover letter generator</li>
+                <li><i class="ti ti-check"></i> Full Mzizi access</li>
+                <li><i class="ti ti-check"></i> ATS keyword scoring</li>
+                <li><i class="ti ti-check"></i> CV history & saved versions</li>
+              </ul>
+              <a href="https://summrtools.co.zw/login.html" class="pricing-btn primary">Get started</a>
+            </div>
+
+            <div class="pricing-card reveal">
+              <div class="pricing-name">Elite</div>
+              <div class="pricing-price">39.99 <span>PLN</span></div>
+              <div class="pricing-period">per month</div>
+              <ul class="pricing-features">
+                <li><i class="ti ti-check"></i> Unlimited CV credits</li>
+                <li><i class="ti ti-check"></i> All Pro features</li>
+                <li><i class="ti ti-check"></i> Global Move Advisor</li>
+                <li><i class="ti ti-check"></i> Early access to new tools</li>
+                <li><i class="ti ti-check"></i> Priority support</li>
+              </ul>
+              <a href="https://summrtools.co.zw/login.html" class="pricing-btn">Get started</a>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+<div class="cta-section reveal">
         <h2>Ready to make expat life <em>easier?</em></h2>
         <p>Create a free account and start using your tools straight away.</p>
         <a href="https://summrtools.co.zw/login.html" class="btn-white"><i class="ti ti-user-plus"></i> Create free account</a>
@@ -342,7 +417,7 @@ textarea.cv-input{resize:vertical;min-height:85px;}
 </div>
 
 <script>
-// API calls route through secure server proxy at /api/claude
+// API calls route through secure server proxy
 
 // PAGE NAVIGATION
 function showPage(page) {
