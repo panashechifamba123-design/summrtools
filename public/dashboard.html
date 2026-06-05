@@ -239,7 +239,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
       <div class="plan-feature"><i class="ti ti-check"></i> 20 CV credits / month</div>
       <div class="plan-feature"><i class="ti ti-check"></i> Full Mzizi access</div>
       <div class="plan-feature"><i class="ti ti-check"></i> Cover letter generator</div>
-      <button class="plan-btn primary" onclick="alert('Billing coming soon! Contact us to upgrade.')">Upgrade — 9.99 PLN</button>
+      <button class="plan-btn primary" onclick="upgradePlan('starter')">Upgrade — 9.99 PLN</button>
     </div>
     <div class="plan-card highlighted" id="plan-pro">
       <div class="current-tag">Most popular</div>
@@ -250,7 +250,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
       <div class="plan-feature"><i class="ti ti-check"></i> Full Mzizi access</div>
       <div class="plan-feature"><i class="ti ti-check"></i> Cover letter generator</div>
       <div class="plan-feature"><i class="ti ti-check"></i> ATS scoring</div>
-      <button class="plan-btn primary" onclick="alert('Billing coming soon! Contact us to upgrade.')">Upgrade — 19.99 PLN</button>
+      <button class="plan-btn primary" onclick="upgradePlan('pro')">Upgrade — 19.99 PLN</button>
     </div>
     <div class="plan-card" id="plan-elite">
       <div class="plan-name">Elite</div>
@@ -260,7 +260,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
       <div class="plan-feature"><i class="ti ti-check"></i> Full Mzizi access</div>
       <div class="plan-feature"><i class="ti ti-check"></i> All tools including Global Move Advisor</div>
       <div class="plan-feature"><i class="ti ti-check"></i> Early access to new tools</div>
-      <button class="plan-btn primary" onclick="alert('Billing coming soon! Contact us to upgrade.')">Upgrade — 39.99 PLN</button>
+      <button class="plan-btn primary" onclick="upgradePlan('elite')">Upgrade — 39.99 PLN</button>
     </div>
   </div>
 </div>
@@ -363,6 +363,14 @@ async function load() {
   // Hide upgrade btn if elite
   var upgradeBtn = document.getElementById('upgrade-btn');
   if (tier === 'elite' && upgradeBtn) upgradeBtn.style.display = 'none';
+  // Show manage subscription for paid users
+  if (tier !== 'free' && upgradeBtn) {
+    upgradeBtn.textContent = 'Manage subscription';
+    upgradeBtn.onclick = window.manageSubscription;
+    upgradeBtn.style.background = 'transparent';
+    upgradeBtn.style.color = 'var(--green)';
+    upgradeBtn.style.border = '1px solid var(--green)';
+  }
 
   // Unlock relocation advisor for elite users only
   var relocationCard = document.getElementById('relocation-card');
@@ -396,6 +404,56 @@ window.doSignOut = async function() {
 
 window.scrollToPlans = function() {
   document.getElementById('plans-section').scrollIntoView({ behavior: 'smooth' });
+};
+
+window.upgradePlan = async function(tier) {
+  try {
+    var sessionRes = await sb.auth.getSession();
+    var session = sessionRes.data && sessionRes.data.session;
+    if (!session) { window.location.href = 'https://summrtools.co.zw/login.html'; return; }
+    var btn = event.target;
+    btn.disabled = true;
+    btn.textContent = 'Redirecting...';
+    var res = await fetch('/api/checkout', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        tier: tier,
+        userId: session.user.id,
+        userEmail: session.user.email
+      })
+    });
+    var data = await res.json();
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      alert('Error starting checkout: ' + (data.error || 'Unknown error'));
+      btn.disabled = false;
+      btn.textContent = 'Upgrade';
+    }
+  } catch(e) {
+    alert('Error: ' + e.message);
+  }
+};
+
+window.manageSubscription = async function() {
+  try {
+    var sessionRes = await sb.auth.getSession();
+    var session = sessionRes.data && sessionRes.data.session;
+    if (!session) return;
+    var profileRes = await sb.from('profiles').select('stripe_customer_id').eq('id', session.user.id).maybeSingle();
+    var customerId = profileRes.data && profileRes.data.stripe_customer_id;
+    if (!customerId) { alert('No active subscription found.'); return; }
+    var res = await fetch('/api/portal', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ customerId: customerId })
+    });
+    var data = await res.json();
+    if (data.url) window.location.href = data.url;
+  } catch(e) {
+    alert('Error: ' + e.message);
+  }
 };
 
 window.openRelocation = function() {
@@ -476,6 +534,18 @@ window.requestDeletion = async function() {
 };
 
 load();
+
+// Show message if returning from Stripe
+var urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('upgraded') === 'true') {
+  setTimeout(function() {
+    alert('🎉 Payment successful! Your plan has been upgraded. Welcome to your new tier!');
+    window.history.replaceState({}, '', '/dashboard.html');
+  }, 1000);
+}
+if (urlParams.get('cancelled') === 'true') {
+  window.history.replaceState({}, '', '/dashboard.html');
+}
 </script>
 </body>
 </html>
