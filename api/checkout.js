@@ -3,7 +3,7 @@ import Stripe from 'stripe';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const PRICE_IDS = {
-  starter: 'price_1Tf6pM0Jz1Y9fabbEeMajRDe',
+  starter: 'price_1Tf7dM0Jz1Y9fabbc4je8eHd',
   pro: 'price_1Tf6pj0Jz1Y9fabbKodOSBgm',
   elite: 'price_1Tf6qM0Jz1Y9fabbqq03RDRx'
 };
