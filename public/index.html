@@ -3,599 +3,454 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SummrTools — Tools for the African Expat</title>
+<title>SummrTools — AI-Powered Career & Relocation Tools for the Zimbabwean Diaspora</title>
+<meta name="description" content="AI-powered CVs, cover letters, and relocation guidance built specifically for Zimbabweans building careers and lives abroad.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{--green:#1D9E75;--green-dark:#0F6E56;--green-light:#E1F5EE;--green-mid:#9FE1CB;--text:#0E1C16;--text-secondary:#4A6358;--text-muted:#8AA89C;--bg:#FAFCFB;--surface:#FFFFFF;--border:rgba(29,158,117,0.15);--border-strong:rgba(29,158,117,0.3);--font-display:'Fraunces',Georgia,serif;--font-body:'DM Sans',sans-serif;}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-size:16px;line-height:1.6;overflow-x:hidden;}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:64px;background:rgba(250,252,251,0.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
-.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer;}
-.nav-logo-icon{width:32px;height:32px;border-radius:8px;background:var(--green);display:flex;align-items:center;justify-content:center;}
-.nav-logo-icon i{color:#fff;font-size:17px;}
-.nav-logo-text{font-family:var(--font-display);font-size:18px;font-weight:500;color:var(--text);}
-.nav-links{display:flex;align-items:center;gap:2rem;}
-.nav-links a{font-size:14px;color:var(--text-secondary);text-decoration:none;}
-.nav-links a:hover{color:var(--green);}
-.nav-cta{background:var(--green);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:14px;font-family:var(--font-body);cursor:pointer;text-decoration:none;}
-.nav-cta:hover{background:var(--green-dark);}
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6rem 2rem 4rem;text-align:center;position:relative;overflow:hidden;}
-.hero-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(29,158,117,0.08) 0%,transparent 70%);}
-.hero-dots{position:absolute;inset:0;z-index:0;background-image:radial-gradient(circle,rgba(29,158,117,0.12) 1px,transparent 1px);background-size:32px 32px;mask-image:radial-gradient(ellipse 70% 50% at 50% 0%,black,transparent);}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--green-light);color:var(--green-dark);border:1px solid var(--border-strong);border-radius:99px;padding:5px 14px;font-size:13px;font-weight:500;margin-bottom:1.75rem;position:relative;z-index:1;animation:fadeUp .6s ease both;}
-.hero h1{font-family:var(--font-display);font-size:clamp(2.8rem,6vw,5rem);font-weight:300;line-height:1.1;letter-spacing:-.02em;max-width:800px;margin-bottom:1.5rem;position:relative;z-index:1;animation:fadeUp .6s .1s ease both;}
-.hero h1 em{font-style:italic;color:var(--green);}
-.hero-sub{font-size:clamp(1rem,2vw,1.15rem);color:var(--text-secondary);max-width:520px;line-height:1.7;margin-bottom:2.5rem;position:relative;z-index:1;animation:fadeUp .6s .2s ease both;}
-.hero-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;position:relative;z-index:1;animation:fadeUp .6s .3s ease both;}
-.btn-primary{background:var(--green);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:15px;font-family:var(--font-body);font-weight:500;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:background .2s,transform .15s;}
-.btn-primary:hover{background:var(--green-dark);transform:translateY(-1px);}
-.btn-secondary{background:transparent;color:var(--text);border:1px solid var(--border-strong);border-radius:10px;padding:12px 24px;font-size:15px;font-family:var(--font-body);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:border-color .2s,color .2s;}
-.btn-secondary:hover{border-color:var(--green);color:var(--green);}
-.stats{display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;padding:2.5rem 2rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface);}
-.stat{text-align:center;}
-.stat-number{font-family:var(--font-display);font-size:2rem;font-weight:500;color:var(--green);}
-.stat-label{font-size:13px;color:var(--text-muted);margin-top:2px;}
-section{padding:5rem 2rem;}
-.section-inner{max-width:1080px;margin:0 auto;}
-.section-label{font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:1rem;}
-.section-title{font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:300;line-height:1.15;letter-spacing:-.02em;margin-bottom:1rem;max-width:600px;}
-.section-title em{font-style:italic;color:var(--green);}
-.section-sub{font-size:1rem;color:var(--text-secondary);max-width:520px;line-height:1.7;margin-bottom:3rem;}
-.tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.25rem;}
-.tool-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.75rem;position:relative;overflow:hidden;text-decoration:none;color:inherit;transition:border-color .2s,transform .2s,box-shadow .2s;display:block;cursor:pointer;}
-.tool-card:hover{border-color:var(--green);transform:translateY(-3px);box-shadow:0 12px 32px rgba(29,158,117,0.1);}
-.tool-card-accent{position:absolute;top:0;left:0;right:0;height:3px;background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform .2s;}
-.tool-card:hover .tool-card-accent{transform:scaleX(1);}
-.tool-icon{width:48px;height:48px;border-radius:12px;background:var(--green-light);display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;}
-.tool-icon i{font-size:22px;color:var(--green);}
-.tool-name{font-size:18px;font-weight:500;margin-bottom:6px;}
-.tool-desc{font-size:14px;color:var(--text-secondary);line-height:1.6;margin-bottom:1.25rem;}
-.tool-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem;}
-.tool-tag{font-size:11px;font-weight:500;padding:3px 10px;border-radius:99px;background:var(--green-light);color:var(--green-dark);border:1px solid var(--border-strong);}
-.tool-link{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:500;color:var(--green);}
-.tool-link i{font-size:14px;transition:transform .2s;}
-.tool-card:hover .tool-link i{transform:translateX(4px);}
-.tool-card.coming-soon{opacity:.6;pointer-events:none;}
-.coming-badge{position:absolute;top:1rem;right:1rem;font-size:11px;font-weight:500;padding:3px 10px;border-radius:99px;background:#FFF3CD;color:#856404;border:1px solid #FFE08A;}
-.how-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem;}
-.step-number{font-family:var(--font-display);font-size:3.5rem;font-weight:300;color:var(--green-light);line-height:1;margin-bottom:.75rem;}
-.step-title{font-size:16px;font-weight:500;margin-bottom:6px;}
-.step-desc{font-size:14px;color:var(--text-secondary);line-height:1.6;}
-.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;}
-.why-card{padding:1.5rem;border-radius:12px;border:1px solid var(--border);background:var(--surface);}
-.why-icon{font-size:22px;color:var(--green);margin-bottom:.75rem;display:block;}
-.why-title{font-size:15px;font-weight:500;margin-bottom:6px;}
-.why-desc{font-size:14px;color:var(--text-secondary);line-height:1.6;}
-.cta-section{background:var(--green);border-radius:20px;padding:4rem 2.5rem;text-align:center;position:relative;overflow:hidden;}
-.cta-section h2{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;color:#fff;margin-bottom:1rem;}
-.cta-section h2 em{font-style:italic;}
-.cta-section p{color:rgba(255,255,255,.75);font-size:1rem;margin-bottom:2rem;}
-.btn-white{background:#fff;color:var(--green-dark);border:none;border-radius:10px;padding:12px 28px;font-size:15px;font-family:var(--font-body);font-weight:500;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;}
-.btn-white:hover{transform:translateY(-2px);}
-footer{padding:2.5rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
-.footer-logo{display:flex;align-items:center;gap:8px;text-decoration:none;cursor:pointer;}
-.footer-logo-icon{width:28px;height:28px;border-radius:6px;background:var(--green);display:flex;align-items:center;justify-content:center;}
-.footer-logo-icon i{color:#fff;font-size:14px;}
-.footer-logo-text{font-family:var(--font-display);font-size:16px;font-weight:500;color:var(--text);}
-.footer-copy{font-size:13px;color:var(--text-muted);}
-.footer-links a{font-size:13px;color:var(--text-muted);text-decoration:none;margin-left:1.5rem;}
-.footer-links a:hover{color:var(--green);}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;}
-.reveal.visible{opacity:1;transform:translateY(0);}
-/* PAGES */
-.page{display:none;}
-.page.active{display:block;}
-#page-home{display:block;}
-.tool-page-header{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;background:rgba(250,252,251,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 2rem;gap:12px;}
-.back-btn{display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--text-secondary);background:none;border:1px solid var(--border-strong);padding:6px 14px;border-radius:8px;cursor:pointer;font-family:var(--font-body);}
-.back-btn:hover{background:var(--green-light);color:var(--green);border-color:var(--green);}
-.tool-page-content{max-width:820px;margin:0 auto;padding:5rem 2rem 3rem;}
-/* MZIZI STYLES */
-.mz-streak{display:inline-flex;align-items:center;gap:6px;background:#f0f4f2;border-radius:8px;padding:6px 12px;font-size:13px;font-weight:500;margin-bottom:1.25rem;}
-.mz-daily{background:#f5f9f7;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:12px;border:1px solid var(--border);}
-.mz-daily-badge{background:var(--green-light);color:var(--green-dark);font-size:11px;font-weight:500;padding:3px 8px;border-radius:6px;white-space:nowrap;}
-.mz-daily-pl{font-size:16px;font-weight:500;}
-.mz-daily-en{font-size:13px;color:var(--text-secondary);}
-.mz-speak-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--border-strong);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s;}
-.mz-speak-btn:hover,.mz-speak-btn.speaking{background:var(--green-light);}
-.mz-speak-btn i{font-size:17px;color:var(--green);}
-.mz-tabs{display:flex;gap:4px;margin-bottom:1.25rem;background:#f0f4f2;border-radius:8px;padding:3px;}
-.mz-tab{flex:1;padding:7px;text-align:center;font-size:13px;border-radius:6px;cursor:pointer;color:var(--text-secondary);border:none;background:transparent;font-family:var(--font-body);}
-.mz-tab.active{background:#fff;color:var(--text);font-weight:500;border:1px solid var(--border);}
-.mz-cats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.25rem;}
-.mz-cat{font-size:13px;padding:6px 14px;border-radius:99px;border:1px solid var(--border-strong);background:transparent;cursor:pointer;color:var(--text-secondary);font-family:var(--font-body);}
-.mz-cat.active{background:var(--green);border-color:var(--green);color:#fff;}
-.mz-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1rem;}
-.mz-tag{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--green-dark);background:var(--green-light);border-radius:6px;padding:2px 8px;display:inline-block;margin-bottom:8px;}
-.mz-pl{font-size:19px;font-weight:500;margin-bottom:4px;}
-.mz-en{font-size:14px;color:var(--text-secondary);margin-bottom:12px;}
-.mz-actions{display:flex;gap:8px;flex-wrap:wrap;}
-.mz-btn{font-size:13px;padding:6px 12px;border-radius:8px;border:1px solid var(--border-strong);background:transparent;cursor:pointer;color:var(--text-secondary);display:inline-flex;align-items:center;gap:5px;font-family:var(--font-body);transition:background .15s;}
-.mz-btn:hover{background:#f5f5f5;}
-.mz-btn.teal{border-color:var(--green);color:var(--green-dark);}
-.mz-btn.blue{border-color:#378ADD;color:#185FA5;}
-.mz-btn:disabled{opacity:.5;cursor:not-allowed;}
-.mz-pbox{background:#f5f9f7;border-radius:8px;padding:.75rem 1rem;margin-top:10px;display:none;}
-.mz-pbox.vis{display:block;}
-.mz-ctx{border-left:3px solid var(--green);border-radius:0 8px 8px 0;padding:.75rem 1rem;margin-top:12px;font-size:14px;line-height:1.6;display:none;background:#f9fefb;color:var(--text);}
-.mz-ctx.vis{display:block;}
-.mz-ctx.loading{background:#f5f5f5;border-left-color:#ccc;color:#888;font-style:italic;}
-.mz-comm-card{border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:.75rem;background:#fff;}
-.mz-av{width:28px;height:28px;border-radius:50%;background:var(--green-mid);display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:#085041;flex-shrink:0;}
-/* CV STYLES */
-.cv-form{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;}
-.cv-field{display:flex;flex-direction:column;gap:4px;}
-.cv-field.full{grid-column:1/-1;}
-.cv-label{font-size:12px;font-weight:500;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.05em;}
-.cv-input{padding:9px 12px;border:1px solid var(--border-strong);border-radius:8px;font-size:14px;font-family:var(--font-body);outline:none;background:#fff;color:var(--text);transition:border-color .2s;}
-.cv-input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(29,158,117,0.1);}
-textarea.cv-input{resize:vertical;min-height:85px;}
-.cv-result-box{background:#f9fefb;border:1px solid var(--border-strong);border-radius:12px;padding:1.5rem;margin-top:1.5rem;display:none;}
-.cv-result-box.vis{display:block;}
-.cv-result-text{font-size:14px;line-height:1.9;white-space:pre-wrap;color:var(--text);}
-.cv-copy-btn{margin-top:1rem;font-size:13px;padding:7px 16px;border:1px solid var(--border-strong);border-radius:8px;background:transparent;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:var(--font-body);}
-.cv-copy-btn:hover{background:var(--green-light);}
-@media(max-width:640px){nav{padding:0 1.25rem;}.nav-links{display:none;}section{padding:3.5rem 1.25rem;}.cv-form{grid-template-columns:1fr;}.cv-field.full{grid-column:1;}}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#08080f;--srf:#0e0e1a;--card:#151528;--bdr:#252545;--txt:#e8e8f4;--mut:#8080a8;--acc:#00d4aa;--alt:#7b61ff;--gld:#fbbf24}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'Inter',system-ui,sans-serif;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.gt{background:linear-gradient(135deg,var(--alt),#a78bfa,var(--acc));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200% 200%;animation:grad 4s ease infinite}
+
+/* Animations */
+@keyframes grad{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes morph1{0%,100%{border-radius:60% 40% 30% 70%/60% 30% 70% 40%;transform:translate(0,0) rotate(0)}50%{border-radius:30% 60% 70% 40%/50% 60% 30% 60%;transform:translate(30px,-20px) rotate(180deg)}}
+@keyframes morph2{0%,100%{border-radius:40% 60% 60% 40%/70% 30% 70% 30%;transform:translate(0,0)}50%{border-radius:60% 40% 30% 70%/40% 70% 30% 60%;transform:translate(-30px,20px)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+@keyframes bob2{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2deg)}}
+@keyframes bob3{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-12px) scale(1.03)}}
+@keyframes pulse{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:.7;transform:scale(1.3)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .7s ease,transform .7s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:.1s}.reveal-d2{transition-delay:.2s}.reveal-d3{transition-delay:.3s}.reveal-d4{transition-delay:.4s}
+
+/* Blob */
+.blob{position:absolute;filter:blur(40px);pointer-events:none;z-index:0}
+.blob-1{width:500px;height:500px;background:radial-gradient(circle,var(--alt) 0%,transparent 70%);opacity:.1;top:-150px;left:-100px;animation:morph1 15s ease-in-out infinite}
+.blob-2{width:400px;height:400px;background:radial-gradient(circle,var(--acc) 0%,transparent 70%);opacity:.08;top:-50px;right:-100px;animation:morph2 18s ease-in-out infinite}
+.blob-3{width:300px;height:300px;background:radial-gradient(circle,var(--gld) 0%,transparent 70%);opacity:.05;top:50px;left:-80px;animation:morph1 16s ease-in-out infinite}
+
+/* Shapes */
+.shape{position:absolute;pointer-events:none;z-index:0;opacity:.35}
+.shape-circle{border:1.5px solid rgba(123,97,255,.3);border-radius:50%;animation:bob 7s ease-in-out infinite}
+.shape-diamond{border:1.5px solid rgba(0,212,170,.3);border-radius:4px;transform:rotate(45deg);animation:bob2 5s ease-in-out 1s infinite}
+.dot{position:absolute;border-radius:50%;pointer-events:none;z-index:0;animation:pulse 2.5s ease-in-out infinite}
+
+/* Cursor glow */
+#cursor-glow{position:fixed;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(123,97,255,.04) 0%,transparent 70%);pointer-events:none;z-index:1;transition:left .3s ease-out,top .3s ease-out;display:none}
+
+/* Nav */
+nav{position:sticky;top:0;z-index:50;padding:16px 0;transition:all .3s}
+nav.scrolled{background:rgba(8,8,15,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--bdr)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-logo-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--alt),var(--acc));display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:#fff;animation:bob 4s ease-in-out infinite}
+.nav-logo-text{font-weight:800;font-size:20px;letter-spacing:-.5px}
+.nav-links{display:flex;align-items:center;gap:24px;font-size:14px}
+.nav-links a{color:var(--mut);transition:color .2s}.nav-links a:hover{color:var(--txt)}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;padding:10px 24px;border-radius:12px;font-weight:700;font-size:14px;background:linear-gradient(135deg,var(--alt),var(--acc));color:#fff;transition:transform .2s,filter .2s}
+.btn-primary:hover{transform:translateY(-1px);filter:brightness(1.1)}
+.btn-outline{display:inline-flex;align-items:center;gap:8px;padding:16px 28px;border-radius:14px;font-weight:700;font-size:16px;border:1px solid var(--bdr);color:var(--txt);transition:border-color .2s}
+.btn-outline:hover{border-color:var(--acc)}
+.btn-big{padding:16px 36px;font-size:16px;border-radius:14px;box-shadow:0 8px 32px rgba(0,212,170,.15)}
+
+/* Hero */
+.hero{padding:60px 0 80px;position:relative}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;position:relative;z-index:2}
+.hero-badge{display:inline-block;padding:6px 16px;border-radius:20px;background:var(--card);border:1px solid var(--bdr);font-size:13px;font-weight:600;color:var(--acc);margin-bottom:28px}
+.hero h1{font-size:clamp(36px,5vw,64px);font-weight:900;line-height:1.05;letter-spacing:-2px;margin-bottom:24px}
+.hero p{font-size:17px;color:var(--mut);max-width:480px;line-height:1.65;margin-bottom:36px}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:60px;background:var(--bdr);border-radius:16px;overflow:hidden;position:relative;z-index:2}
+.stat{background:var(--srf);padding:28px 16px;text-align:center}
+.stat-value{font-size:30px;font-weight:800;letter-spacing:-1px}
+.stat-label{font-size:12px;color:var(--mut);margin-top:4px;font-weight:500}
+
+/* Section headers */
+.section-label{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px}
+.section-title{font-size:clamp(28px,4vw,48px);font-weight:800;letter-spacing:-1px}
+.section-header{text-align:center;margin-bottom:48px}
+
+/* Tools */
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;position:relative;z-index:2}
+.tool-card{background:var(--card);border:1px solid var(--bdr);border-radius:20px;padding:28px;transition:border-color .3s,box-shadow .3s,transform .3s}
+.tool-card:hover{border-color:rgba(0,212,170,.3);box-shadow:0 0 30px rgba(0,212,170,.08);transform:translateY(-3px)}
+.tool-illust{display:flex;justify-content:center;margin-bottom:16px}
+.tool-header{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.tool-header h3{font-size:20px;font-weight:700}
+.tool-tag{font-size:10px;font-weight:700;padding:3px 10px;border-radius:8px;text-transform:uppercase;letter-spacing:1px}
+.tool-desc{font-size:14px;color:var(--mut);line-height:1.7}
+
+/* Coming soon */
+.coming-soon{background:var(--card);border:1px dashed rgba(251,191,36,.3);border-radius:20px;padding:32px;max-width:500px;margin:32px auto 0;display:flex;align-items:center;gap:24px;transition:border-color .3s}
+.coming-soon:hover{border-color:rgba(251,191,36,.5)}
+.coming-soon-text h3{font-size:18px;font-weight:700;margin-bottom:6px}
+.coming-soon-text p{font-size:13px;color:var(--mut);line-height:1.5}
+
+/* Pricing */
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;align-items:start;position:relative;z-index:2}
+.price-card{background:var(--card);border:1px solid var(--bdr);border-radius:20px;padding:28px;position:relative;transition:border-color .3s,box-shadow .3s,transform .3s}
+.price-card:hover{transform:translateY(-3px);box-shadow:0 0 30px rgba(0,212,170,.06)}
+.price-card.popular{background:linear-gradient(135deg,rgba(123,97,255,.07),rgba(0,212,170,.03));border:2px solid var(--acc)}
+.popular-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);padding:4px 16px;border-radius:20px;font-size:11px;font-weight:700;background:linear-gradient(135deg,var(--alt),var(--acc));color:#fff;text-transform:uppercase;letter-spacing:1px}
+.price-name{font-size:14px;font-weight:700;color:var(--mut);margin-bottom:8px}
+.price-name.pop{color:var(--acc)}
+.price-amount{font-size:40px;font-weight:800}
+.price-curr{font-size:14px;color:var(--mut);vertical-align:top}
+.price-per{font-size:14px;color:var(--mut)}
+.price-features{margin:20px 0 24px}
+.price-feat{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:13px}
+.price-check{color:var(--acc);flex-shrink:0}
+.price-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:12px;font-weight:700;font-size:14px;width:100%;transition:transform .2s}
+.price-btn:hover{transform:translateY(-1px)}
+.price-btn.primary{background:linear-gradient(135deg,var(--alt),var(--acc));color:#fff}
+.price-btn.outline{border:1px solid var(--bdr);color:var(--txt)}
+
+/* About */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;position:relative;z-index:2}
+.about-text p{font-size:15px;color:var(--mut);line-height:1.7;margin-bottom:16px}
+.about-meta{display:flex;gap:24px;flex-wrap:wrap;margin-top:24px}
+.about-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--mut)}
+.about-meta-item svg{color:var(--acc)}
+.about-card{background:linear-gradient(135deg,rgba(123,97,255,.04),rgba(0,212,170,.04));border:1px solid var(--bdr);border-radius:24px;padding:48px;text-align:center;transition:border-color .3s,transform .3s}
+.about-card:hover{border-color:rgba(0,212,170,.3);transform:translateY(-3px)}
+.about-flag{font-size:72px;margin-bottom:16px;animation:bob2 5s ease-in-out infinite;display:inline-block}
+.about-card h3{font-size:24px;font-weight:800;margin-bottom:8px}
+.about-card p{font-size:14px;color:var(--mut);line-height:1.6}
+
+/* CTA */
+.cta-banner{background:linear-gradient(135deg,var(--alt),var(--acc));border-radius:28px;padding:64px 40px;text-align:center;position:relative;overflow:hidden}
+.cta-banner h2{font-size:clamp(24px,4vw,40px);font-weight:800;color:#fff;margin-bottom:14px;position:relative}
+.cta-banner p{font-size:16px;color:rgba(255,255,255,.85);margin-bottom:32px;position:relative}
+.cta-banner .btn-white{display:inline-flex;align-items:center;gap:8px;padding:16px 36px;border-radius:14px;font-weight:700;font-size:16px;background:#fff;color:var(--bg);box-shadow:0 8px 24px rgba(0,0,0,.2);position:relative;transition:transform .2s}
+.cta-banner .btn-white:hover{transform:translateY(-2px)}
+.cta-circle{position:absolute;border-radius:50%;background:rgba(255,255,255,.07)}
+.cta-c1{width:200px;height:200px;top:-60px;right:-60px;animation:bob 6s ease-in-out infinite}
+.cta-c2{width:150px;height:150px;bottom:-40px;left:-40px;animation:bob2 8s ease-in-out infinite}
+
+/* Footer */
+footer{padding:40px 0;border-top:1px solid var(--bdr)}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-logo{font-weight:800;font-size:16px;margin-bottom:4px}
+.footer-sub{font-size:12px;color:var(--mut)}
+.footer-links{display:flex;gap:24px;font-size:13px}
+.footer-links a{color:var(--mut);transition:color .2s}.footer-links a:hover{color:var(--txt)}
+.footer-copy{font-size:11px;color:var(--mut)}
+
+/* Responsive */
+@media(max-width:768px){
+  .hero-grid,.about-grid{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .hero-illust{order:-1}
+  .nav-links a:not(.btn-primary){display:none}
+  .about-card{order:-1}
+  .coming-soon{flex-direction:column;text-align:center}
+}
+
+/* SVG bobs */
+.svg-bob{animation:bob 4s ease-in-out infinite}
+.svg-bob2{animation:bob2 3s ease-in-out infinite}
+.svg-bob3{animation:bob3 5s ease-in-out 1s infinite}
+.svg-pulse{animation:pulse 2s ease-in-out infinite}
 </style>
 </head>
 <body>
 
-<!-- NAV (shown on home) -->
-<nav id="main-nav">
-  <div class="nav-logo" onclick="showPage('home')">
-    <div class="nav-logo-icon"><i class="ti ti-tools"></i></div>
-    <span class="nav-logo-text">SummrTools</span>
+<!-- Cursor glow -->
+<div id="cursor-glow"></div>
+
+<!-- Nav -->
+<nav id="nav">
+  <div class="wrap nav-inner">
+    <div class="nav-logo">
+      <div class="nav-logo-mark">S</div>
+      <span class="nav-logo-text">Summr<span style="color:var(--acc)">Tools</span></span>
+    </div>
+    <div class="nav-links">
+      <a href="#tools">Tools</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#about">About</a>
+      <a href="#pricing" class="btn-primary">Get started</a>
+    </div>
   </div>
-  <div class="nav-links">
-    <a href="#tools">Tools</a>
-    <a href="#how">How it works</a>
-    <a href="#why">Why SummrTools</a>
-  </div>
-  <a href="https://summrtools.co.zw/login.html" class="nav-cta" style="margin-right:8px;background:transparent;color:var(--green);border:1px solid var(--green);">Sign in</a><a href="https://summrtools.co.zw/dashboard.html" class="nav-cta">Dashboard</a>
 </nav>
 
-<!-- HOME PAGE -->
-<div class="page active" id="page-home">
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-dots"></div>
-    <div class="hero-badge"><i class="ti ti-map-pin"></i> Built for Africans living abroad</div>
-    <h1>Tools that make <em>expat life</em> easier</h1>
-    <p class="hero-sub">SummrTools is a growing suite of practical AI-powered tools designed for African expats — from landing your next job to settling into a new country.</p>
-    <div class="hero-actions">
-      <a href="#tools" class="btn-primary"><i class="ti ti-layout-grid"></i> Browse Tools</a>
-      <a href="#why" class="btn-secondary"><i class="ti ti-info-circle"></i> Learn more</a>
-    </div>
-  </section>
+<!-- Hero -->
+<section class="hero">
+  <div class="wrap" style="position:relative">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="shape shape-circle" style="width:50px;height:50px;top:60px;left:5%"></div>
+    <div class="shape shape-diamond" style="width:30px;height:30px;top:120px;right:8%"></div>
+    <div class="dot" style="width:10px;height:10px;background:var(--acc);top:30px;right:20%"></div>
+    <div class="dot" style="width:8px;height:8px;background:var(--alt);top:200px;left:3%;animation-delay:1s"></div>
 
-  <div class="stats">
-    <div class="stat"><div class="stat-number">2</div><div class="stat-label">Tools available now</div></div>
-    <div class="stat"><div class="stat-number">5+</div><div class="stat-label">More coming soon</div></div>
-    <div class="stat"><div class="stat-number">Free</div><div class="stat-label">To use today</div></div>
-    <div class="stat"><div class="stat-number">AI</div><div class="stat-label">Powered experiences</div></div>
-  </div>
-
-  <section id="tools">
-    <div class="section-inner">
-      <p class="section-label reveal">Tools</p>
-      <h2 class="section-title reveal">Everything you need, <em>in one place</em></h2>
-      <p class="section-sub reveal">Practical, AI-powered tools built around the real challenges African expats face every day.</p>
-      <div class="tools-grid">
-        <div class="tool-card reveal" onclick="window.location.href='https://summrtools.co.zw/login.html'">
-          <div class="tool-card-accent"></div>
-          <div class="tool-icon"><i class="ti ti-language"></i></div>
-          <div class="tool-name">Mzizi</div>
-          <div class="tool-desc">Learn Polish the way an African expat actually needs to — practical phrases, cultural context, and pronunciation guides built for your experience.</div>
-          <div class="tool-tags"><span class="tool-tag">Language</span><span class="tool-tag">Poland</span><span class="tool-tag">AI-powered</span></div>
-          <span class="tool-link">Get started <i class="ti ti-arrow-right"></i></span>
-        </div>
-        <div class="tool-card reveal" onclick="window.location.href='https://summrtools.co.zw/login.html'">
-          <div class="tool-card-accent"></div>
-          <div class="tool-icon"><i class="ti ti-file-cv"></i></div>
-          <div class="tool-name">CV Builder</div>
-          <div class="tool-desc">Create a professional, tailored CV in minutes. AI helps you craft the right words for the right job — no templates, just results.</div>
-          <div class="tool-tags"><span class="tool-tag">Career</span><span class="tool-tag">AI-powered</span><span class="tool-tag">Free</span></div>
-          <span class="tool-link">Get started — sign in <i class="ti ti-arrow-right"></i></span>
-        </div>
-        <div class="tool-card reveal" onclick="window.location.href='https://summrtools.co.zw/login.html'">
-          <div class="tool-card-accent"></div>
-          <div class="coming-badge" style="background:var(--green-light);color:var(--green-dark);border:1px solid var(--border-strong);">Elite</div>
-          <div class="tool-icon"><i class="ti ti-world"></i></div>
-          <div class="tool-name">Global Move Advisor</div>
-          <div class="tool-desc">AI-powered relocation guide for Zimbabwean EU residents — visa routes, job markets, cost breakdowns and personalised checklists for any country.</div>
-          <div class="tool-tags"><span class="tool-tag">Relocation</span><span class="tool-tag">Immigration</span><span class="tool-tag">Careers</span></div>
-          <div class="tool-link">Get started <i class="ti ti-arrow-right"></i></div>
-        </div>
-        <div class="tool-card coming-soon reveal">
-          <div class="coming-badge">Coming soon</div>
-          <div class="tool-icon"><i class="ti ti-home"></i></div>
-          <div class="tool-name">Housing Guide</div>
-          <div class="tool-desc">Navigate renting in a new country — leases, rights, red flags, and key phrases explained for African expats.</div>
-          <div class="tool-tags"><span class="tool-tag">Housing</span><span class="tool-tag">Expat life</span></div>
-        </div>
-        <div class="tool-card coming-soon reveal">
-          <div class="coming-badge">Coming soon</div>
-          <div class="tool-icon"><i class="ti ti-transfer"></i></div>
-          <div class="tool-name">Remittance Finder</div>
-          <div class="tool-desc">Compare real-time rates across money transfer services for popular African corridors.</div>
-          <div class="tool-tags"><span class="tool-tag">Finance</span><span class="tool-tag">Transfers</span></div>
+    <div class="hero-grid">
+      <div>
+        <div class="reveal"><div class="hero-badge">✨ Built for the Zimbabwean diaspora</div></div>
+        <div class="reveal reveal-d1"><h1>Your next move<br>starts with the <span class="gt">right tools</span></h1></div>
+        <div class="reveal reveal-d2"><p>AI-powered CVs, cover letters, and relocation guidance — built specifically for Zimbabweans building careers and lives abroad.</p></div>
+        <div class="reveal reveal-d3 hero-btns">
+          <a href="#pricing" class="btn-primary btn-big">Start building →</a>
+          <a href="#tools" class="btn-outline">Explore tools ›</a>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section id="how" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
-    <div class="section-inner">
-      <p class="section-label reveal">How it works</p>
-      <h2 class="section-title reveal">Simple, fast, <em>useful</em></h2>
-      <p class="section-sub reveal">Create a free account in seconds and get instant access to all tools.</p>
-      <div class="how-grid">
-        <div class="how-step reveal"><div class="step-number">01</div><div class="step-title">Pick a tool</div><div class="step-desc">Browse the tools and open whichever fits your current need.</div></div>
-        <div class="how-step reveal"><div class="step-number">02</div><div class="step-title">Let AI do the work</div><div class="step-desc">Each tool is powered by AI built around real expat scenarios.</div></div>
-        <div class="how-step reveal"><div class="step-number">03</div><div class="step-title">Get your result</div><div class="step-desc">Download, copy, or use your output right away. Fast and practical.</div></div>
-        <div class="how-step reveal"><div class="step-number">04</div><div class="step-title">Come back for more</div><div class="step-desc">New tools are added regularly. SummrTools grows with your journey.</div></div>
+      <div class="reveal reveal-d2 hero-illust">
+        <svg viewBox="0 0 400 320" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:400px">
+          <rect x="80" y="220" width="240" height="12" rx="6" fill="#151528" stroke="#252545"/>
+          <rect x="140" y="232" width="12" height="60" rx="3" fill="#252545"/>
+          <rect x="248" y="232" width="12" height="60" rx="3" fill="#252545"/>
+          <g class="svg-bob">
+            <rect x="120" y="160" width="160" height="60" rx="8" fill="#151528" stroke="rgba(123,97,255,.35)" stroke-width="1.5"/>
+            <rect x="132" y="170" width="136" height="40" rx="4" fill="rgba(123,97,255,.1)"/>
+            <rect x="140" y="178" width="80" height="3" rx="1.5" fill="rgba(0,212,170,.35)"/>
+            <rect x="140" y="186" width="60" height="3" rx="1.5" fill="rgba(123,97,255,.25)"/>
+            <rect x="140" y="194" width="100" height="3" rx="1.5" fill="rgba(0,212,170,.25)"/>
+            <rect x="140" y="202" width="45" height="3" rx="1.5" fill="rgba(123,97,255,.18)"/>
+          </g>
+          <g class="svg-bob">
+            <circle cx="200" cy="110" r="28" fill="rgba(123,97,255,.2)" stroke="#7b61ff" stroke-width="2"/>
+            <circle cx="192" cy="106" r="3" fill="#e8e8f4"/><circle cx="208" cy="106" r="3" fill="#e8e8f4"/>
+            <path d="M193 116 Q200 122 207 116" stroke="#00d4aa" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M200 138 L200 175" stroke="#7b61ff" stroke-width="3" stroke-linecap="round"/>
+            <path d="M200 150 L165 170" stroke="#7b61ff" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M200 150 L235 170" stroke="#7b61ff" stroke-width="2.5" stroke-linecap="round"/>
+          </g>
+          <g class="svg-bob2">
+            <rect x="300" y="80" width="60" height="80" rx="6" fill="#151528" stroke="rgba(0,212,170,.3)" stroke-width="1.5"/>
+            <rect x="310" y="92" width="30" height="3" rx="1.5" fill="rgba(0,212,170,.4)"/>
+            <rect x="310" y="100" width="40" height="3" rx="1.5" fill="rgba(123,97,255,.25)"/>
+            <rect x="310" y="108" width="35" height="3" rx="1.5" fill="rgba(0,212,170,.2)"/>
+            <rect x="310" y="120" width="40" height="3" rx="1.5" fill="rgba(123,97,255,.2)"/>
+            <rect x="310" y="128" width="25" height="3" rx="1.5" fill="rgba(0,212,170,.3)"/>
+            <text x="330" y="150" text-anchor="middle" font-size="8" fill="#00d4aa" font-weight="700">CV</text>
+          </g>
+          <g class="svg-bob3"><polygon points="50,120 56,138 74,138 60,148 65,166 50,155 35,166 40,148 26,138 44,138" fill="rgba(251,191,36,.25)" stroke="#fbbf24"/></g>
+          <circle cx="320" cy="60" r="5" fill="rgba(0,212,170,.35)" class="svg-pulse"/>
+          <circle cx="70" cy="80" r="4" fill="rgba(123,97,255,.35)" class="svg-pulse" style="animation-delay:.5s"/>
+        </svg>
       </div>
     </div>
-  </section>
 
-  <section id="why">
-    <div class="section-inner">
-      <p class="section-label reveal">Why SummrTools</p>
-      <h2 class="section-title reveal">Built from <em>lived experience</em></h2>
-      <p class="section-sub reveal">These tools exist because we've lived the expat life — and built what we wished existed.</p>
-      <div class="why-grid">
-        <div class="why-card reveal"><i class="ti ti-world why-icon"></i><div class="why-title">Made for Africans abroad</div><div class="why-desc">Not generic expat tools — every feature is designed with the African expat experience in mind.</div></div>
-        <div class="why-card reveal"><i class="ti ti-bolt why-icon"></i><div class="why-title">Fast and practical</div><div class="why-desc">No bloat. Open a tool, get what you need, move on with your life.</div></div>
-        <div class="why-card reveal"><i class="ti ti-sparkles why-icon"></i><div class="why-title">AI that understands context</div><div class="why-desc">Our tools use AI that understands the cultural and practical context of life as an African expat.</div></div>
-        <div class="why-card reveal"><i class="ti ti-trending-up why-icon"></i><div class="why-title">Always growing</div><div class="why-desc">New tools are added based on real problems. Your feedback shapes what comes next.</div></div>
-      </div>
-    </div>
-  </section>
-
-  <section style="padding:5rem 2rem;">
-    <div class="section-inner">
-            <!-- PRICING -->
-      <section id="pricing">
-        <div class="section-inner">
-          <div class="section-label reveal">Pricing</div>
-          <h2 class="section-title reveal">Simple, <em>honest</em> pricing</h2>
-          <p class="section-sub reveal">Start free — upgrade when you need more. No hidden fees, cancel anytime.</p>
-          <div class="pricing-grid">
-
-            <div class="pricing-card reveal">
-              <div class="pricing-name">Free</div>
-              <div class="pricing-price">0 <span>PLN</span></div>
-              <div class="pricing-period">forever</div>
-              <ul class="pricing-features">
-                <li><i class="ti ti-check"></i> 3 CV credits</li>
-                <li><i class="ti ti-check"></i> Full Mzizi access</li>
-                <li><i class="ti ti-check"></i> Dashboard access</li>
-              </ul>
-              <a href="https://summrtools.co.zw/login.html" class="pricing-btn">Get started free</a>
-            </div>
-
-            <div class="pricing-card reveal">
-              <div class="pricing-name">Starter</div>
-              <div class="pricing-price">9.99 <span>PLN</span></div>
-              <div class="pricing-period">per month</div>
-              <ul class="pricing-features">
-                <li><i class="ti ti-check"></i> 20 CV credits / month</li>
-                <li><i class="ti ti-check"></i> Cover letter generator</li>
-                <li><i class="ti ti-check"></i> Full Mzizi access</li>
-                <li><i class="ti ti-check"></i> ATS keyword scoring</li>
-              </ul>
-              <a href="https://summrtools.co.zw/login.html" class="pricing-btn">Get started</a>
-            </div>
-
-            <div class="pricing-card popular reveal">
-              <div class="pricing-popular-badge">Most popular</div>
-              <div class="pricing-name">Pro</div>
-              <div class="pricing-price">19.99 <span>PLN</span></div>
-              <div class="pricing-period">per month</div>
-              <ul class="pricing-features">
-                <li><i class="ti ti-check"></i> 60 CV credits / month</li>
-                <li><i class="ti ti-check"></i> Cover letter generator</li>
-                <li><i class="ti ti-check"></i> Full Mzizi access</li>
-                <li><i class="ti ti-check"></i> ATS keyword scoring</li>
-                <li><i class="ti ti-check"></i> CV history & saved versions</li>
-              </ul>
-              <a href="https://summrtools.co.zw/login.html" class="pricing-btn primary">Get started</a>
-            </div>
-
-            <div class="pricing-card reveal">
-              <div class="pricing-name">Elite</div>
-              <div class="pricing-price">39.99 <span>PLN</span></div>
-              <div class="pricing-period">per month</div>
-              <ul class="pricing-features">
-                <li><i class="ti ti-check"></i> Unlimited CV credits</li>
-                <li><i class="ti ti-check"></i> All Pro features</li>
-                <li><i class="ti ti-check"></i> Global Move Advisor</li>
-                <li><i class="ti ti-check"></i> Early access to new tools</li>
-                <li><i class="ti ti-check"></i> Priority support</li>
-              </ul>
-              <a href="https://summrtools.co.zw/login.html" class="pricing-btn">Get started</a>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-<div class="cta-section reveal">
-        <h2>Ready to make expat life <em>easier?</em></h2>
-        <p>Create a free account and start using your tools straight away.</p>
-        <a href="https://summrtools.co.zw/login.html" class="btn-white"><i class="ti ti-user-plus"></i> Create free account</a>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="footer-logo" onclick="showPage('home')">
-      <div class="footer-logo-icon"><i class="ti ti-tools"></i></div>
-      <span class="footer-logo-text">SummrTools</span>
-    </div>
-    <div class="footer-copy">© 2026 SummrTools · Built by Alexander Designs</div>
-    <div class="footer-links"><a href="#tools">Tools</a><a href="#why">About</a></div>
-  </footer>
-</div>
-
-<!-- MZIZI PAGE -->
-<div class="page" id="page-mzizi">
-  <div class="tool-page-header">
-    <button class="back-btn" onclick="showPage('home')"><i class="ti ti-arrow-left"></i> Back</button>
-    <span style="font-size:14px;color:var(--text-secondary);">/</span>
-    <span style="font-size:15px;font-weight:500;">Mzizi — Polish for African Expats</span>
-  </div>
-  <div class="tool-page-content">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;">
-      <div style="display:flex;align-items:center;gap:10px;">
-        <div style="width:36px;height:36px;border-radius:8px;background:var(--green);display:flex;align-items:center;justify-content:center;"><i class="ti ti-language" style="color:#fff;font-size:18px;"></i></div>
-        <div><div style="font-size:18px;font-weight:500;">Mzizi</div><div style="font-size:12px;color:var(--text-muted);">Polish for African expats</div></div>
-      </div>
-      <div class="mz-streak"><i class="ti ti-flame" style="color:#EF9F27;font-size:16px;"></i> 4 day streak</div>
-    </div>
-    <div class="mz-daily">
-      <div class="mz-daily-badge">Phrase of the day</div>
-      <div style="flex:1;"><div class="mz-daily-pl">Czy mogę prosić o paragon?</div><div class="mz-daily-en">Can I get a receipt, please?</div></div>
-      <button class="mz-speak-btn" onclick="mzSpeak('Czy mogę prosić o paragon?',this)"><i class="ti ti-volume"></i></button>
-    </div>
-    <div class="mz-tabs">
-      <button class="mz-tab active" onclick="mzSwitchTab('phrases',this)">Phrases</button>
-      <button class="mz-tab" onclick="mzSwitchTab('community',this)">Community tips</button>
-    </div>
-    <div id="mz-phrases-tab">
-      <div class="mz-cats">
-        <button class="mz-cat active" onclick="mzFilter('all',this)">All</button>
-        <button class="mz-cat" onclick="mzFilter('shop',this)">Shopping</button>
-        <button class="mz-cat" onclick="mzFilter('gov',this)">Urząd</button>
-        <button class="mz-cat" onclick="mzFilter('health',this)">Health</button>
-        <button class="mz-cat" onclick="mzFilter('social',this)">Social</button>
-        <button class="mz-cat" onclick="mzFilter('transport',this)">Transport</button>
-      </div>
-      <div id="mz-list"></div>
-    </div>
-    <div id="mz-community-tab" style="display:none;">
-      <div class="mz-comm-card"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><div class="mz-av">TM</div><div><div style="font-size:13px;font-weight:500;">Tonderai M.</div><div style="font-size:12px;color:var(--text-muted);">Zimbabwe · Warsaw</div></div></div><div style="font-size:15px;font-weight:500;margin-bottom:2px;">Proszę wystawić fakturę na firmę.</div><div style="font-size:13px;color:var(--text-secondary);">Essential if you're freelancing or need work expenses reimbursed. Saved me so much confusion at shops!</div><div style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text-muted);margin-top:8px;"><i class="ti ti-heart" style="color:#D85A30;font-size:14px;"></i> 24 helpful</div></div>
-      <div class="mz-comm-card"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><div class="mz-av">AN</div><div><div style="font-size:13px;font-weight:500;">Adaeze N.</div><div style="font-size:12px;color:var(--text-muted);">Nigeria · Kraków</div></div></div><div style="font-size:15px;font-weight:500;margin-bottom:2px;">Czy jest kolejka z numerkiem?</div><div style="font-size:13px;color:var(--text-secondary);">In Polish offices you need to take a ticket from a machine. Nobody tells you this and you'll stand there forever otherwise.</div><div style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text-muted);margin-top:8px;"><i class="ti ti-heart" style="color:#D85A30;font-size:14px;"></i> 41 helpful</div></div>
-      <div class="mz-comm-card"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><div class="mz-av">KO</div><div><div style="font-size:13px;font-weight:500;">Kofi O.</div><div style="font-size:12px;color:var(--text-muted);">Ghana · Wrocław</div></div></div><div style="font-size:15px;font-weight:500;margin-bottom:2px;">Nie mówię dobrze po polsku, czy możemy po angielsku?</div><div style="font-size:13px;color:var(--text-secondary);">Most younger Poles will switch immediately. Don't be shy about it.</div><div style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text-muted);margin-top:8px;"><i class="ti ti-heart" style="color:#D85A30;font-size:14px;"></i> 67 helpful</div></div>
+    <div class="reveal reveal-d4 stats">
+      <div class="stat"><div class="stat-value"><span class="gt">2,400+</span></div><div class="stat-label">CVs generated</div></div>
+      <div class="stat"><div class="stat-value"><span class="gt">38</span></div><div class="stat-label">Countries covered</div></div>
+      <div class="stat"><div class="stat-value"><span class="gt">94%</span></div><div class="stat-label">User satisfaction</div></div>
+      <div class="stat"><div class="stat-value"><span class="gt">12min</span></div><div class="stat-label">Avg. time to CV</div></div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- CV PAGE -->
-<div class="page" id="page-cv">
-  <div class="tool-page-header">
-    <button class="back-btn" onclick="showPage('home')"><i class="ti ti-arrow-left"></i> Back</button>
-    <span style="font-size:14px;color:var(--text-secondary);">/</span>
-    <span style="font-size:15px;font-weight:500;">AI CV Builder</span>
+<!-- Tools -->
+<section id="tools" style="padding:80px 0;position:relative">
+  <div class="wrap">
+    <div class="blob blob-2" style="top:0;right:-80px;width:300px;height:300px;opacity:.06"></div>
+    <div class="reveal section-header">
+      <div class="section-label" style="color:var(--acc)">Tools</div>
+      <h2 class="section-title">Everything you need to <span class="gt">land and relocate</span></h2>
+    </div>
+    <div class="tools-grid">
+      <div class="reveal tool-card">
+        <div class="tool-illust">
+          <svg viewBox="0 0 180 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:160px">
+            <g class="svg-bob"><rect x="25" y="10" width="90" height="120" rx="8" fill="#151528" stroke="rgba(123,97,255,.3)" stroke-width="1.5"/><circle cx="52" cy="38" r="11" fill="rgba(123,97,255,.2)" stroke="#7b61ff" stroke-width="1.5"/><rect x="72" y="33" width="32" height="4" rx="2" fill="rgba(0,212,170,.35)"/><rect x="72" y="42" width="22" height="3" rx="1.5" fill="rgba(123,97,255,.2)"/><rect x="36" y="60" width="68" height="3" rx="1.5" fill="rgba(0,212,170,.2)"/><rect x="36" y="70" width="55" height="3" rx="1.5" fill="rgba(123,97,255,.15)"/><rect x="36" y="80" width="68" height="3" rx="1.5" fill="rgba(0,212,170,.15)"/><rect x="36" y="90" width="45" height="3" rx="1.5" fill="rgba(123,97,255,.12)"/><rect x="36" y="105" width="68" height="3" rx="1.5" fill="rgba(0,212,170,.1)"/><rect x="36" y="115" width="50" height="3" rx="1.5" fill="rgba(123,97,255,.1)"/></g>
+            <g class="svg-bob2"><circle cx="140" cy="28" r="16" fill="rgba(0,212,170,.15)" stroke="#00d4aa" stroke-width="1.5"/><path d="M132 28 L138 34 L148 21" stroke="#00d4aa" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+            <circle cx="155" cy="75" r="4" fill="rgba(251,191,36,.3)" class="svg-pulse"/>
+          </svg>
+        </div>
+        <div class="tool-header"><h3>CV Builder</h3><span class="tool-tag" style="background:rgba(123,97,255,.12);color:var(--alt)">All plans</span></div>
+        <p class="tool-desc">AI-powered CV tailored for international job markets. ATS-optimized, instant generation, download-ready PDFs.</p>
+      </div>
+      <div class="reveal reveal-d1 tool-card">
+        <div class="tool-illust">
+          <svg viewBox="0 0 180 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:160px">
+            <g class="svg-bob2"><rect x="30" y="15" width="100" height="120" rx="8" fill="#151528" stroke="rgba(0,212,170,.3)" stroke-width="1.5"/><rect x="44" y="32" width="72" height="4" rx="2" fill="rgba(0,212,170,.4)"/><rect x="44" y="44" width="55" height="3" rx="1.5" fill="rgba(123,97,255,.2)"/><rect x="44" y="54" width="68" height="3" rx="1.5" fill="rgba(0,212,170,.18)"/><rect x="44" y="64" width="62" height="3" rx="1.5" fill="rgba(123,97,255,.15)"/><rect x="44" y="74" width="68" height="3" rx="1.5" fill="rgba(0,212,170,.15)"/><rect x="44" y="84" width="48" height="3" rx="1.5" fill="rgba(123,97,255,.12)"/><rect x="44" y="100" width="36" height="3" rx="1.5" fill="rgba(0,212,170,.2)"/><rect x="44" y="110" width="55" height="3" rx="1.5" fill="rgba(123,97,255,.15)"/></g>
+            <g class="svg-bob3"><line x1="148" y1="40" x2="165" y2="12" stroke="#7b61ff" stroke-width="3" stroke-linecap="round"/><circle cx="148" cy="40" r="3" fill="#00d4aa"/></g>
+            <circle cx="20" cy="55" r="3" fill="rgba(123,97,255,.3)" class="svg-pulse"/>
+          </svg>
+        </div>
+        <div class="tool-header"><h3>Cover Letter Generator</h3><span class="tool-tag" style="background:rgba(0,212,170,.12);color:var(--acc)">All plans</span></div>
+        <p class="tool-desc">Personalized cover letters matched to any job description. Multiple tones, industry-specific language.</p>
+      </div>
+      <div class="reveal reveal-d2 tool-card">
+        <div class="tool-illust">
+          <svg viewBox="0 0 180 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:160px">
+            <g class="svg-bob"><circle cx="80" cy="80" r="50" fill="#151528" stroke="rgba(0,212,170,.3)" stroke-width="1.5"/><ellipse cx="80" cy="80" rx="27" ry="50" fill="none" stroke="rgba(0,212,170,.15)"/><ellipse cx="80" cy="80" rx="50" ry="18" fill="none" stroke="rgba(0,212,170,.12)"/><line x1="30" y1="80" x2="130" y2="80" stroke="rgba(0,212,170,.1)"/><line x1="80" y1="30" x2="80" y2="130" stroke="rgba(0,212,170,.1)"/></g>
+            <g class="svg-bob2"><circle cx="62" cy="58" r="5" fill="#7b61ff" opacity=".7"/><circle cx="62" cy="58" r="2" fill="#fff"/></g>
+            <g class="svg-bob3"><circle cx="105" cy="72" r="5" fill="#fbbf24" opacity=".7"/><circle cx="105" cy="72" r="2" fill="#fff"/></g>
+            <g class="svg-bob"><circle cx="75" cy="102" r="5" fill="#00d4aa" opacity=".7"/><circle cx="75" cy="102" r="2" fill="#fff"/></g>
+            <g class="svg-bob2"><path d="M145 35 L160 30 L155 45 Z" fill="rgba(123,97,255,.4)" stroke="#7b61ff"/><line x1="145" y1="35" x2="130" y2="43" stroke="rgba(123,97,255,.3)" stroke-dasharray="3 3"/></g>
+          </svg>
+        </div>
+        <div class="tool-header"><h3>Global Move Advisor</h3><span class="tool-tag" style="background:rgba(251,191,36,.12);color:var(--gld)">Elite</span></div>
+        <p class="tool-desc">AI relocation guidance for any country. Visa pathways, cost of living, job markets, community connections.</p>
+      </div>
+    </div>
+    <div class="reveal reveal-d3 coming-soon">
+      <svg viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:140px;flex-shrink:0">
+        <g class="svg-bob3"><rect x="30" y="20" width="100" height="90" rx="18" fill="#151528" stroke="rgba(251,191,36,.3)" stroke-width="1.5"/><text x="80" y="65" text-anchor="middle" font-size="28">🚀</text><text x="80" y="95" text-anchor="middle" font-size="9" fill="#8080a8" font-weight="600" font-family="Inter,system-ui">COMING SOON</text></g>
+        <circle cx="25" cy="35" r="4" fill="rgba(123,97,255,.3)" class="svg-pulse"/><circle cx="140" cy="45" r="3" fill="rgba(0,212,170,.3)" class="svg-pulse" style="animation-delay:.5s"/>
+      </svg>
+      <div class="coming-soon-text">
+        <div style="font-size:12px;font-weight:700;color:var(--gld);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Coming soon</div>
+        <h3>Interview Coach</h3>
+        <p>AI-powered mock interviews tailored to your target role and country. Practice, get feedback, land the job.</p>
+      </div>
+    </div>
   </div>
-  <div class="tool-page-content">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;">
-      <div style="width:36px;height:36px;border-radius:8px;background:var(--green);display:flex;align-items:center;justify-content:center;"><i class="ti ti-file-cv" style="color:#fff;font-size:18px;"></i></div>
-      <div><div style="font-size:18px;font-weight:500;">AI CV Builder</div><div style="font-size:12px;color:var(--text-muted);">Fill in your details — AI does the rest</div></div>
+</section>
+
+<!-- Pricing -->
+<section id="pricing" style="padding:80px 0;position:relative">
+  <div class="wrap">
+    <div class="blob blob-3"></div>
+    <div class="reveal section-header">
+      <div class="section-label" style="color:var(--gld)">Pricing</div>
+      <h2 class="section-title">Pick your <span class="gt">power level</span></h2>
+      <p style="font-size:15px;color:var(--mut);margin-top:12px">Prices in PLN. Cancel anytime.</p>
     </div>
-    <div class="cv-form">
-      <div class="cv-field"><label class="cv-label">Full name</label><input class="cv-input" id="cv-name" placeholder="e.g. Alexander Chifamba"></div>
-      <div class="cv-field"><label class="cv-label">Target role</label><input class="cv-input" id="cv-role" placeholder="e.g. Technical Support Advisor"></div>
-      <div class="cv-field"><label class="cv-label">Email</label><input class="cv-input" id="cv-email" placeholder="you@email.com"></div>
-      <div class="cv-field"><label class="cv-label">Phone & Location</label><input class="cv-input" id="cv-contact" placeholder="+48 884 390 611 · Warsaw, Poland"></div>
-      <div class="cv-field full"><label class="cv-label">Work experience</label><textarea class="cv-input" id="cv-exp" placeholder="e.g. Implementation Consultant at Justt AI (2022–present) — onboarded enterprise clients, resolved technical issues, managed merchant communications..."></textarea></div>
-      <div class="cv-field full"><label class="cv-label">Education</label><textarea class="cv-input" id="cv-edu" placeholder="e.g. Masters in Process & Project Management — VIZJA University, Warsaw (2025)&#10;Bachelor of Business Management & IT — Catholic University of Zimbabwe (2022)"></textarea></div>
-      <div class="cv-field full"><label class="cv-label">Skills & tools</label><input class="cv-input" id="cv-skills" placeholder="e.g. Microsoft 365, Zendesk, Jira, Salesforce, remote work, customer support"></div>
-      <div class="cv-field full"><label class="cv-label">Job you are applying for (optional — improves tailoring)</label><input class="cv-input" id="cv-job" placeholder="e.g. Technical Support Advisor at Concentrix"></div>
-    </div>
-    <button class="btn-primary" id="cv-btn" onclick="cvGenerate()"><i class="ti ti-sparkles"></i> Generate my CV</button>
-    <div class="cv-result-box" id="cv-result-box">
-      <div class="cv-result-text" id="cv-result-text"></div>
-      <button class="cv-copy-btn" onclick="cvCopy()"><i class="ti ti-copy"></i> Copy CV</button>
+    <div class="pricing-grid">
+      <div class="reveal price-card">
+        <div class="price-name">Starter</div>
+        <div style="margin-bottom:20px"><span class="price-amount">Free</span></div>
+        <div class="price-features">
+          <div class="price-feat"><span class="price-check">✓</span> 1 CV generation</div>
+          <div class="price-feat"><span class="price-check">✓</span> Basic formatting</div>
+          <div class="price-feat"><span class="price-check">✓</span> PDF download</div>
+        </div>
+        <a href="#" class="price-btn outline">Get started →</a>
+      </div>
+      <div class="reveal reveal-d1 price-card">
+        <div class="price-name">Standard</div>
+        <div style="margin-bottom:20px"><span class="price-curr">PLN</span><span class="price-amount">29</span><span class="price-per">/mo</span></div>
+        <div class="price-features">
+          <div class="price-feat"><span class="price-check">✓</span> 5 CV generations/mo</div>
+          <div class="price-feat"><span class="price-check">✓</span> Cover letter generator</div>
+          <div class="price-feat"><span class="price-check">✓</span> ATS optimization</div>
+          <div class="price-feat"><span class="price-check">✓</span> Multiple templates</div>
+        </div>
+        <a href="#" class="price-btn outline">Start building →</a>
+      </div>
+      <div class="reveal reveal-d2 price-card popular">
+        <div class="popular-badge">Most popular</div>
+        <div class="price-name pop">Pro</div>
+        <div style="margin-bottom:20px"><span class="price-curr">PLN</span><span class="price-amount">59</span><span class="price-per">/mo</span></div>
+        <div class="price-features">
+          <div class="price-feat"><span class="price-check">✓</span> Unlimited CVs</div>
+          <div class="price-feat"><span class="price-check">✓</span> Unlimited cover letters</div>
+          <div class="price-feat"><span class="price-check">✓</span> Priority AI</div>
+          <div class="price-feat"><span class="price-check">✓</span> LinkedIn optimization</div>
+          <div class="price-feat"><span class="price-check">✓</span> Interview prep</div>
+        </div>
+        <a href="#" class="price-btn primary">Go Pro →</a>
+      </div>
+      <div class="reveal reveal-d3 price-card">
+        <div class="price-name">Elite</div>
+        <div style="margin-bottom:20px"><span class="price-curr">PLN</span><span class="price-amount">99</span><span class="price-per">/mo</span></div>
+        <div class="price-features">
+          <div class="price-feat"><span class="price-check">✓</span> Everything in Pro</div>
+          <div class="price-feat"><span class="price-check">✓</span> Global Move Advisor</div>
+          <div class="price-feat"><span class="price-check">✓</span> Relocation roadmaps</div>
+          <div class="price-feat"><span class="price-check">✓</span> 1-on-1 AI consultation</div>
+          <div class="price-feat"><span class="price-check">✓</span> Priority support</div>
+        </div>
+        <a href="#" class="price-btn outline">Go Elite →</a>
+      </div>
     </div>
   </div>
-</div>
+</section>
+
+<!-- About -->
+<section id="about" style="padding:80px 0;position:relative">
+  <div class="wrap">
+    <div class="shape shape-circle" style="width:40px;height:40px;top:30px;left:5%"></div>
+    <div class="reveal about-grid">
+      <div>
+        <div class="section-label" style="color:var(--acc)">About</div>
+        <h2 style="font-size:clamp(28px,4vw,42px);font-weight:800;letter-spacing:-1px;margin-bottom:16px">Built by the diaspora,<br><span class="gt">for the diaspora</span></h2>
+        <div class="about-text">
+          <p>SummrTools was born from a simple frustration: Zimbabweans moving abroad deserve tools that understand their journey. Not generic templates — real, practical tools for building a career in a new country.</p>
+          <p>From tailoring your CV for European job markets to navigating visa pathways — we're building the toolkit we wish existed when we made our own moves.</p>
+        </div>
+        <div class="about-meta">
+          <div class="about-meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Warsaw, Poland</div>
+          <div class="about-meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> Made in Zimbabwe</div>
+          <div class="about-meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Community-first</div>
+        </div>
+      </div>
+      <div class="about-card">
+        <div class="about-flag">🇿🇼</div>
+        <h3>Kumusha, everywhere</h3>
+        <p>Whether you're in London, Warsaw, Joburg, or Sydney — SummrTools helps you bring your best self to every application and new chapter.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="padding:40px 0 80px">
+  <div class="wrap">
+    <div class="reveal cta-banner">
+      <div class="cta-circle cta-c1"></div>
+      <div class="cta-circle cta-c2"></div>
+      <h2>Ready to build something great?</h2>
+      <p>Join thousands of Zimbabweans using SummrTools to land jobs and navigate new countries.</p>
+      <a href="#pricing" class="btn-white">Get started free →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="wrap footer-inner">
+    <div>
+      <div class="footer-logo">Summr<span style="color:var(--acc)">Tools</span></div>
+      <div class="footer-sub">Tools for the Zimbabwean diaspora</div>
+    </div>
+    <div class="footer-links">
+      <a href="#tools">Tools</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#about">About</a>
+    </div>
+    <div class="footer-copy">© 2026 SummrTools</div>
+  </div>
+</footer>
 
 <script>
-// API calls route through secure server proxy
+// Nav scroll effect
+var nav = document.getElementById('nav');
+window.addEventListener('scroll', function() {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+});
 
-// PAGE NAVIGATION
-function showPage(page) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('main-nav').style.display = page === 'home' ? 'flex' : 'none';
-  document.getElementById('page-' + page).classList.add('active');
-  window.scrollTo(0, 0);
-  if (page === 'mzizi') mzRender('all');
-}
-
-// SCROLL REVEAL
-const revealObserver = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-// ============ MZIZI ============
-const mzPhrases = [
-  { cat: 'shop', pl: 'Ile to kosztuje?', en: 'How much does this cost?', pronounce: 'EE-leh toh KOSH-too-yeh', breakdown: [['Ile','EE-leh'],['to','toh'],['kosztuje?','KOSH-too-yeh']] },
-  { cat: 'gov', pl: 'Mam wizytę na godzinę dziesiątą.', en: "I have an appointment at 10 o'clock.", pronounce: 'Mahm VEE-zi-teh nah go-JEE-neh jeh-SHAN-toh', breakdown: [['Mam','Mahm'],['wizytę','VEE-zi-teh'],['na','nah'],['godzinę','go-JEE-neh'],['dziesiątą','jeh-SHAN-toh']] },
-  { cat: 'health', pl: 'Potrzebuję lekarza pierwszego kontaktu.', en: 'I need a GP (primary care doctor).', pronounce: 'pot-CHEH-boo-yeh leh-KAH-zha PYER-vsheh-go kon-TAK-too', breakdown: [['Potrzebuję','pot-CHEH-boo-yeh'],['lekarza','leh-KAH-zha'],['pierwszego','PYER-vsheh-go'],['kontaktu','kon-TAK-too']] },
-  { cat: 'social', pl: 'Skąd jesteś?', en: 'Where are you from?', pronounce: 'Skond YES-tesh', breakdown: [['Skąd','Skond'],['jesteś?','YES-tesh']] },
-  { cat: 'transport', pl: 'Poproszę bilet do centrum.', en: 'A ticket to the city centre, please.', pronounce: 'po-PRO-sheh BEE-let doh TSEN-troom', breakdown: [['Poproszę','po-PRO-sheh'],['bilet','BEE-let'],['do','doh'],['centrum','TSEN-troom']] },
-  { cat: 'shop', pl: 'Czy mogę zapłacić kartą?', en: 'Can I pay by card?', pronounce: 'Chih MO-geh zah-PWAH-cheech KAR-toh', breakdown: [['Czy','Chih'],['mogę','MO-geh'],['zapłacić','zah-PWAH-cheech'],['kartą?','KAR-toh']] },
-  { cat: 'gov', pl: 'Czy mogę dostać tłumacza?', en: 'Can I get an interpreter?', pronounce: 'Chih MO-geh DOS-tach twoo-MAH-cha', breakdown: [['Czy','Chih'],['mogę','MO-geh'],['dostać','DOS-tach'],['tłumacza?','twoo-MAH-cha']] },
-  { cat: 'social', pl: 'Miło mi cię poznać.', en: 'Nice to meet you.', pronounce: 'MEE-woh mee cheh POZ-nach', breakdown: [['Miło','MEE-woh'],['mi','mee'],['cię','cheh'],['poznać','POZ-nach']] }
-];
-
-let mzCurrentCat = 'all';
-let mzVoice = null;
-
-function mzInitVoice() {
-  const voices = speechSynthesis.getVoices();
-  mzVoice = voices.find(v => v.lang === 'pl-PL') || voices.find(v => v.lang.startsWith('pl'));
-}
-if (speechSynthesis.onvoiceschanged !== undefined) speechSynthesis.onvoiceschanged = mzInitVoice;
-setTimeout(mzInitVoice, 800);
-
-function mzSpeak(text, btn) {
-  mzInitVoice();
-  speechSynthesis.cancel();
-  if (!mzVoice) { alert('Polish voice not available on this browser. Try Chrome on desktop.'); return; }
-  const u = new SpeechSynthesisUtterance(text);
-  u.voice = mzVoice; u.lang = 'pl-PL'; u.rate = 0.82;
-  if (btn) { btn.classList.add('speaking'); u.onend = () => btn.classList.remove('speaking'); u.onerror = () => btn.classList.remove('speaking'); }
-  speechSynthesis.speak(u);
-}
-
-function mzCatLabel(c) { return { shop:'Shopping', gov:'Urząd', health:'Health', social:'Social', transport:'Transport' }[c] || c; }
-
-function mzRender(cat) {
-  const list = document.getElementById('mz-list');
-  if (!list) return;
-  const filtered = cat === 'all' ? mzPhrases : mzPhrases.filter(p => p.cat === cat);
-  list.innerHTML = filtered.map((p, i) => {
-    const bd = p.breakdown.map(([w,pr]) => `<span style="margin-right:10px;"><b>${w}</b> <span style="color:var(--green);font-size:13px;">${pr}</span></span>`).join('');
-    const esc = p.pl.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-    return `<div class="mz-card">
-      <span class="mz-tag">${mzCatLabel(p.cat)}</span>
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
-        <div style="flex:1;"><div class="mz-pl">${p.pl}</div><div class="mz-en">${p.en}</div></div>
-        <button class="mz-speak-btn" onclick="mzSpeak('${esc}',this)"><i class="ti ti-volume"></i></button>
-      </div>
-      <div class="mz-actions" style="margin-top:10px;">
-        <button class="mz-btn teal" onclick="mzToggleP(${i},this)"><i class="ti ti-ear"></i> Pronunciation</button>
-        <button class="mz-btn blue" id="mz-ai-btn-${i}" onclick="mzAI(${i},this)"><i class="ti ti-sparkles"></i> AI context</button>
-      </div>
-      <div class="mz-pbox" id="mz-pbox-${i}">
-        <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);margin-bottom:6px;">How to say it</div>
-        <div style="margin-bottom:6px;line-height:2;">${bd}</div>
-        <div style="font-size:13px;color:var(--text-secondary);">Full phrase: <span style="color:var(--green);font-weight:500;">${p.pronounce}</span></div>
-        <div style="display:flex;align-items:center;gap:10px;margin-top:10px;">
-          <span style="font-size:12px;color:var(--text-muted);">Speed:</span>
-          <input type="range" min="5" max="10" value="8" step="1" id="mz-speed-${i}" style="flex:1;" oninput="">
-          <button class="mz-btn" style="padding:4px 10px;font-size:12px;" onclick="mzSpeak('${esc}',null)"><i class="ti ti-volume"></i> Play</button>
-        </div>
-      </div>
-      <div class="mz-ctx" id="mz-ctx-${i}"></div>
-    </div>`;
-  }).join('');
-}
-
-function mzToggleP(i, btn) {
-  const box = document.getElementById('mz-pbox-' + i);
-  box.classList.toggle('vis');
-  btn.innerHTML = box.classList.contains('vis') ? '<i class="ti ti-x"></i> Hide' : '<i class="ti ti-ear"></i> Pronunciation';
-}
-
-async function mzAI(i, btn) {
-  const filtered = mzCurrentCat === 'all' ? mzPhrases : mzPhrases.filter(p => p.cat === mzCurrentCat);
-  const phrase = filtered[i];
-  if (!phrase) return;
-  const ctx = document.getElementById('mz-ctx-' + i);
-  if (ctx.classList.contains('vis') && ctx.dataset.done) {
-    ctx.classList.remove('vis'); ctx.dataset.done = '';
-    btn.innerHTML = '<i class="ti ti-sparkles"></i> AI context'; return;
-  }
-  btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader"></i> Loading...';
-  ctx.className = 'mz-ctx loading vis'; ctx.textContent = 'Getting cultural context from AI...';
-  try {
-    const res = await fetch('/api/claude', {
-      method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514', max_tokens: 1000,
-        system: 'You are a friendly cultural guide for African expats living in Poland. When given a Polish phrase, explain in 3-4 sentences: 1) When and where to practically use this phrase in Poland, 2) Any cultural nuance an African expat should know, 3) A practical tip that makes life in Poland easier. Write warmly and conversationally, as a fellow expat advising a friend. Flowing prose only, no bullet points.',
-        messages: [{ role: 'user', content: `Polish phrase: "${phrase.pl}" (means: "${phrase.en}"). Give me cultural context for an African expat in Poland.` }]
-      })
-    });
-    const data = await res.json();
-    if (data.error) { ctx.className = 'mz-ctx loading vis'; ctx.textContent = 'API Error: ' + data.error.message; btn.innerHTML = '<i class="ti ti-sparkles"></i> AI context'; btn.disabled = false; return; }
-    const text = data.content && data.content[0] && data.content[0].text;
-    ctx.className = 'mz-ctx vis'; ctx.textContent = text || 'Could not load context.'; ctx.dataset.done = '1';
-    btn.innerHTML = '<i class="ti ti-x"></i> Hide context';
-  } catch(e) {
-    ctx.className = 'mz-ctx loading vis'; ctx.textContent = 'Error: ' + e.message;
-    btn.innerHTML = '<i class="ti ti-sparkles"></i> AI context';
-  }
-  btn.disabled = false;
-}
-
-function mzFilter(cat, btn) {
-  mzCurrentCat = cat;
-  document.querySelectorAll('.mz-cat').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active'); mzRender(cat);
-}
-
-function mzSwitchTab(tab, btn) {
-  document.querySelectorAll('.mz-tab').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('mz-phrases-tab').style.display = tab === 'phrases' ? 'block' : 'none';
-  document.getElementById('mz-community-tab').style.display = tab === 'community' ? 'block' : 'none';
-}
-
-// ============ CV BUILDER ============
-async function cvGenerate() {
-  const name = document.getElementById('cv-name').value.trim();
-  const role = document.getElementById('cv-role').value.trim();
-  const email = document.getElementById('cv-email').value.trim();
-  const contact = document.getElementById('cv-contact').value.trim();
-  const exp = document.getElementById('cv-exp').value.trim();
-  const edu = document.getElementById('cv-edu').value.trim();
-  const skills = document.getElementById('cv-skills').value.trim();
-  const job = document.getElementById('cv-job').value.trim();
-  if (!name || !exp) { alert('Please fill in at least your name and work experience.'); return; }
-  const btn = document.getElementById('cv-btn');
-  btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader"></i> Generating your CV...';
-  const resultBox = document.getElementById('cv-result-box');
-  const resultText = document.getElementById('cv-result-text');
-  resultBox.className = 'cv-result-box vis';
-  resultText.textContent = 'Building your CV with AI...';
-  const prompt = `Create a professional, well-structured CV for the following person. Write it ready to use with clean sections and strong bullet points.${job ? ' Tailor it specifically for: ' + job : ''}\n\nName: ${name}\nTarget Role: ${role}\nContact: ${email} | ${contact}\nWork Experience: ${exp}\nEducation: ${edu}\nSkills: ${skills}${job ? '\nApplying for: ' + job : ''}\n\nFormat: Contact header, Professional Summary (3 sentences), Experience (with strong bullet points), Education, Skills & Tools. Make it compelling, specific, and ready to send.`;
-  try {
-    const res = await fetch('/api/claude', {
-      method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514', max_tokens: 1000,
-        system: 'You are a professional CV writer who creates polished, tailored CVs that get interviews. Use clear formatting with sections and headers using ===. Write strong, specific bullet points starting with action verbs. Output clean plain text only.',
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-    const data = await res.json();
-    if (data.error) { resultText.textContent = 'API Error: ' + data.error.message; btn.disabled = false; btn.innerHTML = '<i class="ti ti-sparkles"></i> Generate my CV'; return; }
-    const text = data.content && data.content[0] && data.content[0].text;
-    resultText.textContent = text || 'Could not generate CV. Please try again.';
-  } catch(e) {
-    resultText.textContent = 'Error: ' + e.message + '. Check browser console for details.';
-  }
-  btn.disabled = false; btn.innerHTML = '<i class="ti ti-sparkles"></i> Generate my CV';
-}
-
-function cvCopy() {
-  const text = document.getElementById('cv-result-text').textContent;
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = event.target.closest('button');
-    btn.innerHTML = '<i class="ti ti-check"></i> Copied!';
-    setTimeout(() => btn.innerHTML = '<i class="ti ti-copy"></i> Copy CV', 2000);
+// Cursor glow
+var glow = document.getElementById('cursor-glow');
+if (window.innerWidth > 768) {
+  glow.style.display = 'block';
+  document.addEventListener('mousemove', function(e) {
+    glow.style.left = (e.clientX - 200) + 'px';
+    glow.style.top = (e.clientY - 200) + 'px';
   });
 }
+
+// Scroll reveal
+var reveals = document.querySelectorAll('.reveal');
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+reveals.forEach(function(el) { observer.observe(el); });
 </script>
 </body>
 </html>
