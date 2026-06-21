@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Portal — SummrTools</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+:root{--green:#00d4aa;--green-dark:#00b894;--green-light:rgba(0,212,170,0.1);--blue:#7b61ff;--text:#e8e8f4;--text-secondary:#a0a0c0;--text-muted:#6868a0;--bg:#08080f;--surface:#12121f;--border:rgba(80,80,130,0.25);--border-strong:rgba(100,100,160,0.35);--card:#151528;--accent:#00d4aa;--alt:#7b61ff;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px;background:rgba(8,8,15,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
+.nav-logo-icon{width:30px;height:30px;border-radius:7px;background:#dc2626;display:flex;align-items:center;justify-content:center;}
+.nav-logo-icon i{color:#fff;font-size:15px;}
+.nav-logo-text{font-family:'Inter',system-ui,sans-serif;font-size:16px;font-weight:500;color:var(--text);}
+.admin-badge{font-size:11px;font-weight:500;background:var(--card)0f0;color:#c0392b;border:1px solid rgba(192,57,43,.2);padding:2px 8px;border-radius:99px;}
+.nav-right{display:flex;align-items:center;gap:10px;}
+.nav-btn{font-size:13px;padding:6px 14px;border:1px solid var(--border-strong);border-radius:8px;background:transparent;cursor:pointer;color:var(--text-secondary);font-family:'Inter',system-ui,sans-serif;text-decoration:none;}
+.nav-btn:hover{background:rgba(0,212,170,0.1);color:var(--accent);}
+.wrap{max-width:1100px;margin:0 auto;padding:80px 1.5rem 3rem;}
+.page-header{margin-bottom:2rem;}
+.page-header h1{font-family:'Inter',system-ui,sans-serif;font-size:26px;font-weight:300;margin-bottom:4px;}
+.page-header h1 em{font-style:italic;color:var(--accent);}
+.page-header p{font-size:14px;color:var(--text-secondary);}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2rem;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;}
+.stat-label{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);margin-bottom:.5rem;}
+.stat-value{font-family:'Inter',system-ui,sans-serif;font-size:2rem;font-weight:300;color:var(--accent);}
+.stat-sub{font-size:12px;color:var(--text-muted);margin-top:2px;}
+.section{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:.5rem;}
+.section-title{font-size:15px;font-weight:500;}
+.search-input{padding:7px 12px;border:1px solid var(--border-strong);border-radius:8px;font-size:13px;font-family:'Inter',system-ui,sans-serif;outline:none;width:220px;}
+.search-input:focus{border-color:var(--accent);}
+table{width:100%;border-collapse:collapse;font-size:14px;}
+th{text-align:left;padding:8px 12px;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);border-bottom:1px solid var(--border);}
+td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(80,80,130,0.08);}
+.tier-badge{font-size:11px;font-weight:500;padding:2px 8px;border-radius:99px;}
+.tier-badge.free{background:rgba(80,80,130,0.15);color:#555;}
+.tier-badge.standard{background:rgba(123,97,255,0.12);color:#a78bfa;}
+.tier-badge.elite{background:rgba(0,212,170,0.12);color:var(--accent);}
+.status-badge{font-size:11px;font-weight:500;padding:2px 8px;border-radius:99px;}
+.status-badge.active{background:rgba(0,212,170,0.12);color:var(--accent);}
+.status-badge.pending_deletion{background:rgba(251,191,36,0.12);color:#fbbf24;}
+.status-badge.deleted{background:var(--card)0f0;color:#c0392b;}
+.action-btn{font-size:12px;padding:4px 10px;border-radius:6px;border:1px solid var(--border-strong);background:transparent;cursor:pointer;font-family:'Inter',system-ui,sans-serif;margin-right:4px;}
+.action-btn:hover{background:rgba(80,80,130,0.08);}
+.action-btn.green{border-color:var(--green);color:var(--green-dark);}
+.action-btn.red{border-color:#c0392b;color:#c0392b;}
+.action-btn.red:hover{background:var(--card)0f0;}
+select.tier-select{font-size:12px;padding:4px 8px;border:1px solid var(--border-strong);border-radius:6px;font-family:'Inter',system-ui,sans-serif;outline:none;background:var(--card);}
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#252545;color:#e8e8f4;font-size:13px;padding:10px 20px;border-radius:8px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:200;}
+.toast.show{opacity:1;}
+.loading{font-size:14px;color:var(--text-muted);padding:1rem 0;text-align:center;}
+</style>
+</head>
+<body>
+<div id="auth-loading" style="position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;">
+  <div style="text-align:center;">
+    <div style="width:40px;height:40px;border-radius:10px;background:#dc2626;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">
+      <i class="ti ti-shield" style="color:#fff;font-size:20px;"></i>
+    </div>
+    <div style="font-size:13px;color:var(--text-muted);">Verifying access...</div>
+  </div>
+</div>
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-icon"><i class="ti ti-shield"></i></div>
+    <span class="nav-logo-text">SummrTools</span>
+    <span class="admin-badge">Admin</span>
+  </div>
+  <div class="nav-right">
+    <a class="nav-btn" href="https://summrtools.co.zw/dashboard.html"><i class="ti ti-layout-dashboard"></i> Dashboard</a>
+    <button class="nav-btn" onclick="doSignOut()"><i class="ti ti-logout"></i> Sign out</button>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="page-header">
+    <h1>Admin <em>Portal</em></h1>
+    <p>Manage users, tiers, and account requests.</p>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-label">Total users</div><div class="stat-value" id="stat-total">—</div><div class="stat-sub">registered accounts</div></div>
+    <div class="stat-card"><div class="stat-label">Free tier</div><div class="stat-value" id="stat-free">—</div><div class="stat-sub">free accounts</div></div>
+    <div class="stat-card"><div class="stat-label">Standard</div><div class="stat-value" id="stat-standard">—</div><div class="stat-sub">starter + pro</div></div>
+    <div class="stat-card"><div class="stat-label">Elite</div><div class="stat-value" id="stat-elite">—</div><div class="stat-sub">elite users</div></div>
+    <div class="stat-card"><div class="stat-label">Pending deletion</div><div class="stat-value" id="stat-deletion" style="color:#c0392b;">—</div><div class="stat-sub">awaiting deletion</div></div>
+  </div>
+
+  <!-- USERS TABLE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">All Users</div>
+      <input class="search-input" id="search" placeholder="Search by name or email..." oninput="filterUsers()">
+    </div>
+    <div id="users-table"><div class="loading"><i class="ti ti-loader"></i> Loading users...</div></div>
+  </div>
+
+  <!-- PENDING DELETIONS -->
+  <div class="section" id="deletions-section" style="display:none;">
+    <div class="section-header">
+      <div class="section-title" style="color:#c0392b;"><i class="ti ti-trash"></i> Pending Deletions</div>
+    </div>
+    <div id="deletions-table"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+var sb = supabase.createClient(
+  'https://wsrhuuuwqzpsprknolot.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indzcmh1dXV3cXpwc3Bya25vbG90Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5ODAzMDIsImV4cCI6MjA5NTU1NjMwMn0.SqtB1CSq5aOauLOyZkYYuFHJe_Ox5SGYpCCrIckCwoc',
+  { auth: { storageKey: 'summrtools-auth', storage: window.localStorage } }
+);
+
+var allUsers = [];
+
+function toast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2500);
+}
+
+var isRedirecting = false;
+async function init() {
+  // Give auth time to initialise
+  await new Promise(function(resolve){ setTimeout(resolve, 200); });
+  var loadingEl = document.getElementById('auth-loading');
+  var sessionRes = await sb.auth.getSession();
+  if (!sessionRes.data || !sessionRes.data.session) {
+    if (!isRedirecting) { isRedirecting = true; window.location.href = 'https://summrtools.co.zw/login.html'; }
+    return;
+  }
+  var uid = sessionRes.data.session.user.id;
+  var meRes = await sb.from('profiles').select('is_admin').eq('id', uid).maybeSingle();
+  if (!meRes.data || !meRes.data.is_admin) {
+    if (!isRedirecting) { isRedirecting = true; window.location.href = 'https://summrtools.co.zw/dashboard.html'; }
+    return;
+  }
+  // Access confirmed — hide loading screen
+  if (loadingEl) loadingEl.style.display = 'none';
+  await loadUsers();
+}
+
+async function loadUsers() {
+  var res = await sb.from('profiles').select('*').order('created_at', { ascending: false });
+  if (res.error) {
+    document.getElementById('users-table').innerHTML = '<div class="loading">Error loading users: ' + res.error.message + '</div>';
+    return;
+  }
+  allUsers = res.data || [];
+  updateStats();
+  renderUsers(allUsers);
+  renderDeletions();
+}
+
+function updateStats() {
+  document.getElementById('stat-total').textContent = allUsers.length;
+  document.getElementById('stat-free').textContent = allUsers.filter(function(u){ return u.tier === 'free' || !u.tier; }).length;
+  document.getElementById('stat-standard').textContent = allUsers.filter(function(u){ return u.tier === 'starter' || u.tier === 'pro'; }).length;
+  document.getElementById('stat-elite').textContent = allUsers.filter(function(u){ return u.tier === 'elite'; }).length;
+  var pending = allUsers.filter(function(u){ return u.account_status === 'pending_deletion'; });
+  document.getElementById('stat-deletion').textContent = pending.length;
+  if (pending.length > 0) document.getElementById('deletions-section').style.display = 'block';
+}
+
+function renderUsers(users) {
+  if (!users.length) {
+    document.getElementById('users-table').innerHTML = '<div class="loading">No users found.</div>';
+    return;
+  }
+  var html = '<table><thead><tr><th>Name</th><th>Email</th><th>Tier</th><th>CV Credits</th><th>Status</th><th>Joined</th><th>Actions</th></tr></thead><tbody>';
+  users.forEach(function(u) {
+    var tier = u.tier || 'free';
+    var status = u.account_status || 'active';
+    var joined = u.created_at ? new Date(u.created_at).toLocaleDateString() : '—';
+    html += '<tr>' +
+      '<td style="font-weight:500;">' + (u.full_name || '—') + (u.is_admin ? ' <span style="font-size:10px;background:var(--card)0f0;color:#c0392b;padding:1px 5px;border-radius:4px;">admin</span>' : '') + '</td>' +
+      '<td style="color:var(--text-secondary);font-size:13px;">' + (u.email || '—') + '</td>' +
+      '<td><span class="tier-badge ' + tier + '">' + tier + '</span></td>' +
+      '<td>' + (tier === 'elite' ? '<span style="color:var(--green);">∞</span>' : (u.cv_credits || 0)) + '</td>' +
+      '<td><span class="status-badge ' + status + '">' + status + '</span></td>' +
+      '<td style="font-size:13px;color:var(--text-muted);">' + joined + '</td>' +
+      '<td>' +
+        '<select class="tier-select" onchange="changeTier(\'' + u.id + '\', this.value)">' +
+          '<option value="free"' + (tier === 'free' ? ' selected' : '') + '>Free</option>' +
+          '<option value="standard"' + (tier === 'standard' ? ' selected' : '') + '>Standard</option>' +
+          '<option value="elite"' + (tier === 'elite' ? ' selected' : '') + '>Elite</option>' +
+        '</select>' +
+        '<button class="action-btn green" onclick="addCredits(\'' + u.id + '\')">+Credits</button>' +
+        '<button class="action-btn red" onclick="directDelete(\'' + u.id + '\')">Delete</button>' +
+      '</td>' +
+    '</tr>';
+  });
+  html += '</tbody></table>';
+  document.getElementById('users-table').innerHTML = html;
+}
+
+function renderDeletions() {
+  var pending = allUsers.filter(function(u){ return u.account_status === 'pending_deletion'; });
+  if (!pending.length) return;
+  var html = '<table><thead><tr><th>Name</th><th>Email</th><th>Requested</th><th>Actions</th></tr></thead><tbody>';
+  pending.forEach(function(u) {
+    var requested = u.deletion_requested_at ? new Date(u.deletion_requested_at).toLocaleDateString() : '—';
+    html += '<tr>' +
+      '<td style="font-weight:500;">' + (u.full_name || '—') + '</td>' +
+      '<td style="color:var(--text-secondary);">' + (u.email || '—') + '</td>' +
+      '<td style="font-size:13px;color:var(--text-muted);">' + requested + '</td>' +
+      '<td>' +
+        '<button class="action-btn red" onclick="approveDelete(\'' + u.id + '\')"><i class="ti ti-trash"></i> Approve deletion</button>' +
+        '<button class="action-btn" onclick="cancelDelete(\'' + u.id + '\')"><i class="ti ti-x"></i> Cancel</button>' +
+      '</td>' +
+    '</tr>';
+  });
+  html += '</tbody></table>';
+  document.getElementById('deletions-table').innerHTML = html;
+}
+
+function filterUsers() {
+  var q = document.getElementById('search').value.toLowerCase();
+  var filtered = allUsers.filter(function(u) {
+    return (u.full_name || '').toLowerCase().includes(q) || (u.email || '').toLowerCase().includes(q);
+  });
+  renderUsers(filtered);
+}
+
+async function changeTier(uid, tier) {
+  var tierCredits = {free: 3, starter: 20, pro: 60, elite: 9999};
+  var credits = tierCredits[tier] !== undefined ? tierCredits[tier] : 3;
+  var res = await sb.from('profiles').update({ tier: tier, cv_credits: credits }).eq('id', uid);
+  if (res.error) { toast('Error: ' + res.error.message); return; }
+  // Update local data
+  var u = allUsers.find(function(x){ return x.id === uid; });
+  if (u) { u.tier = tier; u.cv_credits = credits; }
+  updateStats();
+  toast('Tier updated to ' + tier);
+}
+
+async function addCredits(uid) {
+  var amount = prompt('How many credits to add?', '10');
+  if (!amount || isNaN(amount)) return;
+  var u = allUsers.find(function(x){ return x.id === uid; });
+  var current = u ? (u.cv_credits || 0) : 0;
+  var newCredits = current + parseInt(amount);
+  var res = await sb.from('profiles').update({ cv_credits: newCredits }).eq('id', uid);
+  if (res.error) { toast('Error: ' + res.error.message); return; }
+  if (u) u.cv_credits = newCredits;
+  renderUsers(allUsers);
+  toast(amount + ' credits added!');
+}
+
+async function approveDelete(uid) {
+  if (!confirm('Permanently delete this account? This cannot be undone.')) return;
+  await sb.from('cv_experience').delete().eq('user_id', uid);
+  await sb.from('cv_education').delete().eq('user_id', uid);
+  await sb.from('cv_skills').delete().eq('user_id', uid);
+  await sb.from('cv_languages').delete().eq('user_id', uid);
+  await sb.from('cv_profiles').delete().eq('user_id', uid);
+  await sb.from('profiles').update({ account_status: 'deleted', deletion_token: null, cv_credits: 0 }).eq('id', uid);
+  allUsers = allUsers.filter(function(u){ return u.id !== uid; });
+  updateStats(); renderUsers(allUsers); renderDeletions();
+  toast('Account deleted.');
+}
+
+async function cancelDelete(uid) {
+  await sb.from('profiles').update({ account_status: 'active', deletion_token: null, deletion_requested_at: null }).eq('id', uid);
+  var u = allUsers.find(function(x){ return x.id === uid; });
+  if (u) { u.account_status = 'active'; u.deletion_token = null; }
+  updateStats(); renderUsers(allUsers); renderDeletions();
+  toast('Deletion cancelled.');
+}
+
+function doSignOut() { sb.auth.signOut().then(function(){ window.location.href = 'https://summrtools.co.zw/login.html'; }); }
+
+async function directDelete(uid) {
+  var u = allUsers.find(function(x){ return x.id === uid; });
+  var name = u ? (u.full_name || u.email || uid) : uid;
+  if (!confirm('Permanently delete user "' + name + '"?\n\nThis will remove all their CV data, profiles, and account. This cannot be undone.')) return;
+  if (!confirm('Are you absolutely sure? Type OK to confirm.')) return;
+  toast('Deleting user...');
+  try {
+    await sb.from('cv_experience').delete().eq('user_id', uid);
+    await sb.from('cv_education').delete().eq('user_id', uid);
+    await sb.from('cv_skills').delete().eq('user_id', uid);
+    await sb.from('cv_languages').delete().eq('user_id', uid);
+    await sb.from('cv_profiles').delete().eq('user_id', uid);
+    await sb.from('profiles').delete().eq('id', uid);
+    allUsers = allUsers.filter(function(x){ return x.id !== uid; });
+    updateStats(); renderUsers(allUsers); renderDeletions();
+    toast('User "' + name + '" permanently deleted.');
+  } catch(e) {
+    toast('Error deleting user: ' + e.message);
+  }
+}
+
+init();
+</script>
+</body>
+</html>
