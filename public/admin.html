@@ -4,56 +4,56 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Portal — SummrTools</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
 <style>
-:root{--green:#1D9E75;--green-dark:#0F6E56;--green-light:#E1F5EE;--blue:#378ADD;--text:#0E1C16;--text-secondary:#4A6358;--text-muted:#8AA89C;--bg:#FAFCFB;--surface:#FFFFFF;--border:rgba(29,158,117,0.15);--border-strong:rgba(29,158,117,0.3);}
+:root{--green:#00d4aa;--green-dark:#00b894;--green-light:rgba(0,212,170,0.1);--blue:#7b61ff;--text:#e8e8f4;--text-secondary:#a0a0c0;--text-muted:#6868a0;--bg:#08080f;--surface:#12121f;--border:rgba(80,80,130,0.25);--border-strong:rgba(100,100,160,0.35);--card:#151528;--accent:#00d4aa;--alt:#7b61ff;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px;background:rgba(250,252,251,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px;background:rgba(8,8,15,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
 .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
-.nav-logo-icon{width:30px;height:30px;border-radius:7px;background:#c0392b;display:flex;align-items:center;justify-content:center;}
+.nav-logo-icon{width:30px;height:30px;border-radius:7px;background:#dc2626;display:flex;align-items:center;justify-content:center;}
 .nav-logo-icon i{color:#fff;font-size:15px;}
-.nav-logo-text{font-family:'Fraunces',serif;font-size:16px;font-weight:500;color:var(--text);}
-.admin-badge{font-size:11px;font-weight:500;background:#fff0f0;color:#c0392b;border:1px solid rgba(192,57,43,.2);padding:2px 8px;border-radius:99px;}
+.nav-logo-text{font-family:'Inter',system-ui,sans-serif;font-size:16px;font-weight:500;color:var(--text);}
+.admin-badge{font-size:11px;font-weight:500;background:var(--card)0f0;color:#c0392b;border:1px solid rgba(192,57,43,.2);padding:2px 8px;border-radius:99px;}
 .nav-right{display:flex;align-items:center;gap:10px;}
-.nav-btn{font-size:13px;padding:6px 14px;border:1px solid var(--border-strong);border-radius:8px;background:transparent;cursor:pointer;color:var(--text-secondary);font-family:'DM Sans',sans-serif;text-decoration:none;}
-.nav-btn:hover{background:var(--green-light);color:var(--green);}
+.nav-btn{font-size:13px;padding:6px 14px;border:1px solid var(--border-strong);border-radius:8px;background:transparent;cursor:pointer;color:var(--text-secondary);font-family:'Inter',system-ui,sans-serif;text-decoration:none;}
+.nav-btn:hover{background:rgba(0,212,170,0.1);color:var(--accent);}
 .wrap{max-width:1100px;margin:0 auto;padding:80px 1.5rem 3rem;}
 .page-header{margin-bottom:2rem;}
-.page-header h1{font-family:'Fraunces',serif;font-size:26px;font-weight:300;margin-bottom:4px;}
-.page-header h1 em{font-style:italic;color:var(--green);}
+.page-header h1{font-family:'Inter',system-ui,sans-serif;font-size:26px;font-weight:300;margin-bottom:4px;}
+.page-header h1 em{font-style:italic;color:var(--accent);}
 .page-header p{font-size:14px;color:var(--text-secondary);}
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2rem;}
-.stat-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.25rem;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;}
 .stat-label{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);margin-bottom:.5rem;}
-.stat-value{font-family:'Fraunces',serif;font-size:2rem;font-weight:300;color:var(--green);}
+.stat-value{font-family:'Inter',system-ui,sans-serif;font-size:2rem;font-weight:300;color:var(--accent);}
 .stat-sub{font-size:12px;color:var(--text-muted);margin-top:2px;}
-.section{background:#fff;border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;}
+.section{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;}
 .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:.5rem;}
 .section-title{font-size:15px;font-weight:500;}
-.search-input{padding:7px 12px;border:1px solid var(--border-strong);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;width:220px;}
-.search-input:focus{border-color:var(--green);}
+.search-input{padding:7px 12px;border:1px solid var(--border-strong);border-radius:8px;font-size:13px;font-family:'Inter',system-ui,sans-serif;outline:none;width:220px;}
+.search-input:focus{border-color:var(--accent);}
 table{width:100%;border-collapse:collapse;font-size:14px;}
 th{text-align:left;padding:8px 12px;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);border-bottom:1px solid var(--border);}
 td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle;}
 tr:last-child td{border-bottom:none;}
-tr:hover td{background:var(--bg);}
+tr:hover td{background:rgba(80,80,130,0.08);}
 .tier-badge{font-size:11px;font-weight:500;padding:2px 8px;border-radius:99px;}
-.tier-badge.free{background:#f0f0f0;color:#555;}
-.tier-badge.standard{background:#EBF4FF;color:#185FA5;}
-.tier-badge.elite{background:var(--green-light);color:var(--green-dark);}
+.tier-badge.free{background:rgba(80,80,130,0.15);color:#555;}
+.tier-badge.standard{background:rgba(123,97,255,0.12);color:#a78bfa;}
+.tier-badge.elite{background:rgba(0,212,170,0.12);color:var(--accent);}
 .status-badge{font-size:11px;font-weight:500;padding:2px 8px;border-radius:99px;}
-.status-badge.active{background:var(--green-light);color:var(--green-dark);}
-.status-badge.pending_deletion{background:#FFF3CD;color:#856404;}
-.status-badge.deleted{background:#fff0f0;color:#c0392b;}
-.action-btn{font-size:12px;padding:4px 10px;border-radius:6px;border:1px solid var(--border-strong);background:transparent;cursor:pointer;font-family:'DM Sans',sans-serif;margin-right:4px;}
-.action-btn:hover{background:var(--bg);}
+.status-badge.active{background:rgba(0,212,170,0.12);color:var(--accent);}
+.status-badge.pending_deletion{background:rgba(251,191,36,0.12);color:#fbbf24;}
+.status-badge.deleted{background:var(--card)0f0;color:#c0392b;}
+.action-btn{font-size:12px;padding:4px 10px;border-radius:6px;border:1px solid var(--border-strong);background:transparent;cursor:pointer;font-family:'Inter',system-ui,sans-serif;margin-right:4px;}
+.action-btn:hover{background:rgba(80,80,130,0.08);}
 .action-btn.green{border-color:var(--green);color:var(--green-dark);}
 .action-btn.red{border-color:#c0392b;color:#c0392b;}
-.action-btn.red:hover{background:#fff0f0;}
-select.tier-select{font-size:12px;padding:4px 8px;border:1px solid var(--border-strong);border-radius:6px;font-family:'DM Sans',sans-serif;outline:none;background:#fff;}
-.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#1A1A1A;color:#fff;font-size:13px;padding:10px 20px;border-radius:8px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:200;}
+.action-btn.red:hover{background:var(--card)0f0;}
+select.tier-select{font-size:12px;padding:4px 8px;border:1px solid var(--border-strong);border-radius:6px;font-family:'Inter',system-ui,sans-serif;outline:none;background:var(--card);}
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#252545;color:#e8e8f4;font-size:13px;padding:10px 20px;border-radius:8px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:200;}
 .toast.show{opacity:1;}
 .loading{font-size:14px;color:var(--text-muted);padding:1rem 0;text-align:center;}
 </style>
@@ -61,7 +61,7 @@ select.tier-select{font-size:12px;padding:4px 8px;border:1px solid var(--border-
 <body>
 <div id="auth-loading" style="position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;">
   <div style="text-align:center;">
-    <div style="width:40px;height:40px;border-radius:10px;background:#c0392b;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">
+    <div style="width:40px;height:40px;border-radius:10px;background:#dc2626;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">
       <i class="ti ti-shield" style="color:#fff;font-size:20px;"></i>
     </div>
     <div style="font-size:13px;color:var(--text-muted);">Verifying access...</div>
@@ -184,7 +184,7 @@ function renderUsers(users) {
     var status = u.account_status || 'active';
     var joined = u.created_at ? new Date(u.created_at).toLocaleDateString() : '—';
     html += '<tr>' +
-      '<td style="font-weight:500;">' + (u.full_name || '—') + (u.is_admin ? ' <span style="font-size:10px;background:#fff0f0;color:#c0392b;padding:1px 5px;border-radius:4px;">admin</span>' : '') + '</td>' +
+      '<td style="font-weight:500;">' + (u.full_name || '—') + (u.is_admin ? ' <span style="font-size:10px;background:var(--card)0f0;color:#c0392b;padding:1px 5px;border-radius:4px;">admin</span>' : '') + '</td>' +
       '<td style="color:var(--text-secondary);font-size:13px;">' + (u.email || '—') + '</td>' +
       '<td><span class="tier-badge ' + tier + '">' + tier + '</span></td>' +
       '<td>' + (tier === 'elite' ? '<span style="color:var(--green);">∞</span>' : (u.cv_credits || 0)) + '</td>' +
@@ -197,6 +197,7 @@ function renderUsers(users) {
           '<option value="elite"' + (tier === 'elite' ? ' selected' : '') + '>Elite</option>' +
         '</select>' +
         '<button class="action-btn green" onclick="addCredits(\'' + u.id + '\')">+Credits</button>' +
+        '<button class="action-btn red" onclick="directDelete(\'' + u.id + '\')">Delete</button>' +
       '</td>' +
     '</tr>';
   });
@@ -279,6 +280,27 @@ async function cancelDelete(uid) {
 }
 
 function doSignOut() { sb.auth.signOut().then(function(){ window.location.href = 'https://summrtools.co.zw/login.html'; }); }
+
+async function directDelete(uid) {
+  var u = allUsers.find(function(x){ return x.id === uid; });
+  var name = u ? (u.full_name || u.email || uid) : uid;
+  if (!confirm('Permanently delete user "' + name + '"?\n\nThis will remove all their CV data, profiles, and account. This cannot be undone.')) return;
+  if (!confirm('Are you absolutely sure? Type OK to confirm.')) return;
+  toast('Deleting user...');
+  try {
+    await sb.from('cv_experience').delete().eq('user_id', uid);
+    await sb.from('cv_education').delete().eq('user_id', uid);
+    await sb.from('cv_skills').delete().eq('user_id', uid);
+    await sb.from('cv_languages').delete().eq('user_id', uid);
+    await sb.from('cv_profiles').delete().eq('user_id', uid);
+    await sb.from('profiles').delete().eq('id', uid);
+    allUsers = allUsers.filter(function(x){ return x.id !== uid; });
+    updateStats(); renderUsers(allUsers); renderDeletions();
+    toast('User "' + name + '" permanently deleted.');
+  } catch(e) {
+    toast('Error deleting user: ' + e.message);
+  }
+}
 
 init();
 </script>
