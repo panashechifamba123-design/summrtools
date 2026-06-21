@@ -4,45 +4,45 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My CV Profile — SummrTools</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
 <style>
-:root{--green:#1D9E75;--green-dark:#0F6E56;--green-light:#E1F5EE;--text:#0E1C16;--text-secondary:#4A6358;--text-muted:#8AA89C;--bg:#FAFCFB;--surface:#FFFFFF;--border:rgba(29,158,117,0.15);--border-strong:rgba(29,158,117,0.3);}
+:root{--green:#00d4aa;--green-dark:#00b894;--green-light:rgba(0,212,170,0.1);--blue:#7b61ff;--text:#e8e8f4;--text-secondary:#a0a0c0;--text-muted:#6868a0;--bg:#08080f;--surface:#12121f;--border:rgba(80,80,130,0.25);--border-strong:rgba(100,100,160,0.35);--card:#151528;--accent:#00d4aa;--alt:#7b61ff;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px;background:rgba(250,252,251,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px;background:rgba(8,8,15,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
 .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
-.nav-logo-icon{width:30px;height:30px;border-radius:7px;background:var(--green);display:flex;align-items:center;justify-content:center;}
+.nav-logo-icon{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,var(--alt),var(--accent));display:flex;align-items:center;justify-content:center;}
 .nav-logo-icon i{color:#fff;font-size:15px;}
-.nav-logo-text{font-family:'Fraunces',serif;font-size:16px;font-weight:500;color:var(--text);}
+.nav-logo-text{font-family:'Inter',system-ui,sans-serif;font-size:16px;font-weight:500;color:var(--text);}
 .nav-right{display:flex;align-items:center;gap:10px;}
-.nav-btn{font-size:13px;padding:6px 14px;border:1px solid var(--border-strong);border-radius:8px;background:transparent;cursor:pointer;color:var(--text-secondary);font-family:'DM Sans',sans-serif;text-decoration:none;}
-.nav-btn:hover{background:var(--green-light);color:var(--green);}
+.nav-btn{font-size:13px;padding:6px 14px;border:1px solid var(--border-strong);border-radius:8px;background:transparent;cursor:pointer;color:var(--text-secondary);font-family:'Inter',system-ui,sans-serif;text-decoration:none;}
+.nav-btn:hover{background:rgba(0,212,170,0.1);color:var(--accent);}
 .wrap{max-width:820px;margin:0 auto;padding:80px 1.5rem 3rem;}
 .page-header{margin-bottom:2rem;}
-.page-header h1{font-family:'Fraunces',serif;font-size:26px;font-weight:300;margin-bottom:4px;}
-.page-header h1 em{font-style:italic;color:var(--green);}
+.page-header h1{font-family:'Inter',system-ui,sans-serif;font-size:26px;font-weight:300;margin-bottom:4px;}
+.page-header h1 em{font-style:italic;color:var(--accent);}
 .page-header p{font-size:14px;color:var(--text-secondary);}
-.save-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;z-index:50;}
+.save-bar{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;z-index:50;}
 .save-status{font-size:13px;color:var(--text-muted);}
-.save-status.saved{color:var(--green);}
-.save-btn{background:var(--green);color:#fff;border:none;border-radius:8px;padding:9px 24px;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;}
-.save-btn:hover{background:var(--green-dark);}
+.save-status.saved{color:var(--accent);}
+.save-btn{background:linear-gradient(135deg,var(--alt),var(--accent));color:#fff;border:none;border-radius:8px;padding:9px 24px;font-size:14px;font-family:'Inter',system-ui,sans-serif;font-weight:500;cursor:pointer;}
+.save-btn:hover{background:var(--green);}
 .save-btn:disabled{opacity:.5;cursor:not-allowed;}
 /* SECTIONS */
-.section{background:#fff;border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.25rem;}
+.section{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.25rem;}
 .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
 .section-title{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:500;}
-.section-title i{font-size:18px;color:var(--green);}
-.add-btn{display:inline-flex;align-items:center;gap:5px;font-size:13px;padding:5px 12px;border:1px solid var(--border-strong);border-radius:8px;background:transparent;cursor:pointer;color:var(--green);font-family:'DM Sans',sans-serif;}
+.section-title i{font-size:18px;color:var(--accent);}
+.add-btn{display:inline-flex;align-items:center;gap:5px;font-size:13px;padding:5px 12px;border:1px solid var(--border-strong);border-radius:8px;background:transparent;cursor:pointer;color:var(--green);font-family:'Inter',system-ui,sans-serif;}
 .add-btn:hover{background:var(--green-light);}
 /* FORM */
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
 .field{display:flex;flex-direction:column;gap:4px;}
 .field.full{grid-column:1/-1;}
 .label{font-size:11px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;}
-.input{padding:9px 12px;border:1px solid var(--border-strong);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;background:#fff;color:var(--text);transition:border-color .2s;}
-.input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(29,158,117,0.1);}
+.input{padding:9px 12px;border:1px solid var(--border-strong);border-radius:8px;font-size:14px;font-family:'Inter',system-ui,sans-serif;outline:none;background:var(--card);color:var(--text);transition:border-color .2s;}
+.input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(0,212,170,0.15);}
 textarea.input{resize:vertical;min-height:80px;}
 /* CARDS (experience, education) */
 .item-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1rem;margin-bottom:.75rem;position:relative;}
@@ -50,22 +50,22 @@ textarea.input{resize:vertical;min-height:80px;}
 .item-card-title{font-size:14px;font-weight:500;}
 .item-card-sub{font-size:13px;color:var(--text-muted);}
 .item-actions{display:flex;gap:4px;flex-shrink:0;}
-.icon-btn{width:28px;height:28px;border-radius:6px;border:1px solid var(--border);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.icon-btn{width:28px;height:28px;border-radius:6px;border:1px solid var(--border);background:var(--card);cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .icon-btn:hover{background:var(--green-light);}
 .icon-btn i{font-size:14px;color:var(--text-secondary);}
-.icon-btn.danger:hover{background:#fff0f0;}
+.icon-btn.danger:hover{background:var(--card)0f0;}
 .icon-btn.danger i{color:#c0392b;}
 /* INLINE EDIT FORM */
-.edit-form{background:#fff;border:1px solid var(--border-strong);border-radius:10px;padding:1rem;margin-bottom:.75rem;}
+.edit-form{background:var(--card);border:1px solid var(--border-strong);border-radius:10px;padding:1rem;margin-bottom:.75rem;}
 /* SKILLS */
-.skill-tag{display:inline-flex;align-items:center;gap:4px;background:var(--green-light);color:var(--green-dark);padding:4px 10px;border-radius:99px;font-size:12px;margin:3px;}
+.skill-tag{display:inline-flex;align-items:center;gap:4px;background:rgba(0,212,170,0.12);color:var(--green);padding:4px 10px;border-radius:99px;font-size:12px;margin:3px;}
 .skill-tag button{background:none;border:none;cursor:pointer;color:var(--green-dark);font-size:12px;padding:0;line-height:1;}
 /* LANGUAGE */
 .lang-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);}
 .lang-row:last-child{border-bottom:none;}
-.proficiency-badge{font-size:11px;padding:2px 8px;border-radius:99px;background:var(--green-light);color:var(--green-dark);}
+.proficiency-badge{font-size:11px;padding:2px 8px;border-radius:99px;background:rgba(0,212,170,0.12);color:var(--accent);}
 /* TOAST */
-.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1A1A1A;color:#fff;font-size:13px;padding:10px 20px;border-radius:8px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:200;}
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#252545;color:#e8e8f4;font-size:13px;padding:10px 20px;border-radius:8px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:200;}
 .toast.show{opacity:1;}
 @media(max-width:600px){.form-grid{grid-template-columns:1fr;}.field.full{grid-column:1;}}
 </style>
@@ -123,7 +123,7 @@ textarea.input{resize:vertical;min-height:80px;}
           <div class="field full"><label class="label">Key achievements (one per line)</label><textarea class="input" id="exp-bullets" placeholder="Managed end-to-end client onboarding for enterprise merchants&#10;Reduced report analysis time from 4 hours to 30 minutes using n8n automation&#10;Resolved complex API integration issues across PayPal, Worldpay, Nuvei"></textarea></div>
         </div>
         <div style="display:flex;gap:8px;margin-top:.75rem;">
-          <button class="add-btn" style="background:var(--green);color:#fff;border-color:var(--green);" onclick="saveExp()"><i class="ti ti-check"></i> Save role</button>
+          <button class="add-btn" style="background:linear-gradient(135deg,var(--alt),var(--accent));color:#fff;border-color:var(--green);" onclick="saveExp()"><i class="ti ti-check"></i> Save role</button>
           <button class="add-btn" onclick="document.getElementById('exp-form').style.display='none'">Cancel</button>
         </div>
       </div>
@@ -147,7 +147,7 @@ textarea.input{resize:vertical;min-height:80px;}
           <div class="field"><label class="label">End date</label><input class="input" id="edu-end" placeholder="e.g. 2025"></div>
         </div>
         <div style="display:flex;gap:8px;margin-top:.75rem;">
-          <button class="add-btn" style="background:var(--green);color:#fff;border-color:var(--green);" onclick="saveEdu()"><i class="ti ti-check"></i> Save education</button>
+          <button class="add-btn" style="background:linear-gradient(135deg,var(--alt),var(--accent));color:#fff;border-color:var(--green);" onclick="saveEdu()"><i class="ti ti-check"></i> Save education</button>
           <button class="add-btn" onclick="document.getElementById('edu-form').style.display='none'">Cancel</button>
         </div>
       </div>
@@ -194,7 +194,7 @@ textarea.input{resize:vertical;min-height:80px;}
           </div>
         </div>
         <div style="display:flex;gap:8px;margin-top:.75rem;">
-          <button class="add-btn" style="background:var(--green);color:#fff;border-color:var(--green);" onclick="saveLang()"><i class="ti ti-check"></i> Save language</button>
+          <button class="add-btn" style="background:linear-gradient(135deg,var(--alt),var(--accent));color:#fff;border-color:var(--green);" onclick="saveLang()"><i class="ti ti-check"></i> Save language</button>
           <button class="add-btn" onclick="document.getElementById('lang-form').style.display='none'">Cancel</button>
         </div>
       </div>
