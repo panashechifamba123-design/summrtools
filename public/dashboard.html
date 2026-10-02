@@ -209,6 +209,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
         <i class="ti ti-lock tool-arrow" style="color:var(--text-muted);"></i>
       </div>
     </div>
+    <div class="tool-card" id="tracker-card" onclick="window.location.href='https://summrtools.co.zw/tracker.html'" style="opacity:0.6;pointer-events:none;">
+      <div class="tool-card-accent"></div>
+      <div class="tool-icon"><i class="ti ti-briefcase"></i></div>
+      <div class="tool-name">Job Tracker</div>
+      <div class="tool-desc">Search LinkedIn, Pracuj.pl, Indeed and more in one click, then track every application from first look to offer.</div>
+      <div class="tool-meta">
+        <span class="tool-tag" style="background:rgba(0,212,170,0.12);color:var(--green);">Elite</span>
+        <i class="ti ti-lock tool-arrow" style="color:var(--text-muted);"></i>
+      </div>
+    </div>
     <div class="tool-card coming-soon">
       <div class="coming-badge">Coming soon</div>
       <div class="tool-icon"><i class="ti ti-briefcase"></i></div>
@@ -259,6 +269,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
       <div class="plan-feature"><i class="ti ti-check"></i> Unlimited CV credits</div>
       <div class="plan-feature"><i class="ti ti-check"></i> Full Mzizi access</div>
       <div class="plan-feature"><i class="ti ti-check"></i> All tools including Global Move Advisor</div>
+      <div class="plan-feature"><i class="ti ti-check"></i> Job Tracker &amp; job-board search</div>
       <div class="plan-feature"><i class="ti ti-check"></i> Early access to new tools</div>
       <button class="plan-btn primary" onclick="upgradePlan('elite')">Upgrade — 39.99 PLN</button>
     </div>
@@ -370,6 +381,15 @@ async function load() {
     upgradeBtn.style.background = 'transparent';
     upgradeBtn.style.color = 'var(--green)';
     upgradeBtn.style.border = '1px solid var(--green)';
+  }
+
+  // Unlock job tracker for elite users only
+  var trackerCard = document.getElementById('tracker-card');
+  if (trackerCard && tier === 'elite') {
+    trackerCard.style.opacity = '1';
+    trackerCard.style.pointerEvents = 'auto';
+    var tLock = trackerCard.querySelector('.ti-lock');
+    if (tLock) { tLock.className = 'ti ti-arrow-right tool-arrow'; tLock.style.color = 'var(--green)'; }
   }
 
   // Unlock relocation advisor for elite users only

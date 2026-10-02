@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Job Tracker — SummrTools</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+:root{--green:#00d4aa;--green-dark:#00b894;--green-light:rgba(0,212,170,0.1);--blue:#7b61ff;--text:#e8e8f4;--text-secondary:#a0a0c0;--text-muted:#6868a0;--bg:#08080f;--surface:#12121f;--border:rgba(80,80,130,0.25);--border-strong:rgba(100,100,160,0.35);--card:#151528;--accent:#00d4aa;--alt:#7b61ff;--danger:#ff6b6b;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;}
+a{color:var(--accent);}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px;background:rgba(8,8,15,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
+.nav-logo-icon{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,var(--alt),var(--accent));display:flex;align-items:center;justify-content:center;}
+.nav-logo-icon i{color:#fff;font-size:15px;}
+.nav-logo-text{font-size:16px;font-weight:500;color:var(--text);}
+.nav-badge{font-size:11px;background:rgba(0,212,170,0.12);color:var(--green);border:1px solid var(--border-strong);padding:2px 8px;border-radius:99px;font-weight:500;}
+.nav-link{font-size:13px;color:var(--text-secondary);text-decoration:none;display:flex;align-items:center;gap:6px;padding:6px 12px;border:1px solid var(--border-strong);border-radius:8px;}
+.nav-link:hover{color:var(--accent);background:var(--green-light);}
+.wrap{max-width:1180px;margin:0 auto;padding:84px 1.5rem 3rem;}
+.hero h1{font-size:clamp(1.6rem,3.5vw,2.3rem);font-weight:300;letter-spacing:-0.5px;margin-bottom:.35rem;}
+.hero h1 em{font-style:italic;color:var(--accent);}
+.hero p{color:var(--text-secondary);margin-bottom:1.75rem;}
+.section-title{font-size:12px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:.75rem;margin-bottom:1.5rem;}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1rem;}
+.stat b{display:block;font-size:24px;font-weight:300;color:var(--text);}
+.stat span{font-size:12px;color:var(--text-muted);}
+.stat.warn b{color:var(--danger);}
+.row{display:flex;flex-wrap:wrap;gap:.75rem;align-items:flex-end;}
+.grow{flex:1 1 220px;}
+label{display:flex;flex-direction:column;gap:5px;font-size:11px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;}
+input,select,textarea{font:inherit;font-size:14px;text-transform:none;letter-spacing:0;color:var(--text);background:var(--surface);border:1px solid var(--border-strong);border-radius:8px;padding:9px 12px;outline:none;min-width:0;}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);}
+textarea{min-height:80px;resize:vertical;}
+select option{background:var(--surface);}
+.btn{font:inherit;font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;border:1px solid var(--border-strong);background:transparent;color:var(--text);cursor:pointer;text-decoration:none;white-space:nowrap;}
+.btn:hover{border-color:var(--accent);color:var(--accent);background:var(--green-light);}
+.btn.primary{background:linear-gradient(135deg,var(--alt),var(--accent));border-color:transparent;color:#fff;}
+.btn.primary:hover{opacity:.88;color:#fff;}
+.btn.danger{color:var(--danger);}
+.btn.danger:hover{border-color:var(--danger);background:rgba(255,107,107,.08);}
+.btn:disabled{opacity:.5;cursor:default;}
+.btn i{font-size:15px;}
+.boards{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem;}
+.presets{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem;align-items:center;}
+.chip{display:inline-flex;align-items:center;gap:4px;background:var(--surface);border:1px solid var(--border);border-radius:99px;padding:3px 4px 3px 12px;font-size:12px;color:var(--text-secondary);}
+.chip button{background:none;border:none;color:var(--text-muted);cursor:pointer;padding:3px 7px;border-radius:99px;font:inherit;font-size:12px;}
+.chip button:hover{color:var(--accent);background:var(--green-light);}
+.toolbar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-bottom:1rem;}
+.toolbar .grow{flex:1 1 200px;}
+.tablewrap{overflow-x:auto;margin:0 -1.5rem;padding:0 1.5rem;}
+table{border-collapse:collapse;width:100%;min-width:940px;}
+th,td{text-align:left;padding:10px;border-bottom:1px solid var(--border);vertical-align:middle;}
+th{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);cursor:pointer;user-select:none;white-space:nowrap;}
+th:hover{color:var(--text-secondary);}
+tbody tr{cursor:pointer;}
+tbody tr:hover td{background:rgba(0,212,170,0.04);}
+.pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:500;white-space:nowrap;}
+.pri-High{color:#ff9f6b;}.pri-Medium{color:var(--text-secondary);}.pri-Low{color:var(--text-muted);}
+.muted{color:var(--text-muted);}
+.overdue{color:var(--danger);font-weight:500;}
+.empty{text-align:center;padding:3rem 1rem;color:var(--text-muted);cursor:default;}
+.empty i{font-size:32px;display:block;margin-bottom:.5rem;color:var(--border-strong);}
+.note{font-size:12px;color:var(--text-muted);margin-top:.75rem;}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:500;align-items:flex-start;justify-content:center;padding:4vh 1rem;overflow:auto;}
+.modal.open{display:flex;}
+.modal-box{background:var(--card);border:1px solid var(--border-strong);border-radius:16px;width:100%;max-width:860px;}
+.mhead{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 1.5rem;border-bottom:1px solid var(--border);}
+.mhead h2{font-size:17px;font-weight:500;}
+.mbody{padding:1.25rem 1.5rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.9rem;}
+.mbody .full{grid-column:1/-1;}
+.mfoot{display:flex;justify-content:space-between;gap:.6rem;padding:1rem 1.5rem;border-top:1px solid var(--border);}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--surface);border:1px solid var(--border-strong);color:var(--text);padding:10px 18px;border-radius:10px;font-size:13px;opacity:0;transition:all .25s;z-index:900;pointer-events:none;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast.err{border-color:var(--danger);color:var(--danger);}
+@media(max-width:600px){nav{padding:0 1rem;}.wrap{padding:76px 1rem 2rem;}.card{padding:1rem;}.tablewrap{margin:0 -1rem;padding:0 1rem;}.nav-badge{display:none;}}
+</style>
+</head>
+<body>
+
+<div id="auth-loading" style="position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;">
+  <div style="text-align:center;">
+    <div style="width:40px;height:40px;border-radius:10px;background:var(--green);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">
+      <i class="ti ti-briefcase" style="color:#fff;font-size:20px;"></i>
+    </div>
+    <div style="font-size:13px;color:var(--text-muted);">Loading...</div>
+  </div>
+</div>
+
+<nav>
+  <a class="nav-logo" href="https://summrtools.co.zw">
+    <div class="nav-logo-icon"><i class="ti ti-briefcase"></i></div>
+    <span class="nav-logo-text">Job Tracker</span>
+    <span class="nav-badge">by SummrTools</span>
+  </a>
+  <a class="nav-link" href="https://summrtools.co.zw/dashboard.html"><i class="ti ti-layout-dashboard"></i> Dashboard</a>
+</nav>
+
+<div class="wrap">
+  <div class="hero">
+    <h1>Your <em>job hunt</em>, organised</h1>
+    <p>Find roles across the major boards, log the ones you like, and track every application through to an offer.</p>
+  </div>
+
+  <div class="stats" id="stats"></div>
+
+  <p class="section-title">Find jobs</p>
+  <section class="card">
+    <div class="row">
+      <label class="grow">Keywords<input id="kw" placeholder="e.g. Customer Success Manager"></label>
+      <label class="grow">Location<input id="loc" placeholder="e.g. Warszawa, Łódź, Poland"></label>
+      <label>Country<select id="ctry"><option>Poland</option><option>UK</option><option>Ireland</option><option>Other</option></select></label>
+      <label>Work mode<select id="mode"><option value="">Any</option><option>Remote</option><option>Hybrid</option><option>On-site</option></select></label>
+      <label>Posted<select id="age"><option value="">Any time</option><option value="1">Last 24h</option><option value="7" selected>Last week</option><option value="30">Last month</option></select></label>
+    </div>
+    <div class="boards" id="boards"></div>
+    <div class="row" style="margin-top:1rem;">
+      <button class="btn primary" id="openAll"><i class="ti ti-external-link"></i> Open all boards</button>
+      <button class="btn" id="savePreset"><i class="ti ti-bookmark"></i> Save search</button>
+      <button class="btn" id="addFound"><i class="ti ti-plus"></i> Add a job I found</button>
+    </div>
+    <div class="presets" id="presets"></div>
+  </section>
+
+  <p class="section-title">Applications</p>
+  <section class="card">
+    <div class="toolbar">
+      <input class="grow" id="q" placeholder="Search company, title, notes…">
+      <select id="fStatus"><option value="">All statuses</option></select>
+      <select id="fPri"><option value="">All priorities</option><option>High</option><option>Medium</option><option>Low</option></select>
+      <button class="btn primary" id="addBtn"><i class="ti ti-plus"></i> Add job</button>
+      <button class="btn" id="exportCsv"><i class="ti ti-download"></i> Export CSV</button>
+      <label class="btn" style="flex-direction:row;text-transform:none;letter-spacing:0;font-size:13px;color:var(--text);"><i class="ti ti-upload"></i> Import CSV<input type="file" id="importFile" accept=".csv" hidden></label>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr id="thead"></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <p class="note">Saved to your SummrTools account — available on any device you sign in from.</p>
+  </section>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <div class="mhead"><h2 id="mTitle">Add job</h2><button class="btn" id="mClose" aria-label="Close"><i class="ti ti-x"></i></button></div>
+    <form id="form" class="mbody" onsubmit="return false"></form>
+    <div class="mfoot">
+      <button class="btn danger" id="delBtn"><i class="ti ti-trash"></i> Delete</button>
+      <div style="display:flex;gap:.6rem;"><button class="btn" id="cancelBtn">Cancel</button><button class="btn primary" id="saveBtn"><i class="ti ti-device-floppy"></i> Save</button></div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+const sb = supabase.createClient(
+  'https://wsrhuuuwqzpsprknolot.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indzcmh1dXV3cXpwc3Bya25vbG90Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5ODAzMDIsImV4cCI6MjA5NTU1NjMwMn0.SqtB1CSq5aOauLOyZkYYuFHJe_Ox5SGYpCCrIckCwoc',
+  { auth: { storageKey: 'summrtools-auth', storage: window.localStorage } }
+);
+
+(function(){
+const STATUSES=["Interested","Preparing","Applied","Assessment","Interview","Final Interview","Offer","Accepted","Rejected","Withdrawn","On Hold"];
+const SCOL={"Interested":["#a5b4fc","rgba(123,97,255,.14)"],"Preparing":["#c4b5fd","rgba(167,139,250,.14)"],"Applied":["#7dd3fc","rgba(56,189,248,.14)"],"Assessment":["#fcd34d","rgba(251,191,36,.14)"],"Interview":["#5eead4","rgba(0,212,170,.14)"],"Final Interview":["#2dd4bf","rgba(0,212,170,.22)"],"Offer":["#86efac","rgba(34,197,94,.18)"],"Accepted":["#4ade80","rgba(34,197,94,.26)"],"Rejected":["#fca5a5","rgba(255,107,107,.14)"],"Withdrawn":["#a0a0c0","rgba(160,160,192,.12)"],"On Hold":["#fdba74","rgba(251,146,60,.14)"]};
+const SOURCES=["LinkedIn","Company Website","Indeed","Pracuj.pl","No Fluff Jobs","Glassdoor","Referral","Recruiter","Other"];
+// k = database column
+const F=[
+ {k:"company",l:"Company",t:"text",req:1},
+ {k:"job_title",l:"Job Title",t:"text",req:1},
+ {k:"location",l:"Location",t:"text"},
+ {k:"work_mode",l:"Work Mode",t:"select",o:["","On-site","Hybrid","Remote"]},
+ {k:"country",l:"Country",t:"select",o:["Poland","UK","Ireland","Other"],d:"Poland"},
+ {k:"job_url",l:"Job URL",t:"url"},
+ {k:"date_found",l:"Date Found",t:"date"},
+ {k:"date_applied",l:"Date Applied",t:"date"},
+ {k:"status",l:"Status",t:"select",o:STATUSES,d:"Interested"},
+ {k:"priority",l:"Priority",t:"select",o:["High","Medium","Low"],d:"Medium"},
+ {k:"salary",l:"Salary / Range",t:"text"},
+ {k:"cv_version",l:"CV Version",t:"text"},
+ {k:"cover_letter",l:"Cover Letter",t:"select",o:["No","Yes"],d:"No"},
+ {k:"contact",l:"Recruiter / Contact",t:"text"},
+ {k:"follow_up_date",l:"Follow-up Date",t:"date"},
+ {k:"interview_date",l:"Interview Date",t:"date"},
+ {k:"interview_stage",l:"Interview Stage",t:"select",o:["","Screening","1st Interview","2nd Interview","Final Interview","Technical","HR","Other"]},
+ {k:"source",l:"Source",t:"select",o:SOURCES,d:"LinkedIn"},
+ {k:"fit_score",l:"Fit Score (1–10)",t:"number"},
+ {k:"outcome_reason",l:"Rejection / Outcome Reason",t:"text"},
+ {k:"notes",l:"Notes",t:"textarea",full:1}
+];
+const COLS=[["company","Company"],["job_title","Job Title"],["location","Location"],["work_mode","Mode"],["status","Status"],["priority","Priority"],["fit_score","Fit"],["date_found","Found"],["date_applied","Applied"],["follow_up_date","Follow-up"],["source","Source"]];
+
+let jobs=[], presets=[], lastSource="LinkedIn", sortKey="date_found", sortDir=-1, editing=null;
+const $=id=>document.getElementById(id);
+const today=()=>{const d=new Date();return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,10)};
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const safeUrl=u=>/^https?:\/\//i.test(u||"")?u:"";
+function toast(msg,err){const t=$("toast");t.textContent=msg;t.className="toast show"+(err?" err":"");clearTimeout(t._h);t._h=setTimeout(()=>t.className="toast",3000)}
+
+/* ---------- Auth + Elite gate (same pattern as Global Move Advisor) ---------- */
+let uid=null;
+async function init(){
+  await new Promise(r=>setTimeout(r,200));
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session){window.location.href='https://summrtools.co.zw/login.html';return}
+  uid=session.user.id;
+  const tierRes=await sb.from('profiles').select('tier').eq('id',uid).maybeSingle();
+  if(!tierRes.data||tierRes.data.tier!=='elite'){
+    document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:2rem;"><div><div style="width:56px;height:56px;border-radius:14px;background:var(--green-light);display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;"><i class="ti ti-lock" style="font-size:26px;color:var(--accent);"></i></div><h1 style="font-size:1.8rem;font-weight:300;margin-bottom:.75rem;">Elite feature</h1><p style="color:var(--text-secondary);margin-bottom:1.75rem;max-width:380px;">The Job Tracker is available on the Elite plan. Upgrade to search every major job board in one click and track all your applications in one place.</p><a href="https://summrtools.co.zw/dashboard.html#plans-section" style="background:linear-gradient(135deg,var(--alt),var(--accent));color:#fff;border-radius:10px;padding:12px 28px;text-decoration:none;font-size:15px;font-weight:500;">See plans</a></div></div>';
+    return;
+  }
+  $("auth-loading").style.display='none';
+  await Promise.all([loadJobs(),loadPresets(),prefillFromProfile()]);
+}
+
+async function loadJobs(){
+  const {data,error}=await sb.from('job_applications').select('*').order('created_at',{ascending:false});
+  if(error){toast('Could not load your jobs: '+error.message,1);return}
+  jobs=data||[];render();
+}
+async function loadPresets(){
+  const {data,error}=await sb.from('job_search_presets').select('*').order('created_at',{ascending:false});
+  if(!error)presets=data||[];renderPresets();
+}
+// First visit: seed the launcher from the user's CV profile
+async function prefillFromProfile(){
+  if(localGet('jt.last'))return setParams(localGet('jt.last'));
+  const [p,e]=await Promise.all([
+    sb.from('cv_profiles').select('location').eq('user_id',uid).maybeSingle(),
+    sb.from('cv_experience').select('job_title').eq('user_id',uid).order('sort_order').limit(1)
+  ]);
+  setParams({kw:(e.data&&e.data[0]&&e.data[0].job_title)||"",loc:(p.data&&p.data.location)||"",ctry:"Poland",mode:"",age:"7"});
+}
+function localGet(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}}
+function localSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+
+/* ---------- Search launcher ---------- */
+const enc=encodeURIComponent;
+const slug=s=>enc(s.trim().toLowerCase());
+const BOARDS=[
+ {n:"LinkedIn",src:"LinkedIn",u:p=>{const wt={"On-site":1,"Remote":2,"Hybrid":3}[p.mode];const tpr={"1":"r86400","7":"r604800","30":"r2592000"}[p.age];
+   return "https://www.linkedin.com/jobs/search/?keywords="+enc(p.kw)+"&location="+enc(p.loc||p.ctry)+(wt?"&f_WT="+wt:"")+(tpr?"&f_TPR="+tpr:"")}},
+ {n:"Pracuj.pl",src:"Pracuj.pl",only:["Poland"],u:p=>"https://www.pracuj.pl/praca/"+slug(p.kw)+";kw"+(p.loc&&p.loc.toLowerCase()!=="poland"?"/"+slug(p.loc)+";wp":"")+(p.mode==="Remote"?"?wm=home-office":p.mode==="Hybrid"?"?wm=hybrid":"")},
+ {n:"No Fluff Jobs",src:"No Fluff Jobs",only:["Poland"],u:p=>"https://nofluffjobs.com/pl/"+(p.mode==="Remote"?"praca-zdalna":"")+"?criteria="+enc("keyword="+p.kw)},
+ {n:"Indeed",src:"Indeed",u:p=>{const d={Poland:"pl.indeed.com",UK:"uk.indeed.com",Ireland:"ie.indeed.com"}[p.ctry]||"www.indeed.com";
+   const l=p.mode==="Remote"?"Remote":(p.loc||p.ctry);return "https://"+d+"/jobs?q="+enc(p.kw)+"&l="+enc(l)+(p.age?"&fromage="+(p.age==="30"?"14":p.age):"")}},
+ {n:"Glassdoor",src:"Glassdoor",u:p=>"https://www.glassdoor.com/Job/jobs.htm?sc.keyword="+enc(p.kw)+"&locKeyword="+enc(p.loc||p.ctry)},
+ {n:"Just Join IT",src:"Other",only:["Poland"],u:p=>"https://justjoin.it/job-offers/"+(p.mode==="Remote"?"remote":"all-locations")+"?keyword="+enc(p.kw)},
+ {n:"Google Jobs",src:"Other",u:p=>"https://www.google.com/search?ibp=htl;jobs&q="+enc(p.kw+" jobs "+(p.mode==="Remote"?"remote ":"")+(p.loc||p.ctry))}
+];
+const params=()=>({kw:$("kw").value.trim(),loc:$("loc").value.trim(),ctry:$("ctry").value,mode:$("mode").value,age:$("age").value});
+const activeBoards=p=>BOARDS.filter(b=>!b.only||b.only.includes(p.ctry));
+function setParams(p){$("kw").value=p.kw||"";$("loc").value=p.loc||"";$("ctry").value=p.ctry||"Poland";$("mode").value=p.mode||"";$("age").value=p.age??"7";renderBoards()}
+function renderBoards(){
+  const p=params();localSet('jt.last',p);
+  $("boards").innerHTML=activeBoards(p).map(b=>`<a class="btn" target="_blank" rel="noopener" data-src="${b.src}" href="${p.kw?esc(b.u(p)):"#"}">${b.n} <i class="ti ti-arrow-up-right"></i></a>`).join("");
+}
+$("boards").addEventListener("click",e=>{const a=e.target.closest("a");if(!a)return;
+  if(!params().kw){e.preventDefault();$("kw").focus();toast('Enter some keywords first');return}lastSource=a.dataset.src});
+["kw","loc","ctry","mode","age"].forEach(id=>$(id).addEventListener("input",renderBoards));
+$("openAll").onclick=()=>{const p=params();if(!p.kw){$("kw").focus();toast('Enter some keywords first');return}
+  activeBoards(p).forEach(b=>window.open(b.u(p),"_blank","noopener"));
+  toast('If only one tab opened, allow pop-ups for summrtools.co.zw')};
+$("savePreset").onclick=async()=>{const p=params();if(!p.kw){$("kw").focus();return}
+  if(presets.some(x=>x.keywords===p.kw&&(x.location||"")===p.loc&&(x.work_mode||"")===p.mode&&x.country===p.ctry)){toast('Already saved');return}
+  const {data,error}=await sb.from('job_search_presets').insert({keywords:p.kw,location:p.loc||null,country:p.ctry,work_mode:p.mode||null,posted_days:p.age?+p.age:null}).select().single();
+  if(error){toast('Could not save: '+error.message,1);return}
+  presets.unshift(data);renderPresets();toast('Search saved')};
+function renderPresets(){
+  $("presets").innerHTML=presets.length?"<span class='muted' style='font-size:12px;'>Saved searches:</span>"+presets.map(p=>
+    `<span class="chip">${esc(p.keywords)}${p.location?" · "+esc(p.location):""}${p.work_mode?" · "+esc(p.work_mode):""}
+     <button data-use="${p.id}">Use</button><button data-del="${p.id}" aria-label="Remove"><i class="ti ti-x"></i></button></span>`).join(""):"";
+}
+$("presets").addEventListener("click",async e=>{const b=e.target.closest("button");if(!b)return;
+  const p=presets.find(x=>x.id===(b.dataset.use||b.dataset.del));if(!p)return;
+  if(b.dataset.use)setParams({kw:p.keywords,loc:p.location,ctry:p.country,mode:p.work_mode,age:p.posted_days!=null?String(p.posted_days):""});
+  else{const {error}=await sb.from('job_search_presets').delete().eq('id',p.id);if(error)return toast(error.message,1);presets=presets.filter(x=>x!==p);renderPresets()}});
+$("addFound").onclick=()=>{const p=params();openForm(null,{source:lastSource,country:p.ctry,work_mode:p.mode,location:p.loc})};
+
+/* ---------- Form ---------- */
+$("form").innerHTML=F.map(f=>{
+  const inner=f.t==="select"?`<select name="${f.k}">${f.o.map(o=>`<option value="${esc(o)}">${o||"—"}</option>`).join("")}</select>`
+    :f.t==="textarea"?`<textarea name="${f.k}"></textarea>`
+    :`<input name="${f.k}" type="${f.t}"${f.t==="number"?' min="1" max="10" step="1"':""}${f.req?" required":""}>`;
+  return `<label class="${f.full?"full":""}">${f.l}${f.req?" *":""}${inner}</label>`}).join("");
+const el=$("form").elements;
+function openForm(job,defaults){
+  editing=job?job.id:null;
+  $("mTitle").textContent=job?"Edit job":"Add job";
+  $("delBtn").style.visibility=job?"visible":"hidden";
+  const src=job||Object.assign({},...F.map(f=>({[f.k]:f.d??""})),{date_found:today()},defaults||{});
+  F.forEach(f=>{let v=src[f.k];if(f.k==="cover_letter")v=v===true||v==="Yes"?"Yes":"No";el[f.k].value=v??""});
+  $("modal").classList.add("open");el.company.focus();
+}
+const closeForm=()=>$("modal").classList.remove("open");
+$("mClose").onclick=$("cancelBtn").onclick=closeForm;
+$("modal").addEventListener("click",e=>{if(e.target.id==="modal")closeForm()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeForm()});
+function rowFromForm(src){
+  const j={};F.forEach(f=>{let v=(src[f.k]??"").toString().trim();
+    if(f.k==="cover_letter")j[f.k]=/^(yes|true|1)$/i.test(v);
+    else if(f.k==="fit_score")j[f.k]=v?Math.min(10,Math.max(1,parseInt(v)||1)):null;
+    else if(f.k==="status")j[f.k]=STATUSES.includes(v)?v:"Interested";
+    else if(f.o&&(v===""||!f.o.includes(v)))j[f.k]=f.d??null;  // keep enum columns valid
+    else j[f.k]=v===""?null:v;});
+  if(j.status==="Applied"&&!j.date_applied)j.date_applied=today();
+  return j;
+}
+$("saveBtn").onclick=async()=>{
+  if(!el.company.value.trim())return el.company.reportValidity();
+  if(!el.job_title.value.trim())return el.job_title.reportValidity();
+  const btn=$("saveBtn");btn.disabled=true;
+  const v={};F.forEach(f=>v[f.k]=el[f.k].value);const row=rowFromForm(v);
+  const q=editing?sb.from('job_applications').update(row).eq('id',editing):sb.from('job_applications').insert(row);
+  const {data,error}=await q.select().single();btn.disabled=false;
+  if(error)return toast('Could not save: '+error.message,1);
+  if(editing)jobs=jobs.map(j=>j.id===editing?data:j);else jobs.unshift(data);
+  closeForm();render();toast('Saved');
+};
+$("delBtn").onclick=async()=>{if(!editing||!confirmDelete())return;
+  const {error}=await sb.from('job_applications').delete().eq('id',editing);
+  if(error)return toast(error.message,1);jobs=jobs.filter(j=>j.id!==editing);closeForm();render();toast('Deleted')};
+function confirmDelete(){const b=$("delBtn");if(b.dataset.armed){delete b.dataset.armed;b.innerHTML='<i class="ti ti-trash"></i> Delete';return true}
+  b.dataset.armed=1;b.innerHTML='<i class="ti ti-alert-triangle"></i> Click again to delete';setTimeout(()=>{delete b.dataset.armed;b.innerHTML='<i class="ti ti-trash"></i> Delete'},3000);return false}
+$("addBtn").onclick=()=>openForm(null);
+
+/* ---------- Table ---------- */
+$("fStatus").innerHTML+=STATUSES.map(s=>`<option>${s}</option>`).join("");
+["q","fStatus","fPri"].forEach(id=>$(id).addEventListener("input",renderTable));
+$("thead").addEventListener("click",e=>{const k=e.target.closest("th")?.dataset.k;if(!k)return;
+  if(sortKey===k)sortDir*=-1;else{sortKey=k;sortDir=1}renderTable()});
+const isOverdue=j=>j.follow_up_date&&j.follow_up_date<today()&&!["Rejected","Withdrawn","Accepted"].includes(j.status);
+const fmt=d=>d?new Date(d+"T00:00").toLocaleDateString('en-GB',{day:"numeric",month:"short"}):"";
+function renderTable(){
+  $("thead").innerHTML=COLS.map(([k,l])=>`<th data-k="${k}">${l}${sortKey===k?(sortDir>0?" ↑":" ↓"):""}</th>`).join("");
+  const q=$("q").value.toLowerCase(),fs=$("fStatus").value,fp=$("fPri").value,pri={High:0,Medium:1,Low:2};
+  let rows=jobs.filter(j=>(!fs||j.status===fs)&&(!fp||j.priority===fp)&&
+    (!q||[j.company,j.job_title,j.location,j.notes,j.contact].join(" ").toLowerCase().includes(q)));
+  rows.sort((a,b)=>{let x=a[sortKey],y=b[sortKey];
+    if(sortKey==="fit_score"){x=+x||0;y=+y||0}else if(sortKey==="priority"){x=pri[x]??9;y=pri[y]??9}
+    else if(sortKey==="status"){x=STATUSES.indexOf(x);y=STATUSES.indexOf(y)}else{x=(x||"").toLowerCase();y=(y||"").toLowerCase()}
+    return (x>y?1:x<y?-1:0)*sortDir});
+  if(!rows.length){$("tbody").innerHTML=`<tr><td colspan="${COLS.length}" class="empty"><i class="ti ti-briefcase"></i>${jobs.length?"No jobs match these filters.":"No jobs yet — run a search above, then click <b>Add a job I found</b>."}</td></tr>`;return}
+  $("tbody").innerHTML=rows.map(j=>{const c=SCOL[j.status]||SCOL.Withdrawn,u=safeUrl(j.job_url);return `<tr data-id="${j.id}">
+    <td><b style="font-weight:500">${esc(j.company)}</b></td>
+    <td>${u?`<a href="${esc(u)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${esc(j.job_title)}</a>`:esc(j.job_title)}</td>
+    <td class="muted">${esc(j.location)}</td><td class="muted">${esc(j.work_mode)}</td>
+    <td><span class="pill" style="color:${c[0]};background:${c[1]}">${esc(j.status)}</span></td>
+    <td class="pri-${esc(j.priority)}">${esc(j.priority)}</td><td>${esc(j.fit_score)}</td>
+    <td class="muted">${fmt(j.date_found)}</td><td class="muted">${fmt(j.date_applied)}</td>
+    <td class="${isOverdue(j)?"overdue":"muted"}">${fmt(j.follow_up_date)}${isOverdue(j)?' <i class="ti ti-alert-circle"></i>':""}</td>
+    <td class="muted">${esc(j.source)}</td></tr>`}).join("");
+}
+$("tbody").addEventListener("click",e=>{const tr=e.target.closest("tr[data-id]");if(tr)openForm(jobs.find(j=>j.id===tr.dataset.id))});
+
+/* ---------- Stats (same logic as the spreadsheet's Dashboard sheet) ---------- */
+function renderStats(){
+  const c=s=>jobs.filter(j=>j.status===s).length;
+  const applied=c("Applied"),interviews=c("Interview")+c("Final Interview"),offers=c("Offer")+c("Accepted");
+  const m=today().slice(0,7),month=jobs.filter(j=>j.date_applied&&j.date_applied.startsWith(m)).length;
+  const pct=n=>applied?Math.round(n/applied*100)+"%":"0%",overdue=jobs.filter(isOverdue).length;
+  $("stats").innerHTML=[["Total",jobs.length],["Applied",applied],["Interviews",interviews],["Offers",offers],["Rejected",c("Rejected")],
+    ["Awaiting response",applied+c("Assessment")+c("On Hold")],["Applied this month",month],["Interview rate",pct(interviews)],["Offer rate",pct(offers)],["Follow-ups overdue",overdue,overdue>0]]
+    .map(([l,v,w])=>`<div class="stat${w?" warn":""}"><b>${v}</b><span>${l}</span></div>`).join("");
+}
+function render(){renderStats();renderTable()}
+
+/* ---------- CSV export / import (works with the Excel tracker's columns) ---------- */
+const label=f=>f.l.replace(" (1–10)","");
+$("exportCsv").onclick=()=>{
+  const q=v=>`"${String(v??"").replace(/"/g,'""')}"`;
+  const csv=[F.map(f=>q(label(f))).join(",")].concat(jobs.map(j=>F.map(f=>q(f.k==="cover_letter"?(j[f.k]?"Yes":"No"):j[f.k])).join(","))).join("\r\n");
+  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["﻿"+csv],{type:"text/csv"}));a.download="job-applications-"+today()+".csv";a.click();
+};
+function parseCSV(t){const r=[];let row=[],f="",qd=false;t=t.replace(/^﻿/,"");
+  for(let i=0;i<t.length;i++){const c=t[i];if(qd){if(c==='"'){if(t[i+1]==='"'){f+='"';i++}else qd=false}else f+=c}
+  else if(c==='"')qd=true;else if(c===","||c===";"){row.push(f);f=""}else if(c==="\n"||c==="\r"){if(c==="\r"&&t[i+1]==="\n")i++;row.push(f);r.push(row);row=[];f=""}else f+=c}
+  if(f||row.length){row.push(f);r.push(row)}return r.filter(x=>x.some(v=>v.trim()))}
+const toISO=v=>{v=(v||"").trim();if(!v)return"";if(/^\d{4}-\d{2}-\d{2}/.test(v))return v.slice(0,10);
+  const m=v.match(/^(\d{1,2})[./-](\d{1,2})[./-](\d{4})$/);return m?`${m[3]}-${m[2].padStart(2,"0")}-${m[1].padStart(2,"0")}`:""};
+$("importFile").onchange=e=>{const file=e.target.files[0];if(!file)return;const rd=new FileReader();
+  rd.onload=async()=>{try{
+    const [h,...rows]=parseCSV(rd.result);const idx=F.map(f=>h.findIndex(x=>x.trim().toLowerCase()===label(f).toLowerCase()));
+    if(idx[0]<0||idx[1]<0)return toast('CSV needs "Company" and "Job Title" columns',1);
+    const recs=rows.map(r=>{const v={};F.forEach((f,i)=>{v[f.k]=idx[i]>=0?r[idx[i]]||"":"";if(f.t==="date")v[f.k]=toISO(v[f.k])});return rowFromForm(v)}).filter(j=>j.company&&j.job_title);
+    if(!recs.length)return toast('No rows found',1);
+    const {data,error}=await sb.from('job_applications').insert(recs).select();
+    if(error)return toast('Import failed: '+error.message,1);
+    jobs=data.concat(jobs);render();toast(`Imported ${data.length} job${data.length===1?"":"s"}`);
+  }catch(err){toast("Couldn't read that file",1)}};
+  rd.readAsText(file);e.target.value=""};
+
+init();
+})();
+</script>
+</body>
+</html>
